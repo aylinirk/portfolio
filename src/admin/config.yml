@@ -3,7 +3,7 @@ backend:
   repo: aylinirk/portfolio
   branch: main
   auth_type: pkce
-  client_id: Ov23likmEjzqZOa7P8RW
+  app_id: Ov23likmEjzqZOa7P8RW
   # OAuth proxy required for production — see docs/superpowers/specs/ for setup notes
 
 media_folder: src/assets/images
