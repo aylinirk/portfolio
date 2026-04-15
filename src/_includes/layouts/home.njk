@@ -45,6 +45,15 @@ layout: base.njk
           </div>
         </a>
       {% endfor %}
+      {% if workItems.length < 2 %}
+        <div class="project-card project-card--coming-soon" aria-hidden="true">
+          <div class="project-card__cover project-card__cover--warm"></div>
+          <div class="project-card__body">
+            <h3 class="project-card__title">Next project</h3>
+            <p class="project-card__tagline">Case study in progress.</p>
+          </div>
+        </div>
+      {% endif %}
     </div>
   </section>
 
