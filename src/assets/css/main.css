@@ -787,8 +787,7 @@ body {
 }
 
 .quotes-wrapper {
-  padding: 0 max(48px, calc(50vw - 380px)) 72px;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 72px;
 }
 
 /* ── 26. TESTIMONIAL ────────────────────────────────────────── */
@@ -873,7 +872,7 @@ body {
   .narrative-section { padding: 64px 32px; }
   .decisions-section { padding: 64px 32px; }
   .phase-block { padding: 48px 32px; }
-  .quotes-wrapper { padding: 0 32px 64px; }
+  .quotes-wrapper { padding-bottom: 64px; }
   .reflection-inner { gap: 40px; }
   .footer { padding: 40px 32px 0; }
   .footer__watermark { font-size: 18vw; }
@@ -946,7 +945,7 @@ body {
   .phase-grid { grid-template-columns: 1fr; }
   .decision-row { grid-template-columns: 1fr; gap: 16px; padding: 28px 0; }
   .reflection-inner { grid-template-columns: 1fr; gap: 28px; }
-  .quotes-wrapper { padding: 0 24px 48px; }
+  .quotes-wrapper { padding-bottom: 48px; }
   .next-project { padding: 48px 24px; }
   .insight-strip { padding: 64px 24px; }
   .testimonial-section { padding: 64px 24px; }
