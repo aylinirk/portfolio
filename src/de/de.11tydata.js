@@ -14,9 +14,6 @@ module.exports = {
     sectionLearning: "Lernen & Wachstum",
     sectionAbout: "Über mich",
     sectionContact: "Kontakt aufnehmen",
-    // Hero
-    heroCta: "Arbeit ansehen",
-    heroTagline: "UI/UX-Designerin mit Fokus auf menschenzentrierte digitale Produkte.",
     // Cards
     viewCaseStudy: "Fallstudie ansehen →",
     // Contact
@@ -46,8 +43,5 @@ module.exports = {
     labelOutcomes: "Ergebnisse",
     labelReflection: "Reflexion",
     labelNextSteps: "Nächste Schritte",
-    // About
-    aboutQuote: "Ich glaube, gutes Design entfernt Denkarbeit, bevor es Funktionen hinzufügt.",
-    skills: ["Figma", "Prototyping", "User Research", "Interaction Design", "Webflow"]
   }
 };

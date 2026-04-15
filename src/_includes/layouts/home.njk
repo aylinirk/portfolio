@@ -3,19 +3,23 @@ layout: base.njk
 ---
 {% include "partials/nav.njk" %}
 
+{% set hp = homepage_en if locale == "en" else homepage_de %}
+
 <main>
 
   {# ── HERO ───────────────────────────────────────────────────── #}
   <section class="hero" id="home" aria-labelledby="hero-heading">
     <div class="hero__inner">
       <div class="hero__content">
-        <h1 class="hero__name" id="hero-heading">Aylin<br>Irk</h1>
-        <p class="hero__tagline">{{ strings.heroTagline }}</p>
+        <h1 class="hero__name" id="hero-heading">{{ hp.heroName }}</h1>
+        <p class="hero__tagline">{{ hp.heroTagline }}</p>
         <div class="hero__cta">
-          <a href="{{ homeUrl }}#work" class="btn">{{ strings.heroCta }}</a>
+          <a href="{{ homeUrl }}#work" class="btn">{{ hp.heroCta }}</a>
         </div>
       </div>
-      <div class="hero__photo" role="img" aria-label="Portrait of Aylin Irk">Portrait photo</div>
+      <div class="hero__photo" role="img" aria-label="Portrait of {{ hp.heroName }}">
+        {% if hp.heroPhoto %}<img src="{{ hp.heroPhoto }}" alt="{{ hp.heroName }}" width="380" height="500" loading="eager" fetchpriority="high">{% else %}Portrait photo{% endif %}
+      </div>
     </div>
     <div class="hero__scroll" aria-hidden="true">↓</div>
   </section>
@@ -89,9 +93,9 @@ layout: base.njk
     <div class="about__inner">
       <div class="about__left">
         <span class="label" aria-hidden="true">{{ strings.sectionAbout }}</span>
-        <p class="about__quote">&ldquo;{{ strings.aboutQuote }}&rdquo;</p>
+        <p class="about__quote">&ldquo;{{ hp.aboutQuote }}&rdquo;</p>
         <div class="about__skills" aria-label="Skills">
-          {% for skill in strings.skills %}
+          {% for skill in hp.skills %}
             <span class="tag">{{ skill }}</span>
           {% endfor %}
         </div>

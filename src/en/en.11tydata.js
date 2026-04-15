@@ -14,9 +14,6 @@ module.exports = {
     sectionLearning: "Learning & Growth",
     sectionAbout: "About",
     sectionContact: "Get in touch",
-    // Hero
-    heroCta: "View Work",
-    heroTagline: "UI/UX Designer focused on human-centered digital products.",
     // Cards
     viewCaseStudy: "View case study →",
     // Contact
@@ -46,9 +43,6 @@ module.exports = {
     labelOutcomes: "Outcomes",
     labelReflection: "Reflection",
     labelNextSteps: "Next Steps",
-    // About
-    aboutQuote: "I believe good design removes thinking before it adds features.",
-    skills: ["Figma", "Prototyping", "User Research", "Interaction Design", "Webflow"]
   },
   eleventyComputed: {
     permalink: data => {

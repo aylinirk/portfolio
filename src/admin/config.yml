@@ -11,6 +11,51 @@ public_folder: /assets/images
 
 collections:
 
+  # ── Homepage content ────────────────────────────────────────
+  - name: homepage
+    label: "Homepage"
+    files:
+      - label: "Homepage (English)"
+        name: homepage_en
+        file: src/_data/homepage_en.json
+        fields:
+          - { label: Name, name: heroName, widget: string }
+          - { label: Tagline, name: heroTagline, widget: text }
+          - { label: CTA button text, name: heroCta, widget: string }
+          - { label: Hero photo, name: heroPhoto, widget: image, required: false, allow_multiple: false }
+          - { label: About quote, name: aboutQuote, widget: text }
+          - label: Skills
+            name: skills
+            widget: list
+            field: { label: Skill, name: skill, widget: string }
+      - label: "Homepage (Deutsch)"
+        name: homepage_de
+        file: src/_data/homepage_de.json
+        fields:
+          - { label: Name, name: heroName, widget: string }
+          - { label: Tagline, name: heroTagline, widget: text }
+          - { label: CTA-Schaltflächentext, name: heroCta, widget: string }
+          - { label: Hero-Foto, name: heroPhoto, widget: image, required: false, allow_multiple: false }
+          - { label: Über-mich-Zitat, name: aboutQuote, widget: text }
+          - label: Skills
+            name: skills
+            widget: list
+            field: { label: Skill, name: skill, widget: string }
+
+  # ── Site settings ────────────────────────────────────────────
+  - name: settings
+    label: "Site Settings"
+    files:
+      - label: "Contact & Links"
+        name: meta
+        file: src/_data/meta.json
+        fields:
+          - { label: Site name, name: siteName, widget: string }
+          - { label: Site description, name: siteDescription, widget: text }
+          - { label: Site URL, name: siteUrl, widget: string }
+          - { label: Contact email, name: contactEmail, widget: string }
+          - { label: LinkedIn URL, name: linkedInUrl, widget: string }
+
   # ── Work case studies — English ─────────────────────────────
   - name: work_en
     label: "Work (English)"
