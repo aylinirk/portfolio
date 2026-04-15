@@ -118,6 +118,20 @@ layout: base.njk
 </section>
 {% endif %}
 
+{# ── LO-FI PHASE BLOCK ────────────────────────────────────── #}
+{% if lofiPhase %}
+<div class="phase-block" role="region" aria-label="{{ lofiPhase.label }}">
+  <p class="phase-block__label">{{ lofiPhase.label }}</p>
+  <div class="phase-grid">
+    {% for screen in lofiPhase.screens %}
+      <div class="phase-img">
+        {% if screen.src %}<img src="{{ screen.src }}" alt="{{ screen.caption | default('') }}" loading="lazy">{% else %}{{ screen.label }}{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 {# ── KEY UX DECISIONS ─────────────────────────────────────────── #}
 {% if decisions %}
 <div class="decisions-section" role="region" aria-label="{{ strings.labelDecisions }}">
@@ -129,6 +143,20 @@ layout: base.njk
       <p class="decision-row__body">{{ d.body }}</p>
     </div>
   {% endfor %}
+</div>
+{% endif %}
+
+{# ── HI-FI PHASE BLOCK ────────────────────────────────────── #}
+{% if hifiPhase %}
+<div class="phase-block phase-block--cream" role="region" aria-label="{{ hifiPhase.label }}">
+  <p class="phase-block__label">{{ hifiPhase.label }}</p>
+  <div class="phase-grid">
+    {% for screen in hifiPhase.screens %}
+      <div class="phase-img">
+        {% if screen.src %}<img src="{{ screen.src }}" alt="{{ screen.caption | default('') }}" loading="lazy">{% else %}{{ screen.label }}{% endif %}
+      </div>
+    {% endfor %}
+  </div>
 </div>
 {% endif %}
 
@@ -146,26 +174,26 @@ layout: base.njk
 <section class="narrative-section" aria-labelledby="outcomes-heading">
   <span class="narrative-section__label" aria-hidden="true">{{ strings.labelOutcomes }}</span>
   <h2 class="narrative-section__heading" id="outcomes-heading">{{ outcomes.heading }}</h2>
-  {% if outcomes.metrics %}
-  <div class="outcomes-metrics" role="region" aria-label="{{ strings.labelOutcomes }}">
-    {% for m in outcomes.metrics %}
-      <div class="metric-block">
-        <p class="metric-block__value">{{ m.value }}</p>
-        <p class="metric-block__label">{{ m.label }}</p>
-      </div>
-    {% endfor %}
-  </div>
-  {% endif %}
-  {% if outcomes.quotes %}
-  <div class="quotes-wrapper">
-    {% for q in outcomes.quotes %}
-      <div class="quote-block">
-        <p class="quote-block__text">&ldquo;{{ q }}&rdquo;</p>
-      </div>
-    {% endfor %}
-  </div>
-  {% endif %}
 </section>
+{% if outcomes.metrics %}
+<div class="outcomes-metrics" role="region" aria-label="{{ strings.labelOutcomes }}">
+  {% for m in outcomes.metrics %}
+    <div class="metric-block">
+      <p class="metric-block__value">{{ m.value }}</p>
+      <p class="metric-block__label">{{ m.label }}</p>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% if outcomes.quotes %}
+<div class="quotes-wrapper">
+  {% for q in outcomes.quotes %}
+    <div class="quote-block">
+      <p class="quote-block__text">&ldquo;{{ q }}&rdquo;</p>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
 {% endif %}
 
 {# ── REFLECTION ───────────────────────────────────────────────── #}

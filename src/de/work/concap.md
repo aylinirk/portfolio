@@ -71,6 +71,13 @@ process:
     - number: "05"
       title: Vom ersten echten Reibungspunkt aus iterieren
       body: Die erste große Reibung war nicht das Erfassen — es war die Organisation. Nutzern gefiel die Geschwindigkeit, aber sie wollten Kontakte nach Konferenz oder Gruppe sortieren. Statt jeden Kontakt beim Erfassen zu taggen, entwarf ich ein sitzungsbasiertes Gruppierungsmodell — Nutzer legen die aktuelle Konferenz einmalig fest, und jede neue Erfassung erbt diesen Kontext automatisch.
+lofiPhase:
+  label: "Frühe Wireframes"
+  screens:
+    - label: "Lo-fi-Screen 1"
+    - label: "Lo-fi-Screen 2"
+    - label: "Lo-fi-Screen 3"
+    - label: "Lo-fi-Screen 4"
 decisions:
   heading: "Die Entscheidungen, die das Produkt geprägt haben"
   items:
@@ -82,6 +89,13 @@ decisions:
       body: Notizen auf einer vollen Veranstaltung zu tippen ist umständlich, langsam und sozial sichtbar. Sprechen ist schneller, natürlicher und passt zum Rhythmus des Moments. Die App transkribiert und hängt die Notiz automatisch an.
     - title: Das Produkt für nachgelagerte Systeme offen halten
       body: Der Wert der App ist nicht nur das Erfassen. Es ist die saubere Übergabe an Tools wie HubSpot, Salesforce, Airtable oder CSV-Export. Ein erfasster Kontakt, der in der App eingesperrt bleibt, ist nur die halbe Arbeit.
+hifiPhase:
+  label: "High-Fidelity-Design"
+  screens:
+    - label: "Hi-fi-Screen 1"
+    - label: "Hi-fi-Screen 2"
+    - label: "Hi-fi-Screen 3"
+    - label: "Hi-fi-Screen 4"
 validation:
   heading: Wie es getestet wurde
   body: |

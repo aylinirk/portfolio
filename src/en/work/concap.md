@@ -71,6 +71,13 @@ process:
     - number: "05"
       title: Iterate from the first real friction point
       body: The first major friction was not capture — it was organization. Users liked the speed, but wanted to sort contacts by conference or group. Instead of tagging every contact during capture, I designed a session-based grouping model — users set the current conference once, and every new capture inherits that context automatically.
+lofiPhase:
+  label: "Early Wireframes"
+  screens:
+    - label: "Lo-fi screen 1"
+    - label: "Lo-fi screen 2"
+    - label: "Lo-fi screen 3"
+    - label: "Lo-fi screen 4"
 decisions:
   heading: "The decisions that shaped the product"
   items:
@@ -82,6 +89,13 @@ decisions:
       body: Typing notes in a crowded event setting is awkward, slow, and socially visible. Speaking is faster, more natural, and fits the rhythm of the moment. The app transcribes and attaches the note automatically.
     - title: Keep the product open to downstream systems
       body: The value of the app is not just capture. It is clean handoff into tools like HubSpot, Salesforce, Airtable, or CSV export. A captured contact that stays locked inside the app is only half the job done.
+hifiPhase:
+  label: "High-Fidelity Design"
+  screens:
+    - label: "Hi-fi screen 1"
+    - label: "Hi-fi screen 2"
+    - label: "Hi-fi screen 3"
+    - label: "Hi-fi screen 4"
 validation:
   heading: How it was tested
   body: |
