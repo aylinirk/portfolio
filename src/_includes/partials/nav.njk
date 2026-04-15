@@ -1,0 +1,26 @@
+<nav class="nav" aria-label="Main navigation">
+  <a href="{{ homeUrl }}" class="nav__wordmark">Aylin Irk</a>
+
+  <div class="nav__links" id="nav-menu">
+    <a href="{{ homeUrl }}#work">{{ strings.navWork }}</a>
+    <a href="{{ homeUrl }}#about">{{ strings.navAbout }}</a>
+    <a href="{{ homeUrl }}#contact">{{ strings.navContact }}</a>
+    {% if locale == "en" %}
+      <a href="/de{{ page.url }}" class="nav__locale" hreflang="de">DE</a>
+    {% else %}
+      {% set enUrl = page.url | replace("/de/", "/") | replace("/de", "/") %}
+      <a href="{{ enUrl or '/' }}" class="nav__locale" hreflang="en">EN</a>
+    {% endif %}
+  </div>
+
+  <button
+    class="nav__hamburger"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="nav-menu"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</nav>

@@ -1,0 +1,16 @@
+<footer class="footer">
+  <div class="footer__bar">
+    <span>{{ meta.siteName }} &copy; 2026</span>
+    <div class="footer__bar-links">
+      <a href="{{ homeUrl }}#work">{{ strings.navWork }}</a>
+      <a href="{{ homeUrl }}#about">{{ strings.navAbout }}</a>
+      <a href="{{ homeUrl }}#contact">{{ strings.navContact }}</a>
+    </div>
+    {% if locale == "en" %}
+      <a href="/de/" style="font-size:13px;color:var(--muted);text-decoration:none;" hreflang="de">DE</a>
+    {% else %}
+      <a href="/" style="font-size:13px;color:var(--muted);text-decoration:none;" hreflang="en">EN</a>
+    {% endif %}
+  </div>
+  <span class="footer__watermark" aria-hidden="true">Aylin Irk</span>
+</footer>

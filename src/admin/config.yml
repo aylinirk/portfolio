@@ -1,0 +1,313 @@
+backend:
+  name: github
+  repo: aylinirk/portfolio
+  branch: main
+  # OAuth proxy required for production — see docs/superpowers/specs/ for setup notes
+
+local_backend: true  # enables `npx decap-server` for local editing
+
+media_folder: src/assets/images
+public_folder: /assets/images
+
+collections:
+
+  # ── Work case studies — English ─────────────────────────────
+  - name: work_en
+    label: "Work (English)"
+    folder: src/en/work
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: case-study.njk }
+      - { label: Title, name: title, widget: string }
+      - { label: Tagline, name: tagline, widget: text }
+      - { label: Order, name: order, widget: number, default: 99, value_type: int }
+      - label: Tags
+        name: tags
+        widget: list
+        field: { label: Tag, name: tag, widget: string }
+      - { label: Cover gradient (CSS), name: coverGradient, widget: string, required: false }
+      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Role, name: role, widget: string }
+      - { label: Scope, name: scope, widget: text }
+      - { label: Tools, name: tools, widget: string }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - label: Metrics
+        name: metrics
+        widget: list
+        fields:
+          - { label: Value, name: value, widget: string }
+          - { label: Label, name: label, widget: string }
+      - label: Brief
+        name: brief
+        widget: object
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Body (markdown), name: body, widget: markdown }
+      - label: Problem
+        name: problem
+        widget: object
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Body (markdown), name: body, widget: markdown }
+      - { label: Insight quote, name: insightQuote, widget: text, required: false }
+      - { label: Insight attribution, name: insightAttr, widget: string, required: false }
+      - label: Principles
+        name: principles
+        widget: object
+        required: false
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: Number, name: number, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+      - label: Process
+        name: process
+        widget: object
+        required: false
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: Number, name: number, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+      - label: Key UX Decisions
+        name: decisions
+        widget: object
+        required: false
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+      - label: Validation
+        name: validation
+        widget: object
+        required: false
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Body (markdown), name: body, widget: markdown }
+      - label: Outcomes
+        name: outcomes
+        widget: object
+        required: false
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - label: Metrics
+            name: metrics
+            widget: list
+            fields:
+              - { label: Value, name: value, widget: string }
+              - { label: Label, name: label, widget: string }
+          - label: Quotes
+            name: quotes
+            widget: list
+            field: { label: Quote, name: quote, widget: string }
+      - label: Reflection
+        name: reflection
+        widget: object
+        required: false
+        fields:
+          - { label: Pull quote, name: pull, widget: text }
+          - { label: Body (markdown), name: body, widget: markdown }
+      - label: Next Steps
+        name: nextSteps
+        widget: object
+        required: false
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Body (markdown), name: body, widget: markdown }
+      - label: Testimonial
+        name: testimonial
+        widget: object
+        required: false
+        fields:
+          - { label: Quote, name: quote, widget: text }
+          - { label: Author, name: author, widget: string }
+      - label: Next project
+        name: nextProject
+        widget: object
+        required: false
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: URL, name: url, widget: string }
+
+  # ── Work case studies — German ──────────────────────────────
+  - name: work_de
+    label: "Work (Deutsch)"
+    folder: src/de/work
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Layout, name: layout, widget: hidden, default: case-study.njk }
+      - { label: Titel, name: title, widget: string }
+      - { label: Tagline, name: tagline, widget: text }
+      - { label: Reihenfolge, name: order, widget: number, default: 99, value_type: int }
+      - label: Tags
+        name: tags
+        widget: list
+        field: { label: Tag, name: tag, widget: string }
+      - { label: Cover-Verlauf (CSS), name: coverGradient, widget: string, required: false }
+      - { label: Cover-Bild, name: cover, widget: image, required: false }
+      - { label: Rolle, name: role, widget: string }
+      - { label: Umfang, name: scope, widget: text }
+      - { label: Tools, name: tools, widget: string }
+      - { label: Jahr, name: year, widget: number, value_type: int }
+      - label: Metriken
+        name: metrics
+        widget: list
+        fields:
+          - { label: Wert, name: value, widget: string }
+          - { label: Bezeichnung, name: label, widget: string }
+      - label: Briefing
+        name: brief
+        widget: object
+        fields:
+          - { label: Überschrift, name: heading, widget: string }
+          - { label: Text (Markdown), name: body, widget: markdown }
+      - label: Problem
+        name: problem
+        widget: object
+        fields:
+          - { label: Überschrift, name: heading, widget: string }
+          - { label: Text (Markdown), name: body, widget: markdown }
+      - { label: Insight-Zitat, name: insightQuote, widget: text, required: false }
+      - { label: Insight-Zuordnung, name: insightAttr, widget: string, required: false }
+      - label: Designprinzipien
+        name: principles
+        widget: object
+        required: false
+        fields:
+          - { label: Überschrift, name: heading, widget: string }
+          - label: Einträge
+            name: items
+            widget: list
+            fields:
+              - { label: Nummer, name: number, widget: string }
+              - { label: Titel, name: title, widget: string }
+              - { label: Text, name: body, widget: text }
+      - label: Prozess
+        name: process
+        widget: object
+        required: false
+        fields:
+          - { label: Überschrift, name: heading, widget: string }
+          - label: Einträge
+            name: items
+            widget: list
+            fields:
+              - { label: Nummer, name: number, widget: string }
+              - { label: Titel, name: title, widget: string }
+              - { label: Text, name: body, widget: text }
+      - label: UX-Entscheidungen
+        name: decisions
+        widget: object
+        required: false
+        fields:
+          - label: Einträge
+            name: items
+            widget: list
+            fields:
+              - { label: Titel, name: title, widget: string }
+              - { label: Text, name: body, widget: text }
+      - label: Validierung
+        name: validation
+        widget: object
+        required: false
+        fields:
+          - { label: Überschrift, name: heading, widget: string }
+          - { label: Text (Markdown), name: body, widget: markdown }
+      - label: Ergebnisse
+        name: outcomes
+        widget: object
+        required: false
+        fields:
+          - { label: Überschrift, name: heading, widget: string }
+          - label: Metriken
+            name: metrics
+            widget: list
+            fields:
+              - { label: Wert, name: value, widget: string }
+              - { label: Bezeichnung, name: label, widget: string }
+          - label: Zitate
+            name: quotes
+            widget: list
+            field: { label: Zitat, name: quote, widget: string }
+      - label: Reflexion
+        name: reflection
+        widget: object
+        required: false
+        fields:
+          - { label: Pull-Zitat, name: pull, widget: text }
+          - { label: Text (Markdown), name: body, widget: markdown }
+      - label: Nächste Schritte
+        name: nextSteps
+        widget: object
+        required: false
+        fields:
+          - { label: Überschrift, name: heading, widget: string }
+          - { label: Text (Markdown), name: body, widget: markdown }
+      - label: Testimonial
+        name: testimonial
+        widget: object
+        required: false
+        fields:
+          - { label: Zitat, name: quote, widget: text }
+          - { label: Autor, name: author, widget: string }
+      - label: Nächstes Projekt
+        name: nextProject
+        widget: object
+        required: false
+        fields:
+          - { label: Titel, name: title, widget: string }
+          - { label: URL, name: url, widget: string }
+
+  # ── Learning items ───────────────────────────────────────────
+  - name: learning
+    label: "Learning & Growth"
+    files:
+      - label: "Learning items (English)"
+        name: learning_en
+        file: src/_data/learning_en.json
+        fields:
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Platform, name: platform, widget: string }
+              - label: Status
+                name: status
+                widget: select
+                options:
+                  - { label: Completed, value: Completed }
+                  - { label: In Progress, value: "In Progress" }
+                  - { label: Planned, value: Planned }
+              - { label: Year, name: year, widget: number, value_type: int }
+      - label: "Lerneinträge (Deutsch)"
+        name: learning_de
+        file: src/_data/learning_de.json
+        fields:
+          - label: Einträge
+            name: items
+            widget: list
+            fields:
+              - { label: Titel, name: title, widget: string }
+              - { label: Plattform, name: platform, widget: string }
+              - label: Status
+                name: status
+                widget: select
+                options:
+                  - { label: Abgeschlossen, value: Completed }
+                  - { label: In Bearbeitung, value: "In Progress" }
+                  - { label: Geplant, value: Planned }
+              - { label: Jahr, name: year, widget: number, value_type: int }

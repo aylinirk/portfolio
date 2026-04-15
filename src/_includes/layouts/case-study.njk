@@ -1,0 +1,212 @@
+---
+layout: base.njk
+---
+{% include "partials/nav.njk" %}
+
+{# ── BACK LINK ────────────────────────────────────────────────── #}
+<div class="case-back">
+  <a href="{{ homeUrl }}#work">{{ strings.backToWork }}</a>
+</div>
+
+{# ── CASE HERO ────────────────────────────────────────────────── #}
+<section class="case-hero" aria-labelledby="case-title">
+  <div class="case-hero__image"{% if coverGradient %} style="background: {{ coverGradient }};"{% endif %}>
+    {% if cover %}<img src="{{ cover }}" alt="{{ title }}" width="1440" height="640" loading="eager" fetchpriority="high">{% endif %}
+  </div>
+  <div class="case-hero__overlay"></div>
+  <div class="case-hero__content">
+    <h1 class="case-hero__title" id="case-title">{{ title }}</h1>
+    {% if tagline %}<p class="case-hero__tagline">{{ tagline }}</p>{% endif %}
+  </div>
+</section>
+
+{# ── SNAPSHOT ─────────────────────────────────────────────────── #}
+<div class="snapshot" role="region" aria-label="Project overview">
+  <div class="snapshot__item">
+    <p class="snapshot__label">{{ strings.labelRole }}</p>
+    <p class="snapshot__value">{{ role }}</p>
+  </div>
+  <div class="snapshot__item">
+    <p class="snapshot__label">{{ strings.labelScope }}</p>
+    <p class="snapshot__value">{{ scope }}</p>
+  </div>
+  <div class="snapshot__item">
+    <p class="snapshot__label">{{ strings.labelTools }}</p>
+    <p class="snapshot__value">{{ tools }}</p>
+  </div>
+  <div class="snapshot__item">
+    <p class="snapshot__label">{{ strings.labelYear }}</p>
+    <p class="snapshot__value">{{ year }}</p>
+  </div>
+</div>
+
+{# ── METRICS ROW ───────────────────────────────────────────────── #}
+{% if metrics %}
+<div class="metrics-row" role="region" aria-label="Key results">
+  {% for m in metrics %}
+    <div class="metric-block">
+      <p class="metric-block__value">{{ m.value }}</p>
+      <p class="metric-block__label">{{ m.label }}</p>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{# ── BRIEF ────────────────────────────────────────────────────── #}
+{% if brief %}
+<section class="narrative-section" aria-labelledby="brief-heading">
+  <span class="narrative-section__label" aria-hidden="true">Brief</span>
+  <h2 class="narrative-section__heading" id="brief-heading">{{ brief.heading }}</h2>
+  <div class="narrative-section__body">{{ brief.body | md | safe }}</div>
+</section>
+{% endif %}
+
+{# ── PROBLEM ──────────────────────────────────────────────────── #}
+{% if problem %}
+<section class="narrative-section narrative-section--cream" aria-labelledby="problem-heading">
+  <span class="narrative-section__label" aria-hidden="true">Problem</span>
+  <h2 class="narrative-section__heading" id="problem-heading">{{ problem.heading }}</h2>
+  <div class="narrative-section__body">{{ problem.body | md | safe }}</div>
+</section>
+{% endif %}
+
+{# ── INSIGHT STRIP ────────────────────────────────────────────── #}
+{% if insightQuote %}
+<div class="insight-strip" role="region" aria-label="Key insight">
+  <p class="insight-strip__text">&ldquo;{{ insightQuote }}&rdquo;</p>
+  {% if insightAttr %}<p class="insight-strip__attr">{{ insightAttr }}</p>{% endif %}
+</div>
+{% endif %}
+
+{# ── DESIGN PRINCIPLES ────────────────────────────────────────── #}
+{% if principles %}
+<section class="narrative-section" aria-labelledby="principles-heading">
+  <span class="narrative-section__label" aria-hidden="true">Design Principles</span>
+  <h2 class="narrative-section__heading" id="principles-heading">{{ principles.heading }}</h2>
+  <div class="principles-list">
+    {% for item in principles.items %}
+      <div class="principle">
+        <span class="principle__number" aria-hidden="true">{{ item.number }}</span>
+        <div class="principle__content">
+          <p class="principle__title">{{ item.title }}</p>
+          <p class="principle__body">{{ item.body }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{# ── PROCESS ──────────────────────────────────────────────────── #}
+{% if process %}
+<section class="narrative-section narrative-section--cream" aria-labelledby="process-heading">
+  <span class="narrative-section__label" aria-hidden="true">Process</span>
+  <h2 class="narrative-section__heading" id="process-heading">{{ process.heading }}</h2>
+  <div class="process-list">
+    {% for step in process.items %}
+      <div class="process-step">
+        <span class="process-step__number" aria-hidden="true">{{ step.number }}</span>
+        <div class="process-step__content">
+          <h3 class="process-step__title">{{ step.title }}</h3>
+          <p class="process-step__body">{{ step.body }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{# ── KEY UX DECISIONS ─────────────────────────────────────────── #}
+{% if decisions %}
+<div class="decisions-section" role="region" aria-label="Key UX decisions">
+  <span class="narrative-section__label" aria-hidden="true">Key UX Decisions</span>
+  <h2 class="narrative-section__heading">The decisions that shaped the product</h2>
+  {% for d in decisions.items %}
+    <div class="decision-row">
+      <h3 class="decision-row__title">{{ d.title }}</h3>
+      <p class="decision-row__body">{{ d.body }}</p>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{# ── VALIDATION ───────────────────────────────────────────────── #}
+{% if validation %}
+<section class="narrative-section narrative-section--cream" aria-labelledby="validation-heading">
+  <span class="narrative-section__label" aria-hidden="true">Validation</span>
+  <h2 class="narrative-section__heading" id="validation-heading">{{ validation.heading }}</h2>
+  <div class="narrative-section__body">{{ validation.body | md | safe }}</div>
+</section>
+{% endif %}
+
+{# ── OUTCOMES ─────────────────────────────────────────────────── #}
+{% if outcomes %}
+<section class="narrative-section" aria-labelledby="outcomes-heading">
+  <span class="narrative-section__label" aria-hidden="true">Outcomes</span>
+  <h2 class="narrative-section__heading" id="outcomes-heading">{{ outcomes.heading }}</h2>
+</section>
+{% if outcomes.metrics %}
+<div class="outcomes-metrics" role="region" aria-label="Outcome metrics">
+  {% for m in outcomes.metrics %}
+    <div class="metric-block">
+      <p class="metric-block__value">{{ m.value }}</p>
+      <p class="metric-block__label">{{ m.label }}</p>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% if outcomes.quotes %}
+<div class="outcomes-quotes">
+  {% for q in outcomes.quotes %}
+    <div class="quote-block">
+      <p class="quote-block__text">&ldquo;{{ q }}&rdquo;</p>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endif %}
+
+{# ── REFLECTION ───────────────────────────────────────────────── #}
+{% if reflection %}
+<section class="narrative-section" aria-label="Reflection">
+  <span class="narrative-section__label" aria-hidden="true">Reflection</span>
+  <div class="reflection-inner">
+    <p class="reflection-pull">{{ reflection.pull }}</p>
+    <div class="reflection-body">{{ reflection.body | md | safe }}</div>
+  </div>
+</section>
+{% endif %}
+
+{# ── NEXT STEPS ───────────────────────────────────────────────── #}
+{% if nextSteps %}
+<section class="narrative-section narrative-section--cream" aria-labelledby="nextsteps-heading">
+  <span class="narrative-section__label" aria-hidden="true">Next Steps</span>
+  <h2 class="narrative-section__heading" id="nextsteps-heading">{{ nextSteps.heading }}</h2>
+  <div class="narrative-section__body">{{ nextSteps.body | md | safe }}</div>
+</section>
+{% endif %}
+
+{# ── TESTIMONIAL ──────────────────────────────────────────────── #}
+{% if testimonial %}
+<div class="testimonial-section" role="region" aria-label="Testimonial">
+  <span class="testimonial-section__mark" aria-hidden="true">&ldquo;</span>
+  <p class="testimonial-section__quote">{{ testimonial.quote }}</p>
+  <p class="testimonial-section__author">{{ testimonial.author }}</p>
+</div>
+{% endif %}
+
+{# ── NEXT PROJECT CTA ─────────────────────────────────────────── #}
+{% if nextProject %}
+<div class="next-project">
+  <p class="next-project__label">{{ strings.nextProjectLabel }}</p>
+  <a href="{{ nextProject.url }}" class="next-project__card">
+    <div class="next-project__cover"></div>
+    <div class="next-project__body">
+      <span class="next-project__title">{{ nextProject.title }}</span>
+      <span class="next-project__arrow">{{ strings.nextProjectLabel }} →</span>
+    </div>
+  </a>
+</div>
+{% endif %}
+
+{% include "partials/footer.njk" %}

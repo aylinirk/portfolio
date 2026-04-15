@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "title": "Google UX-Design-Zertifikat",
+      "platform": "Coursera",
+      "status": "Completed",
+      "year": 2024
+    },
+    {
+      "title": "Kurs- oder Zertifikatsname",
+      "platform": "Plattform",
+      "status": "In Progress",
+      "year": 2025
+    },
+    {
+      "title": "Weiterer Lernmeilenstein",
+      "platform": "Plattform",
+      "status": "Planned",
+      "year": 2026
+    }
+  ]
+}

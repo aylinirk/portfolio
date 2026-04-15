@@ -1,0 +1,107 @@
+---
+layout: base.njk
+---
+{% include "partials/nav.njk" %}
+
+<main>
+
+  {# ── HERO ───────────────────────────────────────────────────── #}
+  <section class="hero" id="home" aria-labelledby="hero-heading">
+    <div class="hero__inner">
+      <div class="hero__content">
+        <h1 class="hero__name" id="hero-heading">Aylin<br>Irk</h1>
+        <p class="hero__tagline">{{ strings.heroTagline }}</p>
+        <div class="hero__cta">
+          <a href="{{ homeUrl }}#work" class="btn">{{ strings.heroCta }}</a>
+        </div>
+      </div>
+      <div class="hero__photo" role="img" aria-label="Portrait of Aylin Irk">Portrait photo</div>
+    </div>
+    <div class="hero__scroll" aria-hidden="true">↓</div>
+  </section>
+
+  {# ── WORK ────────────────────────────────────────────────────── #}
+  {% set workItems = collections.work_en if locale == "en" else collections.work_de %}
+  <section class="section" id="work" aria-labelledby="work-heading">
+    <span class="label" aria-hidden="true">{{ strings.sectionWork }}</span>
+    <h2 id="work-heading">{{ strings.sectionWork }}</h2>
+    <div class="work-grid">
+      {% for project in workItems %}
+        <a class="project-card" href="{{ project.url }}">
+          <div class="project-card__cover{% if project.data.coverVariant %} project-card__cover--{{ project.data.coverVariant }}{% endif %}">
+            {% if project.data.cover %}
+              <img src="{{ project.data.cover }}" alt="{{ project.data.title }}" width="800" height="450" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="project-card__body">
+            <h3 class="project-card__title">{{ project.data.title }}</h3>
+            <p class="project-card__tagline">{{ project.data.tagline }}</p>
+            <div class="project-card__tags">
+              {% for tag in project.data.tags %}
+                <span class="tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            <span class="project-card__link">{{ strings.viewCaseStudy }}</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {# ── LEARNING ─────────────────────────────────────────────────── #}
+  {% set learningItems = learning_en.items if locale == "en" else learning_de.items %}
+  <section class="section section--cream" id="learning" aria-labelledby="learning-heading">
+    <span class="label" aria-hidden="true">{{ strings.sectionLearning }}</span>
+    <h2 id="learning-heading">{{ strings.sectionLearning }}</h2>
+    <div class="learning-list">
+      {% for item in learningItems %}
+        <div class="learning-item">
+          <span class="learning-item__title">{{ item.title }}</span>
+          <div class="learning-item__meta">
+            <span class="learning-item__platform">{{ item.platform }}</span>
+            <span class="badge {{ item.status | badgeClass }}">
+              {%- if item.status == "Completed" -%}{{ strings.badgeCompleted }}
+              {%- elif item.status == "In Progress" -%}{{ strings.badgeInProgress }}
+              {%- else -%}{{ strings.badgePlanned }}{%- endif -%}
+            </span>
+          </div>
+          <span class="learning-item__year">{{ item.year }}</span>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="learning-callout">
+      <p class="learning-callout__eyebrow">{{ strings.learningCalloutLabel }}</p>
+      <p class="learning-callout__text">{{ strings.learningCalloutText }}</p>
+    </div>
+  </section>
+
+  {# ── ABOUT ──────────────────────────────────────────────────── #}
+  <section class="section" id="about" aria-label="{{ strings.sectionAbout }}">
+    <div class="about__inner">
+      <div class="about__left">
+        <span class="label" aria-hidden="true">{{ strings.sectionAbout }}</span>
+        <p class="about__quote">&ldquo;{{ strings.aboutQuote }}&rdquo;</p>
+        <div class="about__skills" aria-label="Skills">
+          {% for skill in strings.skills %}
+            <span class="tag">{{ skill }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="about__photo" role="img" aria-label="Portrait of Aylin Irk">Portrait photo</div>
+    </div>
+  </section>
+
+  {# ── CONTACT ────────────────────────────────────────────────── #}
+  <section class="section contact" id="contact" aria-labelledby="contact-heading">
+    <span class="label" aria-hidden="true">{{ strings.sectionContact }}</span>
+    <h2 id="contact-heading">{{ strings.contactHeading }}</h2>
+    <p class="contact__sub">{{ strings.contactSub }}</p>
+    <div class="contact__actions">
+      <a href="mailto:{{ meta.contactEmail }}" class="btn">{{ meta.contactEmail }}</a>
+      <a href="{{ meta.linkedInUrl }}" class="link-quiet" rel="noopener noreferrer" target="_blank">{{ strings.contactLinkedIn }}</a>
+    </div>
+  </section>
+
+</main>
+
+{% include "partials/footer.njk" %}
