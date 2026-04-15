@@ -72,6 +72,7 @@ process:
       title: Vom ersten echten Reibungspunkt aus iterieren
       body: Die erste große Reibung war nicht das Erfassen — es war die Organisation. Nutzern gefiel die Geschwindigkeit, aber sie wollten Kontakte nach Konferenz oder Gruppe sortieren. Statt jeden Kontakt beim Erfassen zu taggen, entwarf ich ein sitzungsbasiertes Gruppierungsmodell — Nutzer legen die aktuelle Konferenz einmalig fest, und jede neue Erfassung erbt diesen Kontext automatisch.
 decisions:
+  heading: "Die Entscheidungen, die das Produkt geprägt haben"
   items:
     - title: Scannen zur primären Aktion machen
       body: Die App öffnet sich mit der schnellsten, wertvollsten Aktion, nicht mit einem Dashboard. Das reduziert die Zeit bis zum ersten Erfolg und eliminiert den kognitiven Aufwand, entscheiden zu müssen, wo man beginnt.
@@ -117,7 +118,4 @@ nextSteps:
     Der erste Schritt ist sitzungsbasierte Gruppierung nach Konferenz, Zielgruppe oder Kundensegment. Von dort aus kann das Produkt stärkere Filterung, sauberere segmentierte Exporte und eine strukturiertere Übergabe in Sales-Workflows unterstützen.
 
     Der Schlüssel ist, diese Struktur hinzuzufügen, ohne den Kernerfassungsflow zu verlangsamen. Geschwindigkeit bleibt das Produkt.
-testimonial:
-  quote: "Platzhalter — echtes Kundenzitat vor dem Launch einfügen. Konkret halten: den Prozess erwähnen, die Lerngeschwindigkeit und den Wert des frühen Tests des echten Flows vor zu großer Investition in Politur."
-  author: "— Kundenname, Rolle"
 ---

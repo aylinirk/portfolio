@@ -27,6 +27,13 @@ module.exports = function (eleventyConfig) {
     return md.render(String(content));
   });
 
+  // Filter: sanitize CSS gradient for safe inline style injection
+  const SAFE_GRADIENT = /^(linear|radial|conic)-gradient\([\w\s%,.#()\/]+\)$/i;
+  eleventyConfig.addFilter("safeGradient", value => {
+    if (!value) return "";
+    return SAFE_GRADIENT.test(value.trim()) ? value.trim() : "";
+  });
+
   // Filter: badge CSS modifier from status value (stored in English)
   eleventyConfig.addFilter("badgeClass", status => {
     const map = {

@@ -36,6 +36,16 @@ module.exports = {
     labelTools: "Tools",
     labelYear: "Jahr",
     nextProjectLabel: "Nächstes Projekt",
+    // Case study section labels
+    labelBrief: "Briefing",
+    labelProblem: "Problem",
+    labelPrinciples: "Designprinzipien",
+    labelProcess: "Prozess",
+    labelDecisions: "UX-Entscheidungen",
+    labelValidation: "Validierung",
+    labelOutcomes: "Ergebnisse",
+    labelReflection: "Reflexion",
+    labelNextSteps: "Nächste Schritte",
     // About
     aboutQuote: "Ich glaube, gutes Design entfernt Denkarbeit, bevor es Funktionen hinzufügt.",
     skills: ["Figma", "Prototyping", "User Research", "Interaction Design", "Webflow"]

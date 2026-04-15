@@ -8,6 +8,11 @@
   <meta property="og:title" content="{% if title %}{{ title }} — {{ meta.siteName }}{% else %}{{ meta.siteName }} — UI/UX Designer{% endif %}">
   <meta property="og:description" content="{{ description | default(meta.siteDescription) }}">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="{% if locale == 'de' %}de_DE{% else %}en_US{% endif %}">
+  <meta property="og:locale:alternate" content="{% if locale == 'de' %}en_US{% else %}de_DE{% endif %}">
+  <link rel="alternate" hreflang="en" href="{{ meta.siteUrl }}{% if locale == 'de' %}{{ page.url | replace('/de/', '/') }}{% else %}{{ page.url }}{% endif %}">
+  <link rel="alternate" hreflang="de" href="{{ meta.siteUrl }}{% if locale == 'en' %}/de{{ page.url }}{% else %}{{ page.url }}{% endif %}">
+  <link rel="alternate" hreflang="x-default" href="{{ meta.siteUrl }}{% if locale == 'de' %}{{ page.url | replace('/de/', '/') }}{% else %}{{ page.url }}{% endif %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">

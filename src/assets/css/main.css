@@ -434,6 +434,8 @@ body {
 .footer__bar-links { display: flex; gap: 24px; }
 .footer__bar a { color: var(--muted); text-decoration: none; transition: color var(--duration-fast) ease; }
 .footer__bar a:hover { color: var(--accent); }
+.footer__locale { font-size: 13px; color: var(--muted); text-decoration: none; transition: color var(--duration-fast) ease; }
+.footer__locale:hover { color: var(--accent); }
 
 .footer__watermark {
   font-family: var(--font-serif);

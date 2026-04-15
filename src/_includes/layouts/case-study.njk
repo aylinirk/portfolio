@@ -3,6 +3,8 @@ layout: base.njk
 ---
 {% include "partials/nav.njk" %}
 
+<main>
+
 {# ── BACK LINK ────────────────────────────────────────────────── #}
 <div class="case-back">
   <a href="{{ homeUrl }}#work">{{ strings.backToWork }}</a>
@@ -10,7 +12,7 @@ layout: base.njk
 
 {# ── CASE HERO ────────────────────────────────────────────────── #}
 <section class="case-hero" aria-labelledby="case-title">
-  <div class="case-hero__image"{% if coverGradient %} style="background: {{ coverGradient }};"{% endif %}>
+  <div class="case-hero__image"{% if coverGradient %} style="background: {{ coverGradient | safeGradient }};"{% endif %}>
     {% if cover %}<img src="{{ cover }}" alt="{{ title }}" width="1440" height="640" loading="eager" fetchpriority="high">{% endif %}
   </div>
   <div class="case-hero__overlay"></div>
@@ -55,7 +57,7 @@ layout: base.njk
 {# ── BRIEF ────────────────────────────────────────────────────── #}
 {% if brief %}
 <section class="narrative-section" aria-labelledby="brief-heading">
-  <span class="narrative-section__label" aria-hidden="true">Brief</span>
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelBrief }}</span>
   <h2 class="narrative-section__heading" id="brief-heading">{{ brief.heading }}</h2>
   <div class="narrative-section__body">{{ brief.body | md | safe }}</div>
 </section>
@@ -64,7 +66,7 @@ layout: base.njk
 {# ── PROBLEM ──────────────────────────────────────────────────── #}
 {% if problem %}
 <section class="narrative-section narrative-section--cream" aria-labelledby="problem-heading">
-  <span class="narrative-section__label" aria-hidden="true">Problem</span>
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelProblem }}</span>
   <h2 class="narrative-section__heading" id="problem-heading">{{ problem.heading }}</h2>
   <div class="narrative-section__body">{{ problem.body | md | safe }}</div>
 </section>
@@ -81,7 +83,7 @@ layout: base.njk
 {# ── DESIGN PRINCIPLES ────────────────────────────────────────── #}
 {% if principles %}
 <section class="narrative-section" aria-labelledby="principles-heading">
-  <span class="narrative-section__label" aria-hidden="true">Design Principles</span>
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelPrinciples }}</span>
   <h2 class="narrative-section__heading" id="principles-heading">{{ principles.heading }}</h2>
   <div class="principles-list">
     {% for item in principles.items %}
@@ -100,7 +102,7 @@ layout: base.njk
 {# ── PROCESS ──────────────────────────────────────────────────── #}
 {% if process %}
 <section class="narrative-section narrative-section--cream" aria-labelledby="process-heading">
-  <span class="narrative-section__label" aria-hidden="true">Process</span>
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelProcess }}</span>
   <h2 class="narrative-section__heading" id="process-heading">{{ process.heading }}</h2>
   <div class="process-list">
     {% for step in process.items %}
@@ -118,9 +120,9 @@ layout: base.njk
 
 {# ── KEY UX DECISIONS ─────────────────────────────────────────── #}
 {% if decisions %}
-<div class="decisions-section" role="region" aria-label="Key UX decisions">
-  <span class="narrative-section__label" aria-hidden="true">Key UX Decisions</span>
-  <h2 class="narrative-section__heading">The decisions that shaped the product</h2>
+<div class="decisions-section" role="region" aria-label="{{ strings.labelDecisions }}">
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelDecisions }}</span>
+  <h2 class="narrative-section__heading">{{ decisions.heading }}</h2>
   {% for d in decisions.items %}
     <div class="decision-row">
       <h3 class="decision-row__title">{{ d.title }}</h3>
@@ -133,7 +135,7 @@ layout: base.njk
 {# ── VALIDATION ───────────────────────────────────────────────── #}
 {% if validation %}
 <section class="narrative-section narrative-section--cream" aria-labelledby="validation-heading">
-  <span class="narrative-section__label" aria-hidden="true">Validation</span>
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelValidation }}</span>
   <h2 class="narrative-section__heading" id="validation-heading">{{ validation.heading }}</h2>
   <div class="narrative-section__body">{{ validation.body | md | safe }}</div>
 </section>
@@ -142,34 +144,34 @@ layout: base.njk
 {# ── OUTCOMES ─────────────────────────────────────────────────── #}
 {% if outcomes %}
 <section class="narrative-section" aria-labelledby="outcomes-heading">
-  <span class="narrative-section__label" aria-hidden="true">Outcomes</span>
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelOutcomes }}</span>
   <h2 class="narrative-section__heading" id="outcomes-heading">{{ outcomes.heading }}</h2>
+  {% if outcomes.metrics %}
+  <div class="outcomes-metrics" role="region" aria-label="{{ strings.labelOutcomes }}">
+    {% for m in outcomes.metrics %}
+      <div class="metric-block">
+        <p class="metric-block__value">{{ m.value }}</p>
+        <p class="metric-block__label">{{ m.label }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% if outcomes.quotes %}
+  <div class="quotes-wrapper">
+    {% for q in outcomes.quotes %}
+      <div class="quote-block">
+        <p class="quote-block__text">&ldquo;{{ q }}&rdquo;</p>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
 </section>
-{% if outcomes.metrics %}
-<div class="outcomes-metrics" role="region" aria-label="Outcome metrics">
-  {% for m in outcomes.metrics %}
-    <div class="metric-block">
-      <p class="metric-block__value">{{ m.value }}</p>
-      <p class="metric-block__label">{{ m.label }}</p>
-    </div>
-  {% endfor %}
-</div>
-{% endif %}
-{% if outcomes.quotes %}
-<div class="outcomes-quotes">
-  {% for q in outcomes.quotes %}
-    <div class="quote-block">
-      <p class="quote-block__text">&ldquo;{{ q }}&rdquo;</p>
-    </div>
-  {% endfor %}
-</div>
-{% endif %}
 {% endif %}
 
 {# ── REFLECTION ───────────────────────────────────────────────── #}
 {% if reflection %}
-<section class="narrative-section" aria-label="Reflection">
-  <span class="narrative-section__label" aria-hidden="true">Reflection</span>
+<section class="narrative-section" aria-label="{{ strings.labelReflection }}">
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelReflection }}</span>
   <div class="reflection-inner">
     <p class="reflection-pull">{{ reflection.pull }}</p>
     <div class="reflection-body">{{ reflection.body | md | safe }}</div>
@@ -180,7 +182,7 @@ layout: base.njk
 {# ── NEXT STEPS ───────────────────────────────────────────────── #}
 {% if nextSteps %}
 <section class="narrative-section narrative-section--cream" aria-labelledby="nextsteps-heading">
-  <span class="narrative-section__label" aria-hidden="true">Next Steps</span>
+  <span class="narrative-section__label" aria-hidden="true">{{ strings.labelNextSteps }}</span>
   <h2 class="narrative-section__heading" id="nextsteps-heading">{{ nextSteps.heading }}</h2>
   <div class="narrative-section__body">{{ nextSteps.body | md | safe }}</div>
 </section>
@@ -208,5 +210,7 @@ layout: base.njk
   </a>
 </div>
 {% endif %}
+
+</main>
 
 {% include "partials/footer.njk" %}

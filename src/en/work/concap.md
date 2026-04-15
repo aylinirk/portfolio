@@ -72,6 +72,7 @@ process:
       title: Iterate from the first real friction point
       body: The first major friction was not capture — it was organization. Users liked the speed, but wanted to sort contacts by conference or group. Instead of tagging every contact during capture, I designed a session-based grouping model — users set the current conference once, and every new capture inherits that context automatically.
 decisions:
+  heading: "The decisions that shaped the product"
   items:
     - title: Make scanning the primary action
       body: The app opens with the fastest high-value action, not a dashboard. That reduces time to first success and eliminates the cognitive overhead of choosing where to start.
@@ -117,7 +118,4 @@ nextSteps:
     The first step is session-based grouping by conference, audience, or client segment. From there, the product can support stronger filtering, cleaner segmented exports, and a more structured handoff into sales workflows.
 
     The key is to add that structure without slowing the core capture flow. Speed remains the product.
-testimonial:
-  quote: "Placeholder — add the real client quote before launch. Keep it concrete: mention the process, the speed of learning, and the value of testing the real flow before over-investing in polish."
-  author: "— Client name, role"
 ---

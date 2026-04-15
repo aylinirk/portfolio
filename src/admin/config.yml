@@ -4,8 +4,6 @@ backend:
   branch: main
   # OAuth proxy required for production — see docs/superpowers/specs/ for setup notes
 
-local_backend: true  # enables `npx decap-server` for local editing
-
 media_folder: src/assets/images
 public_folder: /assets/images
 
@@ -83,6 +81,7 @@ collections:
         widget: object
         required: false
         fields:
+          - { label: Heading, name: heading, widget: string }
           - label: Items
             name: items
             widget: list
@@ -213,6 +212,7 @@ collections:
         widget: object
         required: false
         fields:
+          - { label: Überschrift, name: heading, widget: string }
           - label: Einträge
             name: items
             widget: list
