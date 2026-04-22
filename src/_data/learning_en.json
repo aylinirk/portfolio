@@ -1,21 +1,33 @@
 {
   "items": [
     {
-      "title": "Google UX Design Certificate",
-      "platform": "Coursera",
+      "title": "Foundations of User Experience (UX) Design",
+      "platform": "Google Coursera",
       "status": "Completed",
-      "year": 2024
-    },
-    {
-      "title": "Course or certification name",
-      "platform": "Platform",
-      "status": "In Progress",
       "year": 2025
     },
     {
-      "title": "Another learning milestone",
-      "platform": "Platform",
-      "status": "Planned",
+      "title": "Start the UX Design Process: Empathize, Define, and Ideate",
+      "platform": "Google Coursera",
+      "status": "Completed",
+      "year": 2025
+    },
+    {
+      "title": "Build Wireframes and Low-Fidelity Prototypes",
+      "platform": "Google Coursera",
+      "status": "Completed",
+      "year": 2025
+    },
+    {
+      "title": "Conduct UX Research and Test Early Concepts",
+      "platform": "Google Coursera",
+      "status": "In Progress",
+      "year": 2026
+    },
+    {
+      "title": "Create High-Fidelity Designs and Prototypes in Figma",
+      "platform": "Google Coursera",
+      "status": "In Progress",
       "year": 2026
     }
   ]
