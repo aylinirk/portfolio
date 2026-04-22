@@ -5,10 +5,12 @@
   "heroPhoto": "/assets/images/img_6057.jpg",
   "aboutQuote": "Ich glaube, gutes Design entfernt Denkarbeit, bevor es Funktionen hinzufügt.",
   "skills": [
-    "Figma",
+    "Nutzerforschung",
+    "User Flows",
+    "Wireframing",
     "Prototyping",
-    "User Research",
-    "Interaction Design",
-    "Webflow"
+    "Usability Testing",
+    "Accessibility Basics",
+    "Figma"
   ]
 }
