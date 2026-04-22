@@ -2,7 +2,13 @@
   "heroName": "Aylin Irk",
   "heroTagline": "UI/UX Designer focused on human-centered digital products.",
   "heroCta": "View Work",
-  "heroPhoto": "",
+  "heroPhoto": "/assets/images/img_6057.jpg",
   "aboutQuote": "I believe good design removes thinking before it adds features.",
-  "skills": ["Figma", "Prototyping", "User Research", "Interaction Design", "Webflow"]
+  "skills": [
+    "Figma",
+    "Prototyping",
+    "User Research",
+    "Interaction Design",
+    "Webflow"
+  ]
 }
