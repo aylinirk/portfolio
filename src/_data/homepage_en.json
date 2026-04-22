@@ -5,10 +5,12 @@
   "heroPhoto": "/assets/images/img_6057.jpg",
   "aboutQuote": "I believe good design removes thinking before it adds features.",
   "skills": [
-    "Figma",
-    "Prototyping",
     "User Research",
-    "Interaction Design",
-    "Webflow"
+    "User Flows",
+    "Wireframing",
+    "Prototyping",
+    "Usability Testing",
+    "Accessibility Basics",
+    "Figma"
   ]
 }
