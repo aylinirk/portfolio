@@ -1,7 +1,7 @@
 ---
 title: ConCap
 tagline: Designing a conference capture flow that turns business cards and fast voice notes into clean, CRM-ready contacts.
-order: 1
+order: 3
 tags:
   - UX & Product Design
   - "2026"

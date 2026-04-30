@@ -1,7 +1,7 @@
 ---
 title: Coursera UX-Projekt
 tagline: Ein UX-Designprojekt aus dem Google UX Design Certificate — wird derzeit als vollständige Fallstudie aufbereitet.
-order: 3
+order: 1
 tags:
   - UX Design
   - Fallstudie in Bearbeitung
