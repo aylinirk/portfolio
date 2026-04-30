@@ -1,7 +1,19 @@
 {
   "items": [
     {
-      "title": " Grundlagen des User Experience (UX)-Designs",
+      "title": "Erstellung von High-Fidelity-Designs und Prototypen in Figma",
+      "platform": "Google Coursera",
+      "status": "In Progress",
+      "year": 2026
+    },
+    {
+      "title": "Führen Sie UX-Recherchen durch und testen Sie frühe Konzepte",
+      "platform": "Google Coursera",
+      "status": "Completed",
+      "year": 2026
+    },
+    {
+      "title": " Wireframes und Low Fidelity Prototypen erstellen",
       "platform": "Google Coursera",
       "status": "Completed",
       "year": 2025
@@ -13,22 +25,10 @@
       "year": 2025
     },
     {
-      "title": " Wireframes und Low Fidelity Prototypen erstellen",
+      "title": " Grundlagen des User Experience (UX)-Designs",
       "platform": "Google Coursera",
       "status": "Completed",
       "year": 2025
-    },
-    {
-      "title": "Führen Sie UX-Recherchen durch und testen Sie frühe Konzepte",
-      "platform": "Google Coursera",
-      "status": "Completed",
-      "year": 2026
-    },
-    {
-      "title": "Erstellung von High-Fidelity-Designs und Prototypen in Figma",
-      "platform": "Google Coursera",
-      "status": "In Progress",
-      "year": 2026
     }
   ]
 }
