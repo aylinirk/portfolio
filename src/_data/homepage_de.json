@@ -1,9 +1,10 @@
 {
   "heroName": "Aylin Irk",
-  "heroTagline": "UI/UX-Designerin mit Fokus auf menschenzentrierte digitale Produkte.",
+  "heroTagline": "Buchhaltung war meine Ausbildung. UX ist mein Weg. Ich bringe strukturiertes Denken und Präzision in Design, das wirklich für Menschen funktioniert.",
   "heroCta": "Arbeit ansehen",
   "heroPhoto": "/assets/images/chatgpt-image-22.-apr.-2026-09_13_15.png",
   "aboutQuote": "First make it functional, then fast, and then, pretty.",
+  "aboutBio": "Vier Jahre in der Buchhaltung haben mir beigebracht, dass klare Strukturen, Präzision und das Verständnis für Prozesse und deren Auswirkungen auf Menschen keine rein buchhalterischen Tugenden sind — sie sind Design-Kompetenzen. Diese Erkenntnis hat mich zum UX-Design geführt.\n\nDerzeit absolviere ich das Google UX Design Certificate und bereite mich auf ein Studium im Bereich Interaction Design ab 2026 vor. In jedem Projekt steht Forschung zuerst, dann Iteration — die visuelle Verfeinerung kommt erst, wenn das Verhalten stimmt.",
   "skills": [
     "Nutzerforschung",
     "User Flows",
@@ -11,6 +12,11 @@
     "Prototyping",
     "Usability Testing",
     "Accessibility Basics",
-    "Figma"
+    "Figma",
+    "FigJam",
+    "Miro",
+    "Notion",
+    "Google Forms",
+    "Microsoft 365"
   ]
 }

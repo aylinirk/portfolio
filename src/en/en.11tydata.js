@@ -18,7 +18,7 @@ module.exports = {
     viewCaseStudy: "View case study →",
     // Contact
     contactHeading: "Let's talk",
-    contactSub: "Open to full-time UX design roles",
+    contactSub: "Applying for the HF Interaction Design programme — open to junior roles, internships, and collaborative projects.",
     contactLinkedIn: "LinkedIn ↗",
     // Learning
     learningCalloutLabel: "Coming up",

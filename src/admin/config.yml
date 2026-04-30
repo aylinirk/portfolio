@@ -24,6 +24,7 @@ collections:
           - { label: CTA button text, name: heroCta, widget: string }
           - { label: Hero photo, name: heroPhoto, widget: image, required: false, allow_multiple: false }
           - { label: About quote, name: aboutQuote, widget: text }
+          - { label: About bio (paragraphs, separate with blank line), name: aboutBio, widget: text, required: false }
           - label: Skills
             name: skills
             widget: list
@@ -37,6 +38,7 @@ collections:
           - { label: CTA-Schaltflächentext, name: heroCta, widget: string }
           - { label: Hero-Foto, name: heroPhoto, widget: image, required: false, allow_multiple: false }
           - { label: Über-mich-Zitat, name: aboutQuote, widget: text }
+          - { label: Über-mich-Text (Absätze mit Leerzeile trennen), name: aboutBio, widget: text, required: false }
           - label: Skills
             name: skills
             widget: list

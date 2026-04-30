@@ -94,6 +94,13 @@ layout: base.njk
       <div class="about__left">
         <span class="label" aria-hidden="true">{{ strings.sectionAbout }}</span>
         <p class="about__quote">&ldquo;{{ hp.aboutQuote }}&rdquo;</p>
+        {% if hp.aboutBio %}
+          <div class="about__bio">
+            {% for paragraph in hp.aboutBio | split("\n\n") %}
+              <p>{{ paragraph }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
         <div class="about__skills" aria-label="Skills">
           {% for skill in hp.skills %}
             <span class="tag">{{ skill }}</span>

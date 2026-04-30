@@ -389,6 +389,10 @@ body {
   margin-top: 24px;
 }
 
+.about__bio { margin-top: 24px; }
+.about__bio p { font-size: 1rem; line-height: 1.75; color: var(--text); margin-bottom: 1em; }
+.about__bio p:last-child { margin-bottom: 0; }
+
 .about__skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 48px; }
 
 .about__photo {

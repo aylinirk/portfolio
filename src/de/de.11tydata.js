@@ -18,7 +18,7 @@ module.exports = {
     viewCaseStudy: "Fallstudie ansehen →",
     // Contact
     contactHeading: "Lass uns reden",
-    contactSub: "Offen für Vollzeit-UX-Designpositionen",
+    contactSub: "Bewerbung für die HF Interaction Design — offen für Junior-Stellen, Praktika und Kooperationsprojekte.",
     contactLinkedIn: "LinkedIn ↗",
     // Learning
     learningCalloutLabel: "Demnächst",

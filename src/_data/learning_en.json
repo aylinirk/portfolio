@@ -1,34 +1,16 @@
 {
   "items": [
     {
-      "title": "Create High-Fidelity Designs and Prototypes in Figma",
-      "platform": "Google Coursera",
+      "title": "Google UX Design Certificate (6 courses)",
+      "platform": "Google · Coursera",
       "status": "In Progress",
       "year": 2026
     },
     {
-      "title": "Conduct UX Research and Test Early Concepts",
-      "platform": "Google Coursera",
-      "status": "Completed",
+      "title": "Bachelor in Interaction Design (HF)",
+      "platform": "Höhere Fachschule",
+      "status": "Planned",
       "year": 2026
-    },
-    {
-      "title": "Build Wireframes and Low-Fidelity Prototypes",
-      "platform": "Google Coursera",
-      "status": "Completed",
-      "year": 2025
-    },
-    {
-      "title": "Start the UX Design Process: Empathize, Define, and Ideate",
-      "platform": "Google Coursera",
-      "status": "Completed",
-      "year": 2025
-    },
-    {
-      "title": "Foundations of User Experience (UX) Design",
-      "platform": "Google Coursera",
-      "status": "Completed",
-      "year": 2025
     }
   ]
 }
