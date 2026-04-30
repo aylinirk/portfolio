@@ -1,16 +1,17 @@
 ---
+layout: seon-case-study.njk
 title: Spielgruppe Seon
-tagline: Designing and building a website for a local playgroup — from scratch, with real users and a real deadline.
+tagline: Designing and building a website for a local playgroup — from scratch, in a single weekend. Logo, flyer, and full digital identity included.
 order: 2
 tags:
   - Web Design
   - UX Design
-  - "2025"
+  - "2026"
 coverGradient: "linear-gradient(135deg, #F7C59F 0%, #EFAA76 35%, #E08C50 70%, #C97A3A 100%)"
-role: "UX design, visual design, web build"
-scope: "Research, information architecture, design, implementation"
-tools: "Figma, [Website builder used]"
-year: 2025
+role: "UX Strategy, Content Design, Brand Identity"
+scope: "Research, information architecture, copywriting, logo, flyer, website"
+tools: "Claude AI, Claude Design, Canva"
+year: 2026
 brief:
   heading: The brief
   body: |

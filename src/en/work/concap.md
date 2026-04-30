@@ -4,12 +4,12 @@ tagline: Designing a conference capture flow that turns business cards and fast 
 order: 1
 tags:
   - UX & Product Design
-  - "2025"
+  - "2026"
 coverGradient: "linear-gradient(135deg, #A8C095 0%, #8A9E78 35%, #6E8860 70%, #587050 100%)"
 role: "UX and product design, prototyping, testing, iteration"
 scope: "Problem framing, low-fi flow, live prototype, high-fi refinement, early user validation"
 tools: "Figma Make, Supabase, Vercel, Cloud Code"
-year: 2025
+year: 2026
 metrics:
   - value: "2h → 10 min"
     label: Post-event prep

@@ -4,12 +4,12 @@ tagline: Gestaltung eines Konferenz-Capture-Flows, der Visitenkarten und schnell
 order: 1
 tags:
   - UX & Produktdesign
-  - "2025"
+  - "2026"
 coverGradient: "linear-gradient(135deg, #A8C095 0%, #8A9E78 35%, #6E8860 70%, #587050 100%)"
 role: "UX- und Produktdesign, Prototyping, Testing, Iteration"
 scope: "Problemdefinition, Low-fi-Flow, Live-Prototyp, High-fi-Ausarbeitung, frühe Nutzervalidierung"
 tools: "Figma Make, Supabase, Vercel, Cloud Code"
-year: 2025
+year: 2026
 metrics:
   - value: "2h → 10 Min."
     label: Vorbereitung nach der Veranstaltung

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study – Spielgruppe Seon · Aylin Irk</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --sage: #7a9e7e; --sage-light: #c8deca; --terra: #d4845a;
+    --terra-light: #f2d5c4; --cream: #fdf8f2; --yellow: #f4c842;
+    --brown: #5c3d2e; --text: #1a1a2e; --text-muted: #6b7280;
+    --border: #e5e7eb;
+  }
+  body { font-family: 'Inter', sans-serif; background: #f9fafb; color: var(--text); font-size: 16px; line-height: 1.7; }
+
+  .back-bar { background: #1a1a2e; padding: 14px 60px; }
+  .back-bar a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+  .back-bar a:hover { color: rgba(255,255,255,0.9); }
+
+  .cover { background: linear-gradient(135deg, #1a1a2e 0%, #2d4a3e 100%); color: white; padding: 80px 60px; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; border-radius: 50%; background: rgba(122,158,126,0.15); }
+  .cover::after { content: ''; position: absolute; bottom: -60px; left: 200px; width: 250px; height: 250px; border-radius: 50%; background: rgba(212,132,90,0.12); }
+  .cover-tag { display: inline-block; background: rgba(122,158,126,0.3); border: 1px solid rgba(122,158,126,0.5); color: #c8deca; padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .cover h1 { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cover h1 span { color: #c8deca; }
+  .cover-sub { font-size: 18px; color: rgba(255,255,255,0.7); margin-bottom: 48px; max-width: 560px; position: relative; z-index: 1; }
+  .cover-meta { display: flex; gap: 40px; position: relative; z-index: 1; flex-wrap: wrap; }
+  .cover-meta-item label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
+  .cover-meta-item span { font-size: 15px; color: rgba(255,255,255,0.9); font-weight: 500; }
+  .cover-tags { position: absolute; bottom: 60px; right: 60px; display: flex; flex-direction: column; gap: 8px; z-index: 1; }
+  .skill-pill { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.75); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; text-align: center; }
+
+  .page { max-width: 900px; margin: 0 auto; padding: 60px 60px; }
+  .section-number { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid var(--sage-light); }
+
+  .overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
+  .overview-card { background: white; border-radius: 16px; padding: 24px; border: 1px solid var(--border); }
+  .overview-card .icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
+  .icon.green { background: #ecf5ec; }
+  .icon.orange { background: #fdf0e8; }
+  .icon.yellow { background: #fef9e6; }
+  .icon.blue { background: #eff6ff; }
+  .icon.purple { background: #f5f3ff; }
+  .icon.red { background: #fef2f2; }
+  .overview-card h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+  .overview-card p { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.5; }
+
+  .challenge-box { background: #1a1a2e; color: white; border-radius: 20px; padding: 40px; margin: 32px 0; }
+  .challenge-box h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 16px; color: #c8deca; }
+  .challenge-box p { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.8; }
+
+  .context-box { background: #fef9e6; border: 1px solid #f4c842; border-radius: 16px; padding: 28px 32px; margin: 24px 0; }
+  .context-box h4 { font-size: 15px; font-weight: 600; color: var(--brown); margin-bottom: 8px; }
+  .context-box p { font-size: 14px; color: #7a6020; line-height: 1.7; }
+
+  .learning-list { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; }
+  .learning-item { background: white; border: 1px solid var(--border); border-left: 4px solid var(--sage); border-radius: 0 12px 12px 0; padding: 20px 24px; }
+  .learning-item h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .learning-item p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  .timeline { position: relative; margin: 32px 0; }
+  .timeline::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: var(--sage-light); }
+  .timeline-item { display: flex; gap: 24px; margin-bottom: 32px; position: relative; }
+  .timeline-dot { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 1; border: 3px solid white; }
+  .timeline-dot.green { background: #ecf5ec; }
+  .timeline-dot.orange { background: #fdf0e8; }
+  .timeline-dot.blue { background: #eff6ff; }
+  .timeline-dot.yellow { background: #fef9e6; }
+  .timeline-dot.purple { background: #f5f3ff; }
+  .timeline-dot.teal { background: #ecfdf5; }
+  .timeline-content { padding-top: 12px; flex: 1; }
+  .timeline-content h4 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .timeline-content p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+  .timeline-tag { display: inline-block; background: var(--sage-light); color: #2d4a3e; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .deliverable-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+  .deliverable-item { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px 24px; display: flex; align-items: flex-start; gap: 14px; }
+  .deliverable-item .check { width: 28px; height: 28px; background: #ecf5ec; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-item h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .deliverable-item p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  .results-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 32px 0; }
+  .result-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; text-align: center; }
+  .result-card .num { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 800; color: var(--terra); line-height: 1; margin-bottom: 8px; }
+  .result-card .label { font-size: 12px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+  .quote-block { background: var(--cream); border-radius: 16px; padding: 32px 40px; margin: 32px 0; position: relative; }
+  .quote-block::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 80px; color: var(--sage-light); position: absolute; top: -10px; left: 24px; line-height: 1; }
+  .quote-block p { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--text); font-style: italic; line-height: 1.6; padding-left: 20px; }
+  .quote-block .attribution { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); font-style: normal; margin-top: 12px; padding-left: 20px; }
+
+  .tools-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+  .tool-pill { background: white; border: 1px solid var(--border); padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .tool-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-green { background: var(--sage); }
+  .dot-orange { background: var(--terra); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-blue { background: #3b82f6; }
+
+  .sprint-box { background: linear-gradient(135deg, #fdf0e8, #fef9e6); border: 1px solid var(--terra-light); border-radius: 16px; padding: 28px 32px; margin: 24px 0; display: flex; gap: 20px; align-items: flex-start; }
+  .sprint-box .sprint-icon { font-size: 32px; flex-shrink: 0; }
+  .sprint-box h4 { font-size: 15px; font-weight: 600; color: var(--brown); margin-bottom: 6px; }
+  .sprint-box p { font-size: 14px; color: #7a4520; line-height: 1.7; }
+
+  .prose p { color: #374151; margin-bottom: 16px; font-size: 15px; line-height: 1.8; }
+  .divider { height: 1px; background: var(--border); margin: 48px 0; }
+  .page-break { padding-top: 60px; }
+  .doc-footer { background: #1a1a2e; color: rgba(255,255,255,0.5); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .doc-footer strong { color: rgba(255,255,255,0.8); }
+
+  @media (max-width: 700px) {
+    .cover { padding: 48px 24px; }
+    .cover h1 { font-size: 36px; }
+    .cover-tags { display: none; }
+    .page { padding: 40px 24px; }
+    .overview-grid { grid-template-columns: 1fr 1fr; }
+    .results-grid { grid-template-columns: 1fr 1fr; }
+    .deliverable-grid { grid-template-columns: 1fr; }
+    .back-bar { padding: 14px 24px; }
+    .doc-footer { flex-direction: column; gap: 8px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="{{ homeUrl }}#work">← Zurück zum Portfolio</a>
+</div>
+
+<div class="cover">
+  <div class="cover-tag">UX / Web Design · Case Study</div>
+  <h1>Spielgruppe <span>Seon</span></h1>
+  <p class="cover-sub">Digitalisierung einer über 20 Jahre bestehenden Spielgruppe – von der Strategie bis zur fertigen Website mit Online-Anmeldung. Umgesetzt an einem Wochenende.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><label>Projekt</label><span>Website Spielgruppe Seon</span></div>
+    <div class="cover-meta-item"><label>Jahr</label><span>2026</span></div>
+    <div class="cover-meta-item"><label>Rolle</label><span>UX Strategy · Content · Design</span></div>
+    <div class="cover-meta-item"><label>Ort</label><span>Seon, Aargau, Schweiz</span></div>
+  </div>
+  <div class="cover-tags">
+    <div class="skill-pill">UX Strategy</div>
+    <div class="skill-pill">Content Design</div>
+    <div class="skill-pill">Information Architecture</div>
+    <div class="skill-pill">Brand Identity</div>
+    <div class="skill-pill">Copywriting (DE/CH)</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="section-number">01 — Projektübersicht</div>
+  <div class="section-title">Auf einen Blick</div>
+  <div class="overview-grid">
+    <div class="overview-card"><div class="icon green">👤</div><h4>Kundin</h4><p>Dina, neue Leiterin der Spielgruppe Seon</p></div>
+    <div class="overview-card"><div class="icon orange">🎯</div><h4>Ziel</h4><p>Bestehende Spielgruppe digitalisieren & Anmeldung vereinfachen</p></div>
+    <div class="overview-card"><div class="icon yellow">👥</div><h4>Zielgruppe</h4><p>Eltern von Kindern zwischen 2½ und 4 Jahren in Seon</p></div>
+    <div class="overview-card"><div class="icon blue">🛠</div><h4>Tools</h4><p>Claude AI · Claude Design · Canva</p></div>
+    <div class="overview-card"><div class="icon purple">📄</div><h4>Umfang</h4><p>7 Sektionen inkl. Datenschutz, Impressum, Logo & Flyer</p></div>
+    <div class="overview-card"><div class="icon red">🌍</div><h4>Sprache</h4><p>Deutsch (Schweiz) – ohne «ß», inklusiv formuliert</p></div>
+  </div>
+
+  <div class="sprint-box">
+    <div class="sprint-icon">⚡</div>
+    <div>
+      <h4>Wochenend-Sprint – von null auf live</h4>
+      <p>Das Projekt musste schnell gehen. Die Spielgruppe brauchte eine funktionsfähige Online-Präsenz so rasch wie möglich. Die gesamte Umsetzung – Strategie, Inhalt, Design, Logo und Flyer – entstand an einem einzigen Wochenende. Kein endloses Abwägen, kein Scope-Creep: klarer Fokus, klare Prioritäten, fertiges Ergebnis.</p>
+    </div>
+  </div>
+
+  <div class="challenge-box">
+    <h3>Die Ausgangslage</h3>
+    <p>Die Spielgruppe Seon existiert seit über 20 Jahren und ist in der Region bekannt – jedoch ohne jede digitale Präsenz. Dina, ausgebildete Fachfrau Betreuung Kleinkinder mit 10 Jahren Erfahrung in einer KITA, hat die Spielgruppe übernommen. Ihr Wunsch: Eltern sollen sich einfach und unkompliziert online informieren und anmelden können – ohne Telefonanruf, ohne Umweg. Eine Institution mit 20-jähriger Geschichte bekommt ihren ersten digitalen Auftritt.</p>
+  </div>
+
+  <div class="context-box">
+    <h4>Wichtiger Kontext – bestehende Stärken nutzen</h4>
+    <p>Die Spielgruppe Seon ist keine Neugründung. Sie bringt über 20 Jahre Vertrauen und Geschichte in der Gemeinde mit. Dinas 10-jährige KITA-Erfahrung ergänzt diese Kontinuität. Die Website musste diese doppelte Stärke kommunizieren: bewährte Tradition trifft frische, kompetente Leitung.</p>
+  </div>
+
+  <div class="section-number" style="margin-top:48px;">02 — Herausforderung & Ziele</div>
+  <div class="section-title">Was musste gelöst werden?</div>
+  <div class="learning-list">
+    <div class="learning-item"><h4>Vertrauen für eine neue Leiterin aufbauen</h4><p>Dina hat die Spielgruppe übernommen. Eltern die die bisherige Leiterin kannten, müssen Vertrauen in die neue Person entwickeln. Die Website musste Dinas Kompetenz und Herzlichkeit zeigen – ohne die Geschichte der Spielgruppe zu übergehen.</p></div>
+    <div class="learning-item"><h4>Online-Anmeldung mit Warteliste</h4><p>Bisher erfolgte die Anmeldung ausschliesslich durch direkten Kontakt. Eine transparente Online-Anmeldung mit Wartelisten-Hinweis sollte den Prozess für beide Seiten vereinfachen und professionalisieren.</p></div>
+    <div class="learning-item"><h4>Informationsarchitektur: Was brauchen Eltern zuerst?</h4><p>Öffnungszeiten, Alter, Preise und Kontaktmöglichkeiten sind für Eltern die entscheidenden Informationen – noch vor allem anderen. Diese Hierarchie musste konsequent in der Seitenstruktur abgebildet werden.</p></div>
+    <div class="learning-item"><h4>Morgen- und Nachmittagsbetreuung abbilden</h4><p>Die Spielgruppe bietet an drei Tagen (Mo/Di/Do) jeweils Morgen- (08:15–11:45) und Nachmittagszeiten (13:00–15:30) an. Diese Flexibilität musste im Formular und in der Übersicht klar und verständlich dargestellt werden.</p></div>
+    <div class="learning-item"><h4>Inklusivität in der Sprache</h4><p>Alle Inhalte wurden aktiv auf ausgrenzende Formulierungen geprüft und überarbeitet. Der Grundsatz «Alle Kinder sind willkommen – so wie sie sind» zieht sich durch die gesamte Website.</p></div>
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">03 — Prozess</div>
+  <div class="section-title">Von A bis Z</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot green">🔍</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Discovery</div>
+        <h4>Analyse & strukturiertes Briefing</h4>
+        <p>Systematische Befragung der Kundin zu Zielgruppe, Inhalten, Preisen, Zeiten und Kontaktpräferenzen. Kritische Rückfragen wurden aktiv gestellt – zu Warteliste, Platzzahl, Schnuppertagen und Kontaktwegen. Wichtige Faktenkorrekturen im Prozess: Dinas Erfahrung stammt aus 10 Jahren KITA-Arbeit; die Spielgruppe selbst besteht seit über 20 Jahren und wurde von ihr übernommen – nicht gegründet.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot orange">🏗</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Strategie</div>
+        <h4>Competitive Analysis</h4>
+        <p>Eine bestehende Spielgruppen-Website wurde vollständig analysiert. Fehlende Inhaltsbereiche wurden identifiziert: Eingewöhnungsphase, Ferienregelung, pädagogisches Konzept, Datenschutz nach DSG und Eltern-Infobereich. Für jeden fehlenden Bereich wurde ein gezielter Prompt entwickelt.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot blue">🗺</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">IA</div>
+        <h4>Informationsarchitektur</h4>
+        <p>Seitenstruktur definiert: Home → Über uns → Was ist eine Spielgruppe? → Zeiten & Preise → Team → Anmeldung → Kontakt → Impressum → Datenschutz. «Was ist eine Spielgruppe?» als eigene Sektion – für Eltern ohne Vorkenntnisse. Rechtliches bewusst im Footer, nicht im Hauptmenü.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot yellow">✍️</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Content Design</div>
+        <h4>Copywriting auf Schweizerdeutsch</h4>
+        <p>Alle Texte in Schweizer Sprachstandard (kein «ß»). Tonalität: warm, einladend, auf Augenhöhe mit Eltern. Das Montessori-Zitat «Hilf mir, es selbst zu tun» wurde mit einer verständlichen Erklärung für neue Eltern ergänzt – zugänglich statt akademisch.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot purple">🎨</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Visual Design</div>
+        <h4>Logo, Flyer & Markenidentität</h4>
+        <p>Farbpalette: Salbeigrün (#7a9e7e), Terrakotta (#d4845a), Honiggelb (#f4c842), Cremeweiß (#fdf8f2). Typografie: Baloo 2 für Titel, Lato für Fliesstext. Logo: Igel mit Sonne – direkt gestaltet und als SVG exportiert. Flyer (A5) für physische Verteilung in der Gemeinde erstellt. Alle Materialien folgen demselben visuellen System.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot teal">⚙️</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Entwicklung</div>
+        <h4>Iteratives Prompting mit Claude Design</h4>
+        <p>Alle Website-Sektionen wurden mit Claude Design umgesetzt. Claude AI unterstützte Strategie, Texte und Struktur. Iterative Anpassungen: Morgen/Nachmittag-Zeiten ergänzt, Kinderanzahl bewusst entfernt, neue Sektionen hinzugefügt, Formulierungen auf Inklusivität geprüft und überarbeitet.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot green">⚖️</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Legal</div>
+        <h4>Datenschutz & Impressum nach Schweizer Recht</h4>
+        <p>Vollständige Datenschutzerklärung nach Schweizer DSG (SR 235.1) verfasst – angepasst auf die Spielgruppe Seon als Einzelbetrieb mit einer Leiterin. Impressum inkl. Haftungsausschluss und Urheberrecht erstellt und für die Veröffentlichung vorbereitet.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">04 — Deliverables</div>
+  <div class="section-title">Was wurde erstellt?</div>
+  <div class="deliverable-grid">
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Website (7 Sektionen)</h4><p>Home, Über uns, Was ist eine Spielgruppe?, Zeiten & Preise, Team, Anmeldung, Kontakt</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Online-Anmeldeformular</h4><p>Mit Wartelisten-Hinweis, Tagesauswahl Morgen/Nachmittag und Bestätigungstext</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Logo (SVG)</h4><p>Igel mit Sonne in der Markenfarbe – skalierbar für Web, Druck und Social Media</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Flyer (A5)</h4><p>Printmaterial für die physische Verteilung in der Gemeinde Seon</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Datenschutzerklärung</h4><p>Nach Schweizer DSG, angepasst auf Spielgruppe Seon als Einzelbetrieb</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Impressum</h4><p>Vollständig nach Schweizer Standard inkl. Urheberrecht und Haftungsausschluss</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Pädagogisches Konzept</h4><p>«Was ist eine Spielgruppe?» mit 5 Themenbereichen und Montessori-Erklärung</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div><h4>Design System</h4><p>Farbpalette, Typografie (Baloo 2 + Lato), Bildsprache und Logo-Richtlinien</p></div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">05 — Ergebnisse</div>
+  <div class="section-title">Was wurde erreicht?</div>
+  <div class="results-grid">
+    <div class="result-card"><div class="num">1</div><div class="label">Wochenende – von null auf live</div></div>
+    <div class="result-card"><div class="num">20+</div><div class="label">Jahre Geschichte sichtbar gemacht</div></div>
+    <div class="result-card"><div class="num">9</div><div class="label">Iterative Design-Schritte</div></div>
+    <div class="result-card"><div class="num">100%</div><div class="label">DSG-konformer Datenschutz</div></div>
+  </div>
+
+  <div class="quote-block">
+    <p>Die grösste Leistung war nicht die Website – es war das Sichtbarmachen von etwas, das schon lange existierte und es verdient hatte, endlich gefunden zu werden.</p>
+    <div class="attribution">— Leitgedanke des Projekts</div>
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">06 — Learnings</div>
+  <div class="section-title">Was hat dieses Projekt gezeigt?</div>
+  <div class="learning-list">
+    <div class="learning-item"><h4>Geschichte ist ein Vertrauensmerkmal</h4><p>Eine Spielgruppe die seit über 20 Jahren besteht, hat etwas das keine neue Website ersetzen kann: bewiesene Kontinuität. Diese Geschichte aktiv zu kommunizieren war eine der wichtigsten strategischen Entscheidungen des Projekts.</p></div>
+    <div class="learning-item"><h4>Übergänge brauchen klare Kommunikation</h4><p>Wenn eine neue Leiterin ein bestehendes Angebot übernimmt, entstehen Fragen bei den Eltern. Die Website musste Dinas Kompetenz – 10 Jahre Kindererziehung in einer KITA – und die Kontinuität der Spielgruppe gleichzeitig sichtbar machen.</p></div>
+    <div class="learning-item"><h4>Kritisches Hinterfragen ist UX-Arbeit</h4><p>Fehler im Briefing wurden aktiv korrigiert: Sachverhalte wurden zunächst ungenau dargestellt. Das Erkennen und Korrigieren solcher Ungenauigkeiten gehört zur UX-Arbeit – nicht nur das Design.</p></div>
+    <div class="learning-item"><h4>Sprache ist Design</h4><p>«Alle Kinder sind willkommen – so wie sie sind» ist kein zufälliger Satz. Er ist das Ergebnis einer bewussten Entscheidung die einen echten Unterschied macht – für Eltern die sich fragen, ob ihr Kind wirklich gemeint ist.</p></div>
+    <div class="learning-item"><h4>Prompting als UX-Kompetenz</h4><p>Präzises Prompting erfordert dieselben Fähigkeiten wie ein gutes Design-Briefing: klare Ziele, konkrete Inhalte, definierte Einschränkungen und ein Verständnis für das Endprodukt. Jede Anpassung war eine bewusste inhaltliche Entscheidung.</p></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">07 — Tools & Methoden</div>
+  <div class="section-title">Womit wurde gearbeitet?</div>
+  <div class="tools-grid">
+    <div class="tool-pill"><span class="dot dot-green"></span>Claude AI (Strategie & Content)</div>
+    <div class="tool-pill"><span class="dot dot-blue"></span>Claude Design (Website)</div>
+    <div class="tool-pill"><span class="dot dot-orange"></span>Canva (Flyer & Visuals)</div>
+    <div class="tool-pill"><span class="dot dot-yellow"></span>SVG (Logo-Illustration)</div>
+    <div class="tool-pill"><span class="dot dot-green"></span>Competitive Analysis</div>
+    <div class="tool-pill"><span class="dot dot-blue"></span>Content Strategy</div>
+    <div class="tool-pill"><span class="dot dot-orange"></span>Information Architecture</div>
+    <div class="tool-pill"><span class="dot dot-yellow"></span>UX Copywriting (DE/CH)</div>
+    <div class="tool-pill"><span class="dot dot-green"></span>Design System</div>
+    <div class="tool-pill"><span class="dot dot-blue"></span>Schweizer DSG / Datenschutzrecht</div>
+    <div class="tool-pill"><span class="dot dot-orange"></span>Prompt Engineering</div>
+    <div class="tool-pill"><span class="dot dot-yellow"></span>Iteratives Design</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">08 — Fazit</div>
+  <div class="section-title">Rückblick</div>
+  <div class="prose">
+    <p>Die Spielgruppe Seon ist kein Start-up – sie ist eine gewachsene Institution mit über 20 Jahren Geschichte. Dinas Aufgabe war es, diese Geschichte in eine neue Ära zu führen: digital, zugänglich und einladend für Eltern von heute.</p>
+    <p>Dieses Projekt zeigt, wie eine vollständige digitale Identität für ein bestehendes lokales Angebot aufgebaut werden kann – mit klarer Strategie, bewusstem Content-Design, modernen AI-Tools und dem Mut, Fehler im Prozess zu erkennen und zu korrigieren. Und das an einem einzigen Wochenende.</p>
+    <p>Das Ergebnis: Eine Website die nicht nur informiert, sondern Vertrauen schafft. Für eine Spielgruppe die dieses Vertrauen seit über 20 Jahren verdient hat.</p>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <div><strong>Spielgruppe Seon</strong> · Website Case Study · 2026</div>
+  <div>UX Strategy · Content Design · Brand Identity · Wochenend-Sprint</div>
+</div>
+
+</body>
+</html>

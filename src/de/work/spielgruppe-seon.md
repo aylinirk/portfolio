@@ -1,16 +1,17 @@
 ---
+layout: seon-case-study.njk
 title: Spielgruppe Seon
-tagline: Website für eine lokale Spielgruppe — von Grund auf gestaltet und umgesetzt, mit echten Nutzern und einem echten Abgabetermin.
+tagline: Website für eine lokale Spielgruppe — von null auf live an einem Wochenende. Mit Logo, Flyer und vollständiger digitaler Identität.
 order: 2
 tags:
   - Webdesign
   - UX Design
-  - "2025"
+  - "2026"
 coverGradient: "linear-gradient(135deg, #F7C59F 0%, #EFAA76 35%, #E08C50 70%, #C97A3A 100%)"
-role: "UX-Design, Visuelles Design, Umsetzung"
-scope: "Recherche, Informationsarchitektur, Design, Implementierung"
-tools: "Figma, [verwendetes Website-Tool]"
-year: 2025
+role: "UX Strategy, Content Design, Brand Identity"
+scope: "Recherche, Informationsarchitektur, Copywriting, Logo, Flyer, Website"
+tools: "Claude AI, Claude Design, Canva"
+year: 2026
 brief:
   heading: Das Briefing
   body: |
