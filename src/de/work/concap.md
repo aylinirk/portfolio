@@ -1,4 +1,5 @@
 ---
+layout: concap-case-study.njk
 title: ConCap
 tagline: Gestaltung eines Konferenz-Capture-Flows, der Visitenkarten und schnelle Sprachnotizen in saubere, CRM-fertige Kontakte verwandelt.
 order: 3

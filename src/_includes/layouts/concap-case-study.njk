@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study – ConCap · Aylin Irk</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green-dark: #2d4a3e;
+    --green-mid: #587050;
+    --green-light: #8A9E78;
+    --green-pale: #c8deca;
+    --cream: #fdf8f2;
+    --terra: #d4845a;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; }
+
+  .back-bar { background: #1a2e1a; padding: 14px 60px; }
+  .back-bar a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+  .back-bar a:hover { color: rgba(255,255,255,0.9); }
+
+  /* COVER */
+  .cover { background: linear-gradient(135deg, #1a2e1a 0%, #2d4a3e 50%, #4a6840 100%); color: white; padding: 80px 60px 100px; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -80px; right: -80px; width: 420px; height: 420px; border-radius: 50%; background: rgba(138,158,120,0.12); }
+  .cover::after { content: ''; position: absolute; bottom: -40px; left: 160px; width: 280px; height: 280px; border-radius: 50%; background: rgba(88,112,80,0.15); }
+  .cover-tag { display: inline-block; background: rgba(138,158,120,0.3); border: 1px solid rgba(138,158,120,0.5); color: var(--green-pale); padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .cover h1 { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 800; line-height: 1; margin-bottom: 20px; position: relative; z-index: 1; }
+  .cover h1 span { color: var(--green-pale); }
+  .cover-sub { font-size: 18px; color: rgba(255,255,255,0.65); margin-bottom: 56px; max-width: 600px; position: relative; z-index: 1; line-height: 1.6; }
+  .cover-meta { display: flex; gap: 48px; position: relative; z-index: 1; flex-wrap: wrap; }
+  .cover-meta-item label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 5px; }
+  .cover-meta-item span { font-size: 14px; color: rgba(255,255,255,0.88); font-weight: 500; }
+  .cover-pills { position: absolute; bottom: 60px; right: 60px; display: flex; flex-direction: column; gap: 8px; z-index: 1; }
+  .skill-pill { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13); color: rgba(255,255,255,0.7); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; text-align: center; }
+
+  /* METRICS BANNER */
+  .metrics-banner { background: white; border-bottom: 1px solid var(--border); padding: 40px 60px; display: flex; gap: 0; }
+  .metric-item { flex: 1; text-align: center; padding: 0 24px; border-right: 1px solid var(--border); }
+  .metric-item:last-child { border-right: none; }
+  .metric-value { font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 800; color: var(--green-mid); line-height: 1; margin-bottom: 8px; }
+  .metric-label { font-size: 12px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+  /* PAGE */
+  .page { max-width: 900px; margin: 0 auto; padding: 64px 60px; }
+  .section-number { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green-light); margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid var(--green-pale); }
+
+  /* DARK BOX */
+  .dark-box { background: #1a2e1a; color: white; border-radius: 20px; padding: 44px; margin: 32px 0; }
+  .dark-box h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 18px; color: var(--green-pale); }
+  .dark-box p { color: rgba(255,255,255,0.72); font-size: 15px; line-height: 1.85; margin-bottom: 12px; }
+  .dark-box p:last-child { margin-bottom: 0; }
+
+  /* INSIGHT QUOTE */
+  .insight { background: var(--cream); border-left: 4px solid var(--green-mid); border-radius: 0 16px 16px 0; padding: 32px 40px; margin: 40px 0; }
+  .insight p { font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: var(--text); line-height: 1.55; margin-bottom: 12px; }
+  .insight .attr { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-mid); }
+
+  /* PRINCIPLES */
+  .principles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+  .principle-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .principle-number { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 800; color: var(--green-pale); line-height: 1; margin-bottom: 12px; }
+  .principle-card h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .principle-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+  /* TIMELINE */
+  .timeline { position: relative; margin: 32px 0; }
+  .timeline::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: var(--green-pale); }
+  .timeline-item { display: flex; gap: 24px; margin-bottom: 36px; position: relative; }
+  .timeline-dot { width: 56px; height: 56px; border-radius: 50%; background: white; border: 2px solid var(--green-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+  .timeline-dot span { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 800; color: var(--green-mid); }
+  .timeline-content { padding-top: 10px; flex: 1; }
+  .timeline-tag { display: inline-block; background: var(--green-pale); color: var(--green-dark); padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .timeline-content h4 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .timeline-content p { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+  /* DECISIONS */
+  .decisions-list { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
+  .decision-item { background: white; border: 1px solid var(--border); border-left: 4px solid var(--green-mid); border-radius: 0 14px 14px 0; padding: 22px 28px; }
+  .decision-item h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+  .decision-item p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+  /* OUTCOMES */
+  .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+  .outcome-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px 20px; text-align: center; }
+  .outcome-value { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; color: var(--terra); line-height: 1.1; margin-bottom: 10px; }
+  .outcome-label { font-size: 12px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+  /* USER QUOTES */
+  .quotes-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .user-quote { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; position: relative; }
+  .user-quote::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 48px; color: var(--green-pale); position: absolute; top: 8px; left: 16px; line-height: 1; }
+  .user-quote p { font-size: 14px; color: var(--text); font-style: italic; line-height: 1.6; padding-left: 24px; padding-top: 16px; }
+
+  /* REFLECTION */
+  .reflection-pull { background: linear-gradient(135deg, #1a2e1a, #2d4a3e); border-radius: 20px; padding: 44px; margin: 32px 0; }
+  .reflection-pull p { font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; color: var(--green-pale); line-height: 1.5; }
+
+  .prose p { color: #374151; margin-bottom: 16px; font-size: 15px; line-height: 1.85; }
+  .prose ul { margin: 12px 0 16px 20px; }
+  .prose li { font-size: 15px; color: #374151; margin-bottom: 6px; line-height: 1.7; }
+
+  /* TOOLS */
+  .tools-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+  .tool-pill { background: white; border: 1px solid var(--border); padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .tool-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-mid); }
+
+  .divider { height: 1px; background: var(--border); margin: 56px 0; }
+  .page-break { padding-top: 56px; }
+
+  .doc-footer { background: #1a2e1a; color: rgba(255,255,255,0.5); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .doc-footer strong { color: rgba(255,255,255,0.85); }
+
+  @media (max-width: 700px) {
+    .cover { padding: 48px 24px 64px; }
+    .cover h1 { font-size: 40px; }
+    .cover-pills { display: none; }
+    .page { padding: 40px 24px; }
+    .metrics-banner { flex-direction: column; padding: 32px 24px; gap: 24px; }
+    .metric-item { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    .metric-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .principles-grid { grid-template-columns: 1fr; }
+    .outcomes-grid { grid-template-columns: 1fr; }
+    .quotes-row { grid-template-columns: 1fr; }
+    .back-bar { padding: 14px 24px; }
+    .doc-footer { flex-direction: column; gap: 8px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="{{ homeUrl }}#work">← Back to portfolio</a>
+</div>
+
+<div class="cover">
+  <div class="cover-tag">UX & Product Design · Case Study</div>
+  <h1>Con<span>Cap</span></h1>
+  <p class="cover-sub">Designing a conference capture flow that turns business cards and fast voice notes into clean, CRM-ready contacts — in seconds, not hours.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><label>Role</label><span>UX & Product Design</span></div>
+    <div class="cover-meta-item"><label>Scope</label><span>Research → Prototype → Test</span></div>
+    <div class="cover-meta-item"><label>Tools</label><span>Figma Make · Supabase · Vercel</span></div>
+    <div class="cover-meta-item"><label>Year</label><span>2026</span></div>
+  </div>
+  <div class="cover-pills">
+    <div class="skill-pill">UX Research</div>
+    <div class="skill-pill">Product Design</div>
+    <div class="skill-pill">Prototyping</div>
+    <div class="skill-pill">Usability Testing</div>
+    <div class="skill-pill">Iteration</div>
+  </div>
+</div>
+
+<div class="metrics-banner">
+  <div class="metric-item">
+    <div class="metric-value">2h → 10 min</div>
+    <div class="metric-label">Post-event prep time</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">1h → 1–2 min</div>
+    <div class="metric-label">CRM handoff time</div>
+  </div>
+  <div class="metric-item">
+    <div class="metric-value">Richer</div>
+    <div class="metric-label">Context captured via voice vs. typing under pressure</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="section-number">01 — The Brief</div>
+  <div class="section-title">What was the job?</div>
+  <div class="dark-box">
+    <h3>The brief</h3>
+    <p>The brief was not "build another networking app." It was tighter than that.</p>
+    <p>Make contact capture fast. Make it feel low-profile in the middle of a conversation. Do not force users to type under pressure. Make the data usable after the event — not trapped in the app.</p>
+    <p>That meant the UX had to protect momentum. Every extra field, tap, or decision was friction.</p>
+  </div>
+
+  <div class="section-number" style="margin-top:56px;">02 — The Problem</div>
+  <div class="section-title">Why does this break?</div>
+  <div class="prose">
+    <p>Conference networking is messy by default. People exchange cards, move to the next conversation, and trust memory to do the rest later. That usually breaks.</p>
+    <p>Photos of cards end up in one place. Voice notes live somewhere else. Details get lost. CRM entry becomes a separate task. By the time the event is over, the best context is already fading.</p>
+  </div>
+
+  <div class="insight">
+    <p>Users do not have time for admin in the moment. Sometimes they barely have time to take out the phone, scan the card, and say one thing before the next conversation starts.</p>
+    <div class="attr">Key insight</div>
+  </div>
+
+  <div class="section-number" style="margin-top:56px;">03 — Design Principles</div>
+  <div class="section-title">Four principles to design around</div>
+  <div class="principles-grid">
+    <div class="principle-card">
+      <div class="principle-number">1</div>
+      <h4>Capture first. Organize later.</h4>
+      <p>The first job is to save the contact and the context before they disappear.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-number">2</div>
+      <h4>One clear next action.</h4>
+      <p>In a rushed setting, the interface cannot ask users to think twice.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-number">3</div>
+      <h4>Use the fastest native behavior.</h4>
+      <p>Taking a picture and speaking a note are faster than typing into forms.</p>
+    </div>
+    <div class="principle-card">
+      <div class="principle-number">4</div>
+      <h4>Reduce the work after the event.</h4>
+      <p>The product only works if it saves time later, not just during capture.</p>
+    </div>
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">04 — Process</div>
+  <div class="section-title">How it came together</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"><span>01</span></div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Framing</div>
+        <h4>Start with the real moment of use</h4>
+        <p>I began by framing the actual context. Users were not sitting at a desk. They were standing at booths, moving between talks, or speaking to the next person in line. Their attention span was measured in seconds. That changed the product immediately — the app could not behave like a traditional form flow.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"><span>02</span></div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Core Flow</div>
+        <h4>Reduce the core flow to two actions</h4>
+        <p>The main action is scanning a business card. The phone camera opens immediately. OCR reads the card and maps the details into structured fields automatically. The second action is recording a voice note. In one quick flow, users capture the card, the context, and a structured record ready for export or CRM sync.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"><span>03</span></div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Low-fi</div>
+        <h4>Prove the workflow before polishing</h4>
+        <p>Before moving into high-fi design, I built a working low-fi prototype using Figma Make, connected a Supabase database, and deployed it on Vercel so the client and early users could test the actual flow. We were not asking people whether they liked screens. We were checking whether the product really worked in a realistic situation.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"><span>04</span></div>
+      <div class="timeline-content">
+        <div class="timeline-tag">High-fi</div>
+        <h4>Move to high-fi only after the behavior worked</h4>
+        <p>Only after the core interaction proved useful did I apply high-fi design. At that point, the goal was not decoration — it was clarity. I tightened the hierarchy, reduced hesitation, and made the two core actions feel obvious and calm. The visual layer came after the workflow made sense.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"><span>05</span></div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Iteration</div>
+        <h4>Iterate from the first real friction point</h4>
+        <p>The first major friction was not capture — it was organization. Users liked the speed, but wanted to sort contacts by conference or group. Instead of tagging every contact during capture, I designed a session-based grouping model — users set the current conference once, and every new capture inherits that context automatically.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">05 — Key UX Decisions</div>
+  <div class="section-title">The decisions that shaped the product</div>
+  <div class="decisions-list">
+    <div class="decision-item">
+      <h4>Make scanning the primary action</h4>
+      <p>The app opens with the fastest high-value action, not a dashboard. That reduces time to first success and eliminates the cognitive overhead of choosing where to start.</p>
+    </div>
+    <div class="decision-item">
+      <h4>Use OCR to remove manual entry</h4>
+      <p>Users should not retype a business card they already have in front of them. OCR reads the card and maps it into structured fields automatically — the contact is created before the next conversation begins.</p>
+    </div>
+    <div class="decision-item">
+      <h4>Use voice instead of typing for context</h4>
+      <p>Typing notes in a crowded event setting is awkward, slow, and socially visible. Speaking is faster, more natural, and fits the rhythm of the moment. The app transcribes and attaches the note automatically.</p>
+    </div>
+    <div class="decision-item">
+      <h4>Keep the product open to downstream systems</h4>
+      <p>The value of the app is not just capture. It is clean handoff into tools like HubSpot, Salesforce, Airtable, or CSV export. A captured contact that stays locked inside the app is only half the job done.</p>
+    </div>
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">06 — Validation</div>
+  <div class="section-title">How it was tested</div>
+  <div class="prose">
+    <p>I validated two things.</p>
+    <p>First, I compared how much useful context users captured during the event with and without the app. The focus was on note richness, remembered details, and how usable the captured information was afterward.</p>
+    <p>Second, I measured how much desk work remained after the event — a timed before-and-after comparison of the post-conference sorting, structuring, and CRM handoff process.</p>
+    <p>The testing group was small and early, so I treat the results as directional. But the signal was strong.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">07 — Outcomes</div>
+  <div class="section-title">The clearest win was work removed, not just speed gained</div>
+  <div class="outcomes-grid">
+    <div class="outcome-card">
+      <div class="outcome-value">2h → 10 min</div>
+      <div class="outcome-label">Post-conference sorting and CRM preparation</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-value">1h → 1–2 min</div>
+      <div class="outcome-label">CRM handoff with sync and review</div>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-value">Richer notes</div>
+      <div class="outcome-label">Users captured more context via voice than memory or typing</div>
+    </div>
+  </div>
+
+  <div class="quotes-row">
+    <div class="user-quote"><p>It feels smooth and intuitive in the background.</p></div>
+    <div class="user-quote"><p>It doesn't look like I'm wasting time on my phone.</p></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">08 — Reflection</div>
+  <div class="section-title">What this project reinforced</div>
+  <div class="reflection-pull">
+    <p>When time and attention are limited, UX has to remove thinking before it adds features.</p>
+  </div>
+  <div class="prose" style="margin-top: 24px;">
+    <p>ConCap reinforced a simple rule: the product's job in the moment is not to be clever. It is to get out of the way.</p>
+    <p>The strongest decision was reducing the experience to two core actions and testing that behavior early in a live prototype. That kept the work honest. It made every later design decision easier, because the product had already proven its value before the visual polish began.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">09 — Next Steps</div>
+  <div class="section-title">What comes next</div>
+  <div class="prose">
+    <p>The next product layer is not more capture. It is better organization and follow-through.</p>
+    <p>The first step is session-based grouping by conference, audience, or client segment. From there, the product can support stronger filtering, cleaner segmented exports, and a more structured handoff into sales workflows.</p>
+    <p>The key is to add that structure without slowing the core capture flow. Speed remains the product.</p>
+  </div>
+
+  <div class="tools-row" style="margin-top: 40px;">
+    <div class="tool-pill"><span class="tool-dot"></span>Figma Make</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Supabase</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Vercel</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Claude Code</div>
+    <div class="tool-pill"><span class="tool-dot"></span>UX Research</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Prototyping</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Usability Testing</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Iteration</div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <div><strong>ConCap</strong> · UX & Product Design Case Study · 2026</div>
+  <div>Aylin Irk · Portfolio</div>
+</div>
+
+</body>
+</html>

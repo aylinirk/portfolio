@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study – Coursera UX Project · Aylin Irk</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue-dark: #1a1f3a;
+    --blue-mid: #3b5bdb;
+    --blue-light: #74c0fc;
+    --blue-pale: #d0ebff;
+    --indigo: #4c6ef5;
+    --cream: #f8f9ff;
+    --terra: #f59f00;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f9fafb;
+  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; }
+
+  .back-bar { background: var(--blue-dark); padding: 14px 60px; }
+  .back-bar a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.03em; }
+  .back-bar a:hover { color: rgba(255,255,255,0.9); }
+
+  /* COVER */
+  .cover { background: linear-gradient(135deg, #1a1f3a 0%, #1e3a5f 50%, #1a3a6e 100%); color: white; padding: 80px 60px 100px; position: relative; overflow: hidden; }
+  .cover::before { content: ''; position: absolute; top: -100px; right: -60px; width: 400px; height: 400px; border-radius: 50%; background: rgba(74,144,226,0.1); }
+  .cover::after { content: ''; position: absolute; bottom: -50px; left: 100px; width: 300px; height: 300px; border-radius: 50%; background: rgba(116,192,252,0.08); }
+  .cover-tag { display: inline-block; background: rgba(116,192,252,0.2); border: 1px solid rgba(116,192,252,0.4); color: var(--blue-light); padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .cover h1 { font-family: 'Playfair Display', serif; font-size: 58px; font-weight: 800; line-height: 1.05; margin-bottom: 20px; position: relative; z-index: 1; }
+  .cover h1 span { color: var(--blue-light); }
+  .cover-sub { font-size: 18px; color: rgba(255,255,255,0.65); margin-bottom: 56px; max-width: 580px; position: relative; z-index: 1; line-height: 1.65; }
+  .cover-meta { display: flex; gap: 48px; position: relative; z-index: 1; flex-wrap: wrap; }
+  .cover-meta-item label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.38); margin-bottom: 5px; }
+  .cover-meta-item span { font-size: 14px; color: rgba(255,255,255,0.88); font-weight: 500; }
+  .cover-pills { position: absolute; bottom: 60px; right: 60px; display: flex; flex-direction: column; gap: 8px; z-index: 1; }
+  .skill-pill { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13); color: rgba(255,255,255,0.7); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; text-align: center; }
+
+  /* STATUS BANNER */
+  .status-banner { background: #fffbeb; border-bottom: 2px solid #f59f00; padding: 16px 60px; display: flex; align-items: center; gap: 12px; }
+  .status-dot { width: 10px; height: 10px; border-radius: 50%; background: #f59f00; animation: pulse 2s infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .status-banner p { font-size: 14px; font-weight: 500; color: #7a5800; }
+  .status-banner strong { color: #5c4200; }
+
+  /* PAGE */
+  .page { max-width: 900px; margin: 0 auto; padding: 64px 60px; }
+  .section-number { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--indigo); margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid var(--blue-pale); }
+
+  /* DARK BOX */
+  .dark-box { background: var(--blue-dark); color: white; border-radius: 20px; padding: 44px; margin: 32px 0; }
+  .dark-box h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 18px; color: var(--blue-light); }
+  .dark-box p { color: rgba(255,255,255,0.72); font-size: 15px; line-height: 1.85; margin-bottom: 12px; }
+  .dark-box p:last-child { margin-bottom: 0; }
+
+  /* PROCESS STEPS */
+  .process-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 32px 0; }
+  .process-step { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px 16px; text-align: center; position: relative; }
+  .process-step.active { border-color: var(--blue-mid); background: var(--cream); }
+  .process-step .step-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 800; color: var(--blue-pale); line-height: 1; margin-bottom: 8px; }
+  .process-step.active .step-num { color: var(--blue-mid); }
+  .process-step h4 { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .process-step .check { position: absolute; top: 10px; right: 10px; width: 18px; height: 18px; background: #d3f9d8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+  .process-step .in-progress { position: absolute; top: 10px; right: 10px; width: 18px; height: 18px; background: #fff3bf; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+
+  /* DELIVERABLES */
+  .deliverables-list { display: flex; flex-direction: column; gap: 14px; margin: 32px 0; }
+  .deliverable-row { background: white; border: 1px solid var(--border); border-left: 4px solid var(--blue-mid); border-radius: 0 14px 14px 0; padding: 20px 28px; display: flex; align-items: flex-start; gap: 16px; }
+  .deliverable-row .icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .deliverable-row h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .deliverable-row p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+  /* TIMELINE */
+  .timeline { position: relative; margin: 32px 0; }
+  .timeline::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: var(--blue-pale); }
+  .timeline-item { display: flex; gap: 24px; margin-bottom: 36px; }
+  .timeline-dot { width: 56px; height: 56px; border-radius: 50%; background: white; border: 2px solid var(--blue-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; font-size: 20px; }
+  .timeline-content { padding-top: 10px; flex: 1; }
+  .timeline-tag { display: inline-block; background: var(--blue-pale); color: #1a3a6e; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .timeline-content h4 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .timeline-content p { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+  /* COMING SOON */
+  .coming-soon { background: linear-gradient(135deg, #1a1f3a, #1e3a5f); border-radius: 20px; padding: 56px 44px; margin: 40px 0; text-align: center; }
+  .coming-soon h3 { font-family: 'Playfair Display', serif; font-size: 28px; color: white; margin-bottom: 16px; }
+  .coming-soon p { font-size: 15px; color: rgba(255,255,255,0.65); max-width: 480px; margin: 0 auto 28px; line-height: 1.7; }
+  .coming-soon .progress-bar { background: rgba(255,255,255,0.1); border-radius: 30px; height: 8px; max-width: 320px; margin: 0 auto; overflow: hidden; }
+  .coming-soon .progress-fill { background: linear-gradient(90deg, var(--blue-light), var(--indigo)); height: 100%; width: 70%; border-radius: 30px; }
+  .coming-soon .progress-label { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 10px; }
+
+  .tools-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+  .tool-pill { background: white; border: 1px solid var(--border); padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .tool-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue-mid); }
+
+  .prose p { color: #374151; margin-bottom: 16px; font-size: 15px; line-height: 1.85; }
+  .divider { height: 1px; background: var(--border); margin: 56px 0; }
+  .page-break { padding-top: 56px; }
+
+  .doc-footer { background: var(--blue-dark); color: rgba(255,255,255,0.5); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .doc-footer strong { color: rgba(255,255,255,0.85); }
+
+  @media (max-width: 700px) {
+    .cover { padding: 48px 24px 64px; }
+    .cover h1 { font-size: 36px; }
+    .cover-pills { display: none; }
+    .page { padding: 40px 24px; }
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .status-banner { padding: 16px 24px; }
+    .back-bar { padding: 14px 24px; }
+    .doc-footer { flex-direction: column; gap: 8px; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="{{ homeUrl }}#work">← Back to portfolio</a>
+</div>
+
+<div class="cover">
+  <div class="cover-tag">UX Design · Case Study in Progress</div>
+  <h1>Google UX<br><span>Design Certificate</span></h1>
+  <p class="cover-sub">A full UX design project following the complete process — from empathy and research to high-fidelity prototyping and usability testing. Case study documentation coming soon.</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><label>Programme</label><span>Google UX Design Certificate</span></div>
+    <div class="cover-meta-item"><label>Platform</label><span>Coursera</span></div>
+    <div class="cover-meta-item"><label>Process</label><span>End-to-end UX</span></div>
+    <div class="cover-meta-item"><label>Year</label><span>2026</span></div>
+  </div>
+  <div class="cover-pills">
+    <div class="skill-pill">Empathize</div>
+    <div class="skill-pill">Define</div>
+    <div class="skill-pill">Ideate</div>
+    <div class="skill-pill">Prototype</div>
+    <div class="skill-pill">Test</div>
+  </div>
+</div>
+
+<div class="status-banner">
+  <div class="status-dot"></div>
+  <p><strong>Work in progress</strong> — The design is complete. Case study documentation is being written and will be published here shortly.</p>
+</div>
+
+<div class="page">
+  <div class="section-number">01 — About this project</div>
+  <div class="section-title">What is this?</div>
+  <div class="dark-box">
+    <h3>The Google UX Design Certificate</h3>
+    <p>The Google UX Design Certificate on Coursera is a structured, end-to-end UX programme that covers the full design process — from initial user research and problem definition through to high-fidelity prototyping and usability testing.</p>
+    <p>Each phase produces real deliverables: user personas, journey maps, wireframes, prototypes, and usability test reports. The programme follows the same process used by professional UX designers.</p>
+  </div>
+
+  <div class="section-number" style="margin-top: 56px;">02 — The UX Process</div>
+  <div class="section-title">Five phases, end to end</div>
+  <div class="process-grid">
+    <div class="process-step active">
+      <div class="check">✓</div>
+      <div class="step-num">1</div>
+      <h4>Empathize</h4>
+    </div>
+    <div class="process-step active">
+      <div class="check">✓</div>
+      <div class="step-num">2</div>
+      <h4>Define</h4>
+    </div>
+    <div class="process-step active">
+      <div class="check">✓</div>
+      <div class="step-num">3</div>
+      <h4>Ideate</h4>
+    </div>
+    <div class="process-step active">
+      <div class="check">✓</div>
+      <div class="step-num">4</div>
+      <h4>Prototype</h4>
+    </div>
+    <div class="process-step active">
+      <div class="in-progress">⏳</div>
+      <div class="step-num">5</div>
+      <h4>Test</h4>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">03 — What the project covers</div>
+  <div class="section-title">Key deliverables</div>
+  <div class="deliverables-list">
+    <div class="deliverable-row">
+      <div class="icon">🔍</div>
+      <div>
+        <h4>User Research</h4>
+        <p>Interviews, empathy maps, and user personas grounded in real observations — not assumptions.</p>
+      </div>
+    </div>
+    <div class="deliverable-row">
+      <div class="icon">🗺</div>
+      <div>
+        <h4>Problem Definition</h4>
+        <p>Problem statement and user journey map that frames the design challenge around actual user needs.</p>
+      </div>
+    </div>
+    <div class="deliverable-row">
+      <div class="icon">✏️</div>
+      <div>
+        <h4>Wireframes & Low-fi Prototype</h4>
+        <p>Paper sketches and low-fidelity digital wireframes that test the structure before any visual design begins.</p>
+      </div>
+    </div>
+    <div class="deliverable-row">
+      <div class="icon">🎨</div>
+      <div>
+        <h4>High-Fidelity Design in Figma</h4>
+        <p>A complete high-fidelity prototype in Figma with a defined visual system, component library, and interaction flows.</p>
+      </div>
+    </div>
+    <div class="deliverable-row">
+      <div class="icon">🧪</div>
+      <div>
+        <h4>Usability Testing</h4>
+        <p>Moderated usability tests with real participants, documented findings, and design iterations based on what was learned.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">04 — Why this matters</div>
+  <div class="section-title">What this project shows</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot">📐</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Process</div>
+        <h4>Following the full UX process, not just the output</h4>
+        <p>A lot of portfolios show finished screens. This project documents the entire process — the messy research, the wrong turns, the iterations — because that is where UX skill actually lives.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">🧠</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Thinking</div>
+        <h4>Design decisions grounded in evidence</h4>
+        <p>Every design decision in this project is linked back to what was learned from users — not aesthetic preference, not convention. Research first, design second.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot">🔁</div>
+      <div class="timeline-content">
+        <div class="timeline-tag">Iteration</div>
+        <h4>Testing and changing, not just testing</h4>
+        <p>Usability testing is only useful if you act on what you find. This project documents what broke, what was changed, and why — because that is how design actually improves.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="coming-soon">
+    <h3>Full case study coming soon</h3>
+    <p>The design work is complete. The write-up is being prepared to document the full process clearly and honestly — research, decisions, iterations, and outcomes.</p>
+    <div class="progress-bar"><div class="progress-fill"></div></div>
+    <div class="progress-label">Case study ~70% complete</div>
+  </div>
+
+  <div class="tools-row" style="margin-top: 40px;">
+    <div class="tool-pill"><span class="tool-dot"></span>Figma</div>
+    <div class="tool-pill"><span class="tool-dot"></span>User Research</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Wireframing</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Prototyping</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Usability Testing</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Google UX Design Certificate</div>
+  </div>
+</div>
+
+<div class="doc-footer">
+  <div><strong>Google UX Design Certificate</strong> · Case Study in Progress · 2026</div>
+  <div>Aylin Irk · Portfolio</div>
+</div>
+
+</body>
+</html>

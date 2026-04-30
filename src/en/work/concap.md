@@ -1,4 +1,5 @@
 ---
+layout: concap-case-study.njk
 title: ConCap
 tagline: Designing a conference capture flow that turns business cards and fast voice notes into clean, CRM-ready contacts.
 order: 3
