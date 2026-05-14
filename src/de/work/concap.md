@@ -74,6 +74,7 @@ process:
       body: Die erste große Reibung war nicht das Erfassen — es war die Organisation. Nutzern gefiel die Geschwindigkeit, aber sie wollten Kontakte nach Konferenz oder Gruppe sortieren. Statt jeden Kontakt beim Erfassen zu taggen, entwarf ich ein sitzungsbasiertes Gruppierungsmodell — Nutzer legen die aktuelle Konferenz einmalig fest, und jede neue Erfassung erbt diesen Kontext automatisch.
 lofiPhase:
   label: "Frühe Wireframes"
+  embed: "/assets/concap/concap-lofi.html"
   screens:
     - label: "Lo-fi-Screen 1"
     - label: "Lo-fi-Screen 2"
@@ -92,6 +93,7 @@ decisions:
       body: Der Wert der App ist nicht nur das Erfassen. Es ist die saubere Übergabe an Tools wie HubSpot, Salesforce, Airtable oder CSV-Export. Ein erfasster Kontakt, der in der App eingesperrt bleibt, ist nur die halbe Arbeit.
 hifiPhase:
   label: "High-Fidelity-Design"
+  embed: "/assets/concap/concap-hifi.html"
   screens:
     - label: "Hi-fi-Screen 1"
     - label: "Hi-fi-Screen 2"

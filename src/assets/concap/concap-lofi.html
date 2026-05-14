@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConCap — Lo-Fi Wireframes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="ios-frame.jsx"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #FAF8F5; min-height: 100vh; font-family: system-ui, -apple-system, sans-serif; }
+    #root { min-height: 100vh; }
+    * { scrollbar-width: none; }
+    *::-webkit-scrollbar { display: none; }
+    .screens-grid { display: flex; flex-wrap: wrap; gap: 0 56px; row-gap: 64px; padding: 32px 48px 64px; max-width: 1200px; margin: 0 auto; justify-content: center; }
+    .screen-item { display: flex; flex-direction: column; align-items: flex-start; }
+    .slide-dots { display: none; }
+    @media (max-width: 700px) {
+      .screens-grid { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; row-gap: 0; padding: 20px 0 0; max-width: none; justify-content: flex-start; }
+      .screen-item { flex: 0 0 100vw; scroll-snap-align: center; align-items: center; padding: 0 28px; box-sizing: border-box; }
+      .slide-dots { display: flex; justify-content: center; gap: 8px; padding: 16px 0 20px; }
+      .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(62,74,110,0.2); transition: background 0.2s, transform 0.2s; }
+      .dot-active { background: #3E4A6E; transform: scale(1.3); }
+    }
+  </style>
+</head>
+<body>
+<!-- Rough-edges SVG filter -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.038" numOctaves="4" seed="9" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const SYS_FONT  = 'system-ui, -apple-system, sans-serif';
+const HD_FONT   = "'Caveat', cursive";
+const INTER     = "'Inter', system-ui, sans-serif";
+const PLAYFAIR  = "'Playfair Display', serif";
+const BG = '#F7F6F2';
+const MUT = '#EEEDE9';
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "handDrawn": true
+}/*EDITMODE-END*/;
+
+// ── SVG Icons ────────────────────────────────────────────────────────────────
+const IcoBack    = <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>;
+const IcoZap     = <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
+const IcoList    = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>;
+const IcoMic     = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10v2a7 7 0 0014 0v-2M12 19v4"/></svg>;
+const IcoCamera  = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>;
+const IcoTrash   = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>;
+const IcoPlus    = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
+const IcoCheck   = <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>;
+const IcoRefresh = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>;
+const IcoLogout  = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>;
+const IcoUsers   = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>;
+const IcoBldg    = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>;
+const IcoStop    = <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>;
+const IcoPause   = <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>;
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function screenStyle(hd) {
+  return {
+    height: 874, overflow: 'hidden', display: 'flex', flexDirection: 'column',
+    fontFamily: hd ? HD_FONT : SYS_FONT,
+    background: BG,
+    ...(hd ? {
+      backgroundImage: 'radial-gradient(circle, rgba(0,0,0,0.09) 1px, transparent 1px)',
+      backgroundSize: '16px 16px',
+    } : {}),
+  };
+}
+
+function StepCard({ number, title, done, locked, children, hd }) {
+  const font = hd ? HD_FONT : SYS_FONT;
+  return (
+    <div style={{ background: '#fff', border: '2px solid #000', padding: 16, opacity: locked ? 0.38 : 1,
+      ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+        <div style={{ width: 28, height: 28, border: '2px solid #000', background: done ? '#000' : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          {done
+            ? <span style={{ color: '#fff', display: 'flex' }}>{IcoCheck}</span>
+            : <span style={{ fontSize: hd ? 16 : 12, fontWeight: 700, color: '#000', lineHeight: 1, fontFamily: font }}>{number}</span>
+          }
+        </div>
+        <p style={{ fontSize: hd ? 13 : 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.04em' : '0.12em', color: '#555', fontFamily: font }}>{title}</p>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function WaveBars() {
+  const hs = [30, 60, 45, 75, 55, 80, 40, 65, 50, 70, 35, 60, 48, 72, 38];
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 3, height: 40 }}>
+      {hs.map((h, i) => (
+        <div key={i} style={{ width: 4, height: h * 0.4, background: '#000', opacity: 0.65 + (i % 3) * 0.12 }} />
+      ))}
+    </div>
+  );
+}
+
+function Badge({ icon, label, hd }) {
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 8px', border: '1.5px solid #000', background: MUT, fontSize: hd ? 12 : 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.02em' : '0.08em', color: '#000', fontFamily: hd ? HD_FONT : SYS_FONT }}>
+      {icon}{label}
+    </span>
+  );
+}
+
+// ── Screen 1: Home ────────────────────────────────────────────────────────────
+function S1Home({ handDrawn: hd = false }) {
+  const font = hd ? HD_FONT : SYS_FONT;
+  const labelStyle = { fontSize: hd ? 14 : 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.04em' : '0.12em', color: '#555', fontFamily: font };
+  return (
+    <div style={{ ...screenStyle(hd), paddingTop: 62 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 16px 8px', flexShrink: 0 }}>
+        <button style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 11px', border: '2px solid #000', background: '#fff', fontSize: hd ? 14 : 11, fontWeight: 700, fontFamily: font, cursor: 'default' }}>
+          <span>◻</span><span>Hi-Fi</span>
+        </button>
+        <button style={{ padding: 9, border: '2px solid #000', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'default', color: '#000' }}>
+          {IcoLogout}
+        </button>
+      </div>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0 16px 40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 40 }}>
+          <p style={{ ...labelStyle, marginBottom: 10 }}>Welcome back</p>
+          <h1 style={{ fontSize: hd ? 52 : 38, fontWeight: 700, color: '#000', letterSpacing: hd ? '-0.01em' : '-0.02em', fontFamily: font }}>Alex</h1>
+        </div>
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <button style={{ width: '100%', height: 66, background: '#000', color: '#fff', fontSize: hd ? 20 : 17, fontWeight: 700, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, fontFamily: font, cursor: 'default',
+            ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+            <span style={{ color: '#fff', display: 'flex' }}>{IcoZap}</span>
+            Quick Capture
+          </button>
+          <button style={{ width: '100%', height: 50, background: '#fff', border: '2px solid #000', fontSize: hd ? 16 : 13, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: font, color: '#000', cursor: 'default',
+            ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+            <span style={{ display: 'flex' }}>{IcoList}</span>
+            View All Contacts
+            <span style={{ color: '#888', fontWeight: 400 }}>(3)</span>
+          </button>
+        </div>
+      </div>
+      <p style={{ textAlign: 'center', color: '#999', fontSize: hd ? 14 : 12, paddingBottom: 48, fontFamily: font, flexShrink: 0 }}>
+        Fast capture for busy trade fairs
+      </p>
+    </div>
+  );
+}
+
+// ── Screen 2: New Conversation ────────────────────────────────────────────────
+function S2Capture({ handDrawn: hd = false }) {
+  const font = hd ? HD_FONT : SYS_FONT;
+  return (
+    <div style={{ ...screenStyle(hd), paddingTop: 0 }}>
+      <div style={{ paddingTop: 62, background: '#fff', borderBottom: '2px solid #000', display: 'flex', alignItems: 'center', gap: 10, padding: '76px 16px 12px', flexShrink: 0,
+        ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+        <span style={{ color: '#000', display: 'flex' }}>{IcoBack}</span>
+        <h1 style={{ fontSize: hd ? 22 : 17, fontWeight: 700, color: '#000', fontFamily: font }}>New Conversation</h1>
+      </div>
+      <div style={{ flex: 1, padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <StepCard number={1} title="Business Card" done hd={hd}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ width: 56, height: 56, background: MUT, border: '2px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="28" height="18" viewBox="0 0 28 18" fill="none"><rect width="28" height="18" fill="#fff" stroke="#000" strokeWidth="1.5"/><circle cx="8" cy="9" r="3.5" fill="#000"/><rect x="14" y="6" width="10" height="2" fill="#000"/><rect x="14" y="10" width="7" height="1.5" fill="#888"/></svg>
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontWeight: 700, color: '#000', fontSize: hd ? 18 : 14, marginBottom: 2, fontFamily: font }}>Klaus Bergmann</p>
+              <p style={{ fontSize: hd ? 14 : 11, color: '#666', fontFamily: font }}>k.bergmann@techventures.de</p>
+            </div>
+          </div>
+        </StepCard>
+        <StepCard number={2} title="Voice Note" hd={hd}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ padding: '12px 14px', border: '2px solid #000', background: MUT,
+              ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                <div style={{ width: 10, height: 10, background: '#000', borderRadius: '50%' }} />
+                <span style={{ fontSize: hd ? 14 : 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.04em' : '0.08em', color: '#333', fontFamily: font }}>Recording</span>
+                <span style={{ marginLeft: 'auto', fontSize: hd ? 16 : 12, fontWeight: 700, fontFamily: hd ? font : 'monospace', color: '#000' }}>0:28</span>
+              </div>
+              <WaveBars />
+            </div>
+            <button style={{ width: '100%', height: 48, background: '#000', color: '#fff', border: 'none', fontSize: hd ? 17 : 13, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: font, cursor: 'default',
+              ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+              <span style={{ display: 'flex' }}>{IcoStop}</span>
+              Stop Recording
+            </button>
+          </div>
+        </StepCard>
+      </div>
+    </div>
+  );
+}
+
+// ── Screen 3: Contact List ─────────────────────────────────────────────────────
+const convs = [
+  { co: 'TechVentures AG', name: 'Klaus Bergmann', voice: true,  card: true,  time: '14:32' },
+  { co: 'Innovate GmbH',   name: 'Sarah Chen',     voice: true,  card: false, time: '13:10' },
+  { co: 'BioLogic AG',     name: 'Marco Rossi',    voice: false, card: false, time: '11:45' },
+];
+
+function S3List({ handDrawn: hd = false }) {
+  const font = hd ? HD_FONT : SYS_FONT;
+  return (
+    <div style={{ ...screenStyle(hd), paddingTop: 0 }}>
+      <div style={{ paddingTop: 62, background: '#fff', borderBottom: '2px solid #000', flexShrink: 0,
+        ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 2, padding: '10px 10px 10px 12px' }}>
+          <button style={{ padding: 8, background: 'none', border: 'none', color: '#000', display: 'flex', cursor: 'default' }}>{IcoBack}</button>
+          <div style={{ flex: 1, padding: '0 4px' }}>
+            <h1 style={{ fontSize: hd ? 20 : 15, fontWeight: 700, color: '#000', fontFamily: font }}>Contacts</h1>
+            <p style={{ fontSize: hd ? 14 : 10, color: '#666', fontFamily: font }}>3 conversations</p>
+          </div>
+          {[IcoRefresh, IcoLogout].map((ico, i) => (
+            <button key={i} style={{ padding: 8, background: 'none', border: 'none', color: '#000', display: 'flex', cursor: 'default' }}>{ico}</button>
+          ))}
+        </div>
+      </div>
+      <div style={{ flex: 1, padding: '14px 14px', display: 'flex', flexDirection: 'column', gap: 8, overflow: 'hidden' }}>
+        {convs.map((c, i) => (
+          <div key={i} style={{ background: '#fff', border: '2px solid #000', padding: '14px 16px',
+            ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 4 }}>
+              <span style={{ color: '#666', display: 'flex' }}>{IcoBldg}</span>
+              <h3 style={{ fontWeight: 700, color: '#000', fontSize: hd ? 18 : 14, fontFamily: font }}>{c.co}</h3>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 10 }}>
+              <span style={{ color: '#666', display: 'flex' }}>{IcoUsers}</span>
+              <p style={{ fontSize: hd ? 15 : 12, color: '#444', fontFamily: font }}>{c.name}</p>
+            </div>
+            <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 6 }}>
+              {c.voice && <Badge icon={IcoMic}    label="1 voice" hd={hd} />}
+              {c.card  && <Badge icon={IcoCamera} label="1 card"  hd={hd} />}
+            </div>
+            <p style={{ fontSize: hd ? 13 : 10, color: '#999', fontFamily: hd ? font : 'monospace' }}>Today, {c.time}</p>
+          </div>
+        ))}
+      </div>
+      <div style={{ background: '#fff', borderTop: '2px solid #000', padding: '14px 14px 28px', flexShrink: 0 }}>
+        <button style={{ width: '100%', height: 54, background: '#000', color: '#fff', fontSize: hd ? 18 : 14, fontWeight: 700, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: font, cursor: 'default',
+          ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+          {IcoPlus} New Conversation
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Screen 4: Conversation Detail ─────────────────────────────────────────────
+function S4Detail({ handDrawn: hd = false }) {
+  const font = hd ? HD_FONT : SYS_FONT;
+  const labelStyle = { display: 'block', fontSize: hd ? 14 : 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.04em' : '0.10em', color: '#555', marginBottom: 8, fontFamily: font };
+  return (
+    <div style={{ ...screenStyle(hd), paddingTop: 0 }}>
+      <div style={{ paddingTop: 62, background: '#fff', borderBottom: '2px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '76px 16px 12px', flexShrink: 0,
+        ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+        <span style={{ color: '#000', display: 'flex' }}>{IcoBack}</span>
+        <h1 style={{ fontSize: hd ? 20 : 16, fontWeight: 700, color: '#000', fontFamily: font }}>Conversation</h1>
+        <span style={{ color: '#000', display: 'flex' }}>{IcoTrash}</span>
+      </div>
+      <div style={{ flex: 1, padding: '14px 14px', display: 'flex', flexDirection: 'column', gap: 12, overflow: 'hidden' }}>
+        <div style={{ background: '#fff', border: '2px solid #000', padding: 16, ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+          <label style={labelStyle}>Company Name</label>
+          <div style={{ height: 46, padding: '0 14px', background: MUT, border: '2px solid #000', display: 'flex', alignItems: 'center', fontSize: hd ? 20 : 15, fontWeight: 600, color: '#000', fontFamily: font }}>
+            TechVentures AG
+          </div>
+        </div>
+        <div style={{ background: '#fff', border: '2px solid #000', padding: 16, ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+          <h2 style={{ fontSize: hd ? 14 : 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.04em' : '0.10em', color: '#555', marginBottom: 10, fontFamily: font }}>Notes</h2>
+          <div style={{ padding: '10px 12px', background: MUT, border: '2px solid #000', fontSize: hd ? 16 : 12, color: '#333', fontStyle: 'italic', lineHeight: 1.55, marginBottom: 10, fontFamily: font }}>
+            "Interested in Q3 rollout. 50+ seat deal. Needs board demo. Follow up on integration with HubSpot."
+          </div>
+          <div style={{ border: '2px solid #000', background: '#fff' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderBottom: '2px solid #000' }}>
+              <button style={{ width: 40, height: 40, background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', flexShrink: 0, color: '#fff', cursor: 'default' }}>{IcoPause}</button>
+              <div>
+                <p style={{ fontSize: hd ? 13 : 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.04em' : '0.08em', color: '#555', fontFamily: font }}>Voice Note</p>
+                <p style={{ fontSize: hd ? 15 : 11, fontFamily: hd ? font : 'monospace', color: '#333' }}>00:42</p>
+              </div>
+            </div>
+            <div style={{ padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ display: 'flex', color: '#000' }}>{IcoMic}</span>
+              <span style={{ fontSize: hd ? 16 : 13, fontWeight: 700, color: '#000', fontFamily: font }}>Record Voice Note</span>
+            </div>
+          </div>
+        </div>
+        <div style={{ background: '#fff', border: '2px solid #000', padding: 16, ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <span style={{ display: 'flex', color: '#000' }}>{IcoUsers}</span>
+            <h2 style={{ fontSize: hd ? 14 : 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: hd ? '0.04em' : '0.10em', color: '#555', fontFamily: font }}>People (1)</h2>
+          </div>
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <div style={{ width: 56, height: 56, background: MUT, border: '2px solid #000', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <span style={{ fontSize: hd ? 22 : 16, fontWeight: 800, color: '#555', fontFamily: font }}>KB</span>
+            </div>
+            <div>
+              <p style={{ fontWeight: 700, fontSize: hd ? 18 : 14, color: '#000', marginBottom: 2, fontFamily: font }}>Klaus Bergmann</p>
+              <p style={{ fontSize: hd ? 14 : 11, color: '#555', marginBottom: 1, fontFamily: font }}>Head of Partnerships</p>
+              <p style={{ fontSize: hd ? 13 : 11, color: '#666', fontFamily: font }}>k.bergmann@techventures.de</p>
+            </div>
+          </div>
+        </div>
+        <button style={{ width: '100%', height: 56, background: '#000', color: '#fff', fontSize: hd ? 18 : 15, fontWeight: 700, border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontFamily: font, cursor: 'default', flexShrink: 0,
+          ...(hd ? { filter: 'url(#rough)' } : {}) }}>
+          <span style={{ display: 'flex', color: '#fff' }}>{IcoCheck}</span>
+          Save &amp; Close
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Phone wrapper ─────────────────────────────────────────────────────────────
+function PhoneWrapper({ children }) {
+  return (
+    <div style={{ width: 261, height: 568, flexShrink: 0, position: 'relative' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, transform: 'scale(0.65)', transformOrigin: 'top left', width: 402, height: 874 }}>
+        <IOSDevice width={402} height={874} dark={false}>{children}</IOSDevice>
+      </div>
+    </div>
+  );
+}
+
+function Annotation({ num, title, desc, hd }) {
+  return (
+    <div style={{ width: 261, paddingTop: 18 }}>
+      <span style={{ display: 'inline-block', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#aaa', marginBottom: 6, fontFamily: INTER }}>
+        {num}
+      </span>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: '#1a1a2e', marginBottom: 4, fontFamily: PLAYFAIR }}>{title}</h3>
+      <p style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.55, fontFamily: INTER }}>{desc}</p>
+    </div>
+  );
+}
+
+// ── Tweaks panel ──────────────────────────────────────────────────────────────
+function LoFiTweaks({ handDrawn, onChange, onClose }) {
+  return (
+    <div style={{ position: 'fixed', bottom: 24, right: 24, width: 252, background: '#fff', border: '2.5px solid #000', padding: '18px 20px 20px', zIndex: 1000, boxShadow: '5px 5px 0 #000', fontFamily: SYS_FONT }}>
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
+        <span style={{ fontWeight: 800, fontSize: 13, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Tweaks</span>
+        <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: '#000', padding: '0 2px' }}>×</button>
+      </div>
+      {/* Hand-drawn toggle */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+        <div>
+          <p style={{ fontSize: 13, fontWeight: 700, color: '#000', marginBottom: 2 }}>Hand-drawn</p>
+          <p style={{ fontSize: 11, color: '#888', lineHeight: 1.4, maxWidth: 150 }}>Caveat font + rough edges + dot-grid paper</p>
+        </div>
+        <div onClick={() => onChange(!handDrawn)} style={{ width: 48, height: 28, background: handDrawn ? '#000' : MUT, border: '2px solid #000', position: 'relative', cursor: 'pointer', flexShrink: 0, marginLeft: 12 }}>
+          <div style={{ position: 'absolute', width: 20, height: 20, background: handDrawn ? '#fff' : '#000', top: 2, left: handDrawn ? 22 : 2, transition: 'left 0.15s ease' }} />
+        </div>
+      </div>
+      {handDrawn && (
+        <div style={{ padding: '8px 10px', background: MUT, border: '1.5px solid #ccc', fontSize: 11, color: '#555', fontFamily: "'Caveat', cursive", fontSize: 14 }}>
+          This is how Caveat looks — like a sketch!
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Portfolio App ─────────────────────────────────────────────────────────────
+const screenDefs = [
+  { num: '01', title: 'Home',                desc: 'Welcome screen — Hi-Fi toggle, one-tap Quick Capture CTA, contacts count at a glance.',        render: (hd) => <S1Home handDrawn={hd} /> },
+  { num: '02', title: 'New Conversation',    desc: 'Two-step capture flow in progress: card scan complete, voice recording underway.',              render: (hd) => <S2Capture handDrawn={hd} /> },
+  { num: '03', title: 'Conversation Detail', desc: 'Full editing surface: company, notes, voice playback, and contact card with editable fields.',  render: (hd) => <S4Detail handDrawn={hd} /> },
+];
+
+function App() {
+  const [handDrawn, setHandDrawn] = useState(TWEAK_DEFAULTS.handDrawn);
+  const [tweaksVisible, setTweaksVisible] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const gridRef = useRef(null);
+  const handleScroll = () => {
+    if (!gridRef.current) return;
+    setActiveSlide(Math.round(gridRef.current.scrollLeft / gridRef.current.offsetWidth));
+  };
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.data?.type === '__activate_edit_mode')   setTweaksVisible(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksVisible(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const setHD = (val) => {
+    setHandDrawn(val);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { handDrawn: val } }, '*');
+  };
+
+  const closeTweaks = () => {
+    setTweaksVisible(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  const pageFont = handDrawn ? HD_FONT : SYS_FONT;
+
+  return (
+    <div style={{ minHeight: '100vh', background: '#FAF8F5', fontFamily: pageFont }}>
+      <div className="screens-grid" ref={gridRef} onScroll={handleScroll}>
+        {screenDefs.map((s, i) => (
+          <div key={i} className="screen-item">
+            <PhoneWrapper>{s.render(handDrawn)}</PhoneWrapper>
+            <Annotation num={s.num} title={s.title} desc={s.desc} hd={handDrawn} />
+          </div>
+        ))}
+      </div>
+      <div className="slide-dots">
+        {screenDefs.map((_, i) => (
+          <div key={i} className={`dot${i === activeSlide ? ' dot-active' : ''}`}/>
+        ))}
+      </div>
+      {tweaksVisible && (
+        <LoFiTweaks handDrawn={handDrawn} onChange={setHD} onClose={closeTweaks} />
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

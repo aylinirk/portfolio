@@ -74,6 +74,7 @@ process:
       body: The first major friction was not capture — it was organization. Users liked the speed, but wanted to sort contacts by conference or group. Instead of tagging every contact during capture, I designed a session-based grouping model — users set the current conference once, and every new capture inherits that context automatically.
 lofiPhase:
   label: "Early Wireframes"
+  embed: "/assets/concap/concap-lofi.html"
   screens:
     - label: "Lo-fi screen 1"
     - label: "Lo-fi screen 2"
@@ -92,6 +93,7 @@ decisions:
       body: The value of the app is not just capture. It is clean handoff into tools like HubSpot, Salesforce, Airtable, or CSV export. A captured contact that stays locked inside the app is only half the job done.
 hifiPhase:
   label: "High-Fidelity Design"
+  embed: "/assets/concap/concap-hifi.html"
   screens:
     - label: "Hi-fi screen 1"
     - label: "Hi-fi screen 2"

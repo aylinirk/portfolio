@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConCap — Hi-Fi Designs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="ios-frame.jsx"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#FAF8F5;min-height:100vh;font-family:'DM Sans',system-ui,sans-serif}
+    #root{min-height:100vh}
+    *{scrollbar-width:none}
+    *::-webkit-scrollbar{display:none}
+    @keyframes ccPulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.65)}}
+    .screens-grid{display:grid;grid-template-columns:repeat(3,261px);gap:64px 40px;padding:32px 48px 64px;max-width:1200px;margin:0 auto;justify-content:center}
+    .screen-item{display:flex;flex-direction:column;align-items:flex-start}
+    .slide-dots{display:none}
+    @media(max-width:700px){
+      .screens-grid{display:flex;flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:0;padding:20px 0 0;max-width:none;justify-content:flex-start}
+      .screen-item{flex:0 0 100vw;scroll-snap-align:center;align-items:center;padding:0 28px;box-sizing:border-box}
+      .slide-dots{display:flex;justify-content:center;gap:8px;padding:16px 0 20px}
+      .dot{width:6px;height:6px;border-radius:50%;background:rgba(62,74,110,0.2);transition:background 0.2s,transform 0.2s}
+      .dot-active{background:#3E4A6E;transform:scale(1.3)}
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useRef } = React;
+const F        = "'DM Sans',system-ui,sans-serif";
+const INTER    = "'Inter',system-ui,sans-serif";
+const PLAYFAIR = "'Playfair Display',serif";
+
+// ── Tokens ───────────────────────────────────────────────────────────────────
+const CC = {
+  bg:        'oklch(0.978 0.010 225)',
+  fg:        'oklch(0.16 0.04 255)',
+  muted:     'oklch(0.93 0.010 225)',
+  mutedFg:   'oklch(0.50 0.03 240)',
+  terra:     'oklch(0.24 0.14 258)',
+  danger:    'oklch(0.55 0.22 25)',
+  divider:   'rgba(20,20,60,0.07)',
+  cardGlass: 'rgba(255,255,255,0.62)',
+};
+
+// ── Gradient states (exact GS_MAP positions from tokens.ts) ──────────────────
+const GRAD = {
+  idle: {
+    backgroundColor: CC.bg,
+    backgroundImage: ['radial-gradient(circle at 10% 15%,hsla(199,92%,64%,.30) 0px,transparent 56%)','radial-gradient(circle at 85% 10%,hsla(225,100%,74%,.30) 0px,transparent 56%)','radial-gradient(circle at 50% 50%,hsla(222,83%,69%,.30) 0px,transparent 56%)','radial-gradient(circle at 15% 82%,hsla(199,80%,70%,.30) 0px,transparent 56%)','radial-gradient(circle at 80% 78%,hsla(215,90%,72%,.30) 0px,transparent 56%)'].join(','),
+  },
+  welcome: {
+    backgroundColor: CC.bg,
+    backgroundImage: ['radial-gradient(circle at 20% 18%,hsla(199,92%,64%,.42) 0px,transparent 62%)','radial-gradient(circle at 78% 12%,hsla(225,100%,74%,.42) 0px,transparent 62%)','radial-gradient(circle at 48% 52%,hsla(222,83%,69%,.42) 0px,transparent 62%)','radial-gradient(circle at 22% 80%,hsla(199,80%,70%,.42) 0px,transparent 62%)','radial-gradient(circle at 76% 72%,hsla(215,90%,72%,.42) 0px,transparent 62%)'].join(','),
+  },
+  review: {
+    backgroundColor: CC.bg,
+    backgroundImage: ['radial-gradient(circle at 15%  8%,hsla(199,92%,64%,.52) 0px,transparent 65%)','radial-gradient(circle at 82%  5%,hsla(225,100%,74%,.52) 0px,transparent 65%)','radial-gradient(circle at 50% 35%,hsla(222,83%,69%,.52) 0px,transparent 65%)','radial-gradient(circle at 30% 65%,hsla(199,80%,70%,.34) 0px,transparent 50%)','radial-gradient(circle at 70% 62%,hsla(215,90%,72%,.34) 0px,transparent 50%)'].join(','),
+  },
+  scanning: {
+    backgroundColor: CC.bg,
+    backgroundImage: ['radial-gradient(circle at 15%  8%,hsla(199,92%,64%,.62) 0px,transparent 68%)','radial-gradient(circle at 82%  5%,hsla(225,100%,74%,.62) 0px,transparent 68%)','radial-gradient(circle at 50% 30%,hsla(222,83%,69%,.62) 0px,transparent 68%)','radial-gradient(circle at 30% 62%,hsla(199,80%,70%,.38) 0px,transparent 50%)','radial-gradient(circle at 70% 58%,hsla(215,90%,72%,.38) 0px,transparent 50%)'].join(','),
+  },
+  recording: {
+    backgroundColor: CC.bg,
+    backgroundImage: ['radial-gradient(circle at 45% 70%,hsla(199,92%,64%,.68) 0px,transparent 72%)','radial-gradient(circle at 20% 80%,hsla(225,100%,74%,.68) 0px,transparent 72%)','radial-gradient(circle at 75% 75%,hsla(222,83%,69%,.68) 0px,transparent 72%)','radial-gradient(circle at 30% 40%,hsla(199,80%,70%,.48) 0px,transparent 60%)','radial-gradient(circle at 65% 35%,hsla(215,90%,72%,.48) 0px,transparent 60%)'].join(','),
+  },
+};
+
+const AV = [
+  {bg:'oklch(0.88 0.04 240)',fg:'oklch(0.36 0.12 258)'},
+  {bg:'oklch(0.86 0.05 260)',fg:'oklch(0.34 0.14 250)'},
+  {bg:'oklch(0.88 0.06 230)',fg:'oklch(0.34 0.14 250)'},
+  {bg:'oklch(0.86 0.04 210)',fg:'oklch(0.34 0.12 230)'},
+];
+
+// ── Icons ─────────────────────────────────────────────────────────────────────
+const IcoBack   = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>;
+const IcoZap    = <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
+const IcoZapSm  = <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
+const IcoList   = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>;
+const IcoFldr   = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>;
+const IcoFldrSm = <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>;
+const IcoMic    = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10v2a7 7 0 0014 0v-2M12 19v4"/></svg>;
+const IcoCam    = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>;
+const IcoQR     = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M17 14h.01M17 17h3v3h-3v-3zM14 17h.01M14 14h3"/></svg>;
+const IcoLink   = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>;
+const IcoImg    = <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>;
+const IcoGear   = <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>;
+const IcoChevR  = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>;
+const IcoChevD  = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="6 9 12 15 18 9"/></svg>;
+const IcoCheck  = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>;
+const IcoTrash  = <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>;
+const IcoSquare = <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="3"/></svg>;
+const IcoSync   = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>;
+const IcoBriefcase = <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>;
+const IcoPhone  = <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>;
+const IcoBuilding = <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>;
+const IcoCard   = <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>;
+
+// ── Shared components ─────────────────────────────────────────────────────────
+function IcoBtn({ children, style={} }) {
+  return (
+    <button style={{ width:36, height:36, borderRadius:'50%', border:'none', background:'rgba(255,255,255,0.46)', backdropFilter:'blur(8px)', display:'flex', alignItems:'center', justifyContent:'center', color:CC.fg, cursor:'default', ...style }}>
+      {children}
+    </button>
+  );
+}
+
+function Btn({ children, icon, variant='primary', full=true, height=52, style={} }) {
+  const v = { primary:{background:CC.terra,color:'#fff'}, danger:{background:'oklch(0.34 0.18 25)',color:'#fff'}, secondary:{background:CC.muted,color:CC.fg} }[variant];
+  return (
+    <button style={{ height, borderRadius:100, border:'none', cursor:'default', display:'flex', alignItems:'center', justifyContent:'center', gap:8, fontSize:14, fontWeight:600, fontFamily:F, width:full?'100%':'auto', padding:'0 22px', ...v, ...style }}>
+      {icon && <span style={{display:'flex',flexShrink:0}}>{icon}</span>}
+      {children}
+    </button>
+  );
+}
+
+// Standard 3-tab bar matching actual screenshots
+function TabBar({ active='capture' }) {
+  const tabs=[{k:'capture',icon:IcoZapSm,label:'Capture'},{k:'conversations',icon:IcoList,label:'Conversations'},{k:'folders',icon:IcoFldr,label:'Folders'}];
+  return (
+    <div style={{ flexShrink:0, height:82, background:'rgba(255,255,255,0.96)', backdropFilter:'blur(24px)', borderTop:`1px solid ${CC.divider}`, display:'flex' }}>
+      {tabs.map(t=>(
+        <div key={t.k} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'flex-start', paddingTop:10, gap:3 }}>
+          <div style={{ color:active===t.k?CC.terra:CC.mutedFg, display:'flex' }}>{t.icon}</div>
+          <span style={{ fontSize:10, fontWeight:active===t.k?700:500, color:active===t.k?CC.terra:CC.mutedFg, fontFamily:F }}>{t.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// "Adding to: Default ▾" folder strip — appears on capture screens
+function FolderStrip() {
+  return (
+    <div style={{ flexShrink:0, height:36, background:'oklch(0.94 0.016 245 / 0.55)', backdropFilter:'blur(8px)', borderBottom:`1px solid ${CC.divider}`, display:'flex', alignItems:'center', justifyContent:'center', gap:5 }}>
+      <span style={{ color:CC.terra, display:'flex', opacity:0.8 }}>{IcoFldrSm}</span>
+      <span style={{ fontSize:12, fontWeight:600, color:CC.terra, letterSpacing:'-0.01em' }}>Adding to:</span>
+      <span style={{ fontSize:12, fontWeight:700, color:CC.terra }}>Default</span>
+      <span style={{ color:CC.terra, display:'flex', opacity:0.55 }}>{IcoChevD}</span>
+    </div>
+  );
+}
+
+// Progress dots (step indicator)
+function ProgressDots({ step=0 }) {
+  return (
+    <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:7 }}>
+      {[0,1].map(i=>(
+        <div key={i} style={{ height:4, borderRadius:2, background:i<=step?CC.fg:CC.muted, width:i===step?24:8, transition:'all 0.3s' }}/>
+      ))}
+    </div>
+  );
+}
+
+// Colored platform dots (Paste link)
+function PlatformDots() {
+  const ps=[{bg:'#13C4B2',l:'M',r:'50%'},{bg:'#0A66C2',l:'in',r:'4px'},{bg:'#E8365D',l:'Hi',r:'4px'},{bg:'#E02020',l:'●',r:'50%'}];
+  return (
+    <div style={{ display:'flex', gap:4, marginTop:7 }}>
+      {ps.map((p,i)=>(
+        <div key={i} style={{ width:18, height:18, borderRadius:p.r, background:p.bg, display:'flex', alignItems:'center', justifyContent:'center' }}>
+          <span style={{ fontSize:7, fontWeight:800, color:'#fff', lineHeight:1 }}>{p.l}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Business card mock
+function BusinessCard() {
+  return (
+    <div style={{ borderRadius:10, background:'#fff', boxShadow:'0 2px 18px rgba(0,0,0,0.11)', border:'1px solid rgba(0,0,0,0.06)', padding:'14px 16px 12px', display:'flex', gap:12, marginBottom:14 }}>
+      <div style={{ flex:1, minWidth:0 }}>
+        <div style={{ fontSize:13, fontWeight:700, color:'#111', marginBottom:1 }}>Bernhard Beispiel</div>
+        <div style={{ fontSize:11, color:'#555', marginBottom:6 }}>Einkäufer</div>
+        <div style={{ fontSize:10, color:'#888', marginBottom:1 }}>SAMPLE International GmbH</div>
+        <div style={{ fontSize:10, color:'#888', marginBottom:1 }}>Musterplatz 7, 1234 Irgendwo</div>
+        <div style={{ fontSize:10, color:'#666', marginTop:4 }}>Tel: +39 12 345 67 09-012</div>
+      </div>
+      <div style={{ flexShrink:0, display:'flex', flexDirection:'column', alignItems:'flex-end', gap:6 }}>
+        <span style={{ fontSize:13, fontWeight:800, color:'#2BAE8E' }}>SAMPLE</span>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="13" stroke="#2BAE8E" strokeWidth="2.5"/>
+          <path d="M7 22 Q16 8 25 22" stroke="#2BAE8E" strokeWidth="2" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+// Extracted field row
+function FieldRow({ icon, value }) {
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap:12, padding:'11px 14px', borderRadius:12, background:'rgba(255,255,255,0.72)', marginBottom:8 }}>
+      <span style={{ color:CC.mutedFg, display:'flex', flexShrink:0 }}>{icon}</span>
+      <span style={{ fontSize:14, color:CC.fg, fontFamily:F }}>{value}</span>
+    </div>
+  );
+}
+
+// Radio option (HubSpot)
+function RadioOpt({ label, sub, selected }) {
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap:12, padding:'14px 16px', borderRadius:12, border:`1.5px solid ${selected?CC.terra:'rgba(20,20,60,0.10)'}`, background:selected?'oklch(0.95 0.025 240)':'#fff', marginBottom:8 }}>
+      <div style={{ width:20, height:20, borderRadius:'50%', border:`2px solid ${selected?CC.terra:'rgba(20,20,60,0.25)'}`, background:selected?CC.terra:'transparent', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+        {selected && <div style={{ width:8, height:8, borderRadius:'50%', background:'#fff' }}/>}
+      </div>
+      <div>
+        <div style={{ fontSize:14, fontWeight:600, color:CC.fg, fontFamily:F }}>{label}</div>
+        <div style={{ fontSize:12, color:CC.mutedFg, fontFamily:F }}>{sub}</div>
+      </div>
+    </div>
+  );
+}
+
+// ── Screen 1: Home (welcome α=0.42) ──────────────────────────────────────────
+function S1Home() {
+  const recent=[{i:'DK',co:'Unnamed',name:"Dr. Kevin Arman Stäuble's Digital Bu…",t:'3d'},{i:'DK',co:'Unnamed',name:"Dr. Kevin Arman Stäuble's Digital Bu…",t:'3d'},{i:'SE',co:'Stäuble Elektrotechnik AG',name:'Reto Stäuble',t:'7d'}];
+  return (
+    <div style={{ height:874, overflow:'hidden', display:'flex', flexDirection:'column', paddingTop:62, fontFamily:F, ...GRAD.welcome }}>
+      {/* Inline nav — no bar */}
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'12px 22px 8px', flexShrink:0 }}>
+        <span style={{ fontSize:14, fontWeight:700, letterSpacing:'-0.01em', color:CC.fg }}>ConCap</span>
+        <IcoBtn>{IcoGear}</IcoBtn>
+      </div>
+      {/* Greeting */}
+      <div style={{ padding:'4px 22px 18px', flexShrink:0 }}>
+        <div style={{ fontSize:28, fontWeight:800, letterSpacing:'-0.03em', color:CC.fg, lineHeight:1.15 }}>Hi Kevin —<br/>ready to start?</div>
+      </div>
+      {/* Quick action card */}
+      <div style={{ margin:'0 22px 10px', borderRadius:20, background:'rgba(255,255,255,0.70)', backdropFilter:'blur(14px)', border:'1px solid rgba(255,255,255,0.80)', padding:'18px 20px 16px', flexShrink:0 }}>
+        <div style={{ fontSize:10, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:CC.mutedFg, marginBottom:5 }}>Quick Action</div>
+        <div style={{ fontSize:18, fontWeight:800, letterSpacing:'-0.02em', color:CC.fg, marginBottom:3 }}>Start capturing</div>
+        <div style={{ fontSize:12, color:CC.mutedFg, marginBottom:14 }}>Scan a card or record a voice note</div>
+        <Btn icon={IcoZapSm} full={false} style={{ height:44, paddingLeft:18, paddingRight:20 }}>Quick capture</Btn>
+      </div>
+      {/* Secondary buttons */}
+      <div style={{ display:'flex', gap:10, padding:'0 22px', marginBottom:14, flexShrink:0 }}>
+        {[{icon:IcoList,l:'24 conversations'},{icon:IcoFldr,l:'All folders'}].map((b,i)=>(
+          <button key={i} style={{ flex:1, height:44, borderRadius:100, border:'none', background:'rgba(255,255,255,0.58)', backdropFilter:'blur(8px)', display:'flex', alignItems:'center', justifyContent:'center', gap:7, fontSize:12, fontWeight:600, color:CC.fg, cursor:'default', fontFamily:F }}>
+            <span style={{ display:'flex', color:CC.mutedFg }}>{b.icon}</span>{b.l}
+          </button>
+        ))}
+      </div>
+      {/* Recent */}
+      <div style={{ margin:'0 22px', borderRadius:18, background:'rgba(255,255,255,0.55)', backdropFilter:'blur(12px)', border:'1px solid rgba(255,255,255,0.70)', overflow:'hidden', flexShrink:0 }}>
+        <div style={{ padding:'10px 16px 8px', fontSize:11, fontWeight:700, letterSpacing:'0.08em', textTransform:'uppercase', color:CC.mutedFg, borderBottom:`1px solid ${CC.divider}` }}>Recent</div>
+        {recent.map((r,i)=>(
+          <div key={i} style={{ display:'flex', alignItems:'center', gap:10, padding:'11px 16px', borderBottom:i<recent.length-1?`1px solid ${CC.divider}`:'none' }}>
+            <div style={{ width:32, height:32, borderRadius:'50%', flexShrink:0, background:AV[i%AV.length].bg, color:AV[i%AV.length].fg, display:'flex', alignItems:'center', justifyContent:'center', fontSize:10, fontWeight:700 }}>{r.i}</div>
+            <div style={{ flex:1, minWidth:0 }}>
+              <div style={{ fontSize:13, fontWeight:700, color:CC.fg, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.co}</div>
+              <div style={{ fontSize:11, color:CC.mutedFg, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{r.name}</div>
+            </div>
+            <span style={{ fontSize:11, color:CC.mutedFg, flexShrink:0 }}>{r.t}</span>
+            <span style={{ color:CC.mutedFg, display:'flex' }}>{IcoChevR}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Screen 2: Capture method select (scanning α=0.62) ────────────────────────
+function CapTile({ icon, title, sub, wide=false }) {
+  return (
+    <div style={{ gridColumn:wide?'span 2':undefined, borderRadius:20, padding:wide?'14px 16px':18, background:'rgba(255,255,255,0.65)', backdropFilter:'blur(12px)', border:'1px solid rgba(255,255,255,0.85)', display:'flex', alignItems:wide?'center':'flex-start', flexDirection:wide?'row':'column', gap:wide?14:10 }}>
+      <div style={{ width:46, height:46, borderRadius:13, background:CC.terra, display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', flexShrink:0 }}>{icon}</div>
+      <div style={{ flex:wide?1:undefined }}>
+        <div style={{ fontSize:14, fontWeight:700, color:CC.fg, marginBottom:2 }}>{title}</div>
+        <div style={{ fontSize:11, color:CC.mutedFg }}>{sub}</div>
+        {title==='Paste link'&&<PlatformDots/>}
+      </div>
+      {wide&&<span style={{ color:CC.mutedFg, display:'flex' }}>{IcoChevR}</span>}
+    </div>
+  );
+}
+
+function S2Capture() {
+  return (
+    <div style={{ height:874, overflow:'hidden', display:'flex', flexDirection:'column', paddingTop:62, fontFamily:F, ...GRAD.scanning }}>
+      {/* Floating nav */}
+      <div style={{ height:48, display:'flex', alignItems:'center', padding:'0 8px', flexShrink:0 }}>
+        <IcoBtn>{IcoBack}</IcoBtn>
+      </div>
+      <FolderStrip/>
+      {/* Content */}
+      <div style={{ flex:1, overflow:'hidden', padding:'18px 20px 0', display:'flex', flexDirection:'column', gap:18 }}>
+        <div>
+          <div style={{ fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:CC.mutedFg, marginBottom:8 }}>Quick Action</div>
+          <div style={{ fontSize:24, fontWeight:800, letterSpacing:'-0.03em', color:CC.fg, lineHeight:1.15 }}>How do you want<br/>to capture?</div>
+        </div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+          <CapTile icon={IcoCam}  title="Scan card"    sub="Business card photo" />
+          <CapTile icon={IcoQR}   title="Scan QR"      sub="vCard or profile link" />
+          <CapTile icon={IcoLink} title="Paste link"   sub="Wazzl, LinkedIn, HiHello…" wide />
+          <CapTile icon={IcoImg}  title="Upload image" sub="LinkedIn, Xing, any profile page" wide />
+          <CapTile icon={IcoMic}  title="Just voice"   sub="Voice note only — no card needed" wide />
+        </div>
+      </div>
+      <TabBar active="capture"/>
+    </div>
+  );
+}
+
+// ── Screen 3: Card result — enriched (review α=0.52) ─────────────────────────
+function S3CardResult() {
+  return (
+    <div style={{ height:874, overflow:'hidden', display:'flex', flexDirection:'column', paddingTop:62, fontFamily:F, ...GRAD.review }}>
+      {/* Floating nav + progress */}
+      <div style={{ height:48, display:'flex', alignItems:'center', padding:'0 8px', flexShrink:0 }}>
+        <IcoBtn>{IcoBack}</IcoBtn>
+        <ProgressDots step={0}/>
+        <div style={{ width:36 }}/>
+      </div>
+      <FolderStrip/>
+      {/* Content */}
+      <div style={{ flex:1, overflow:'hidden', padding:'16px 20px 0' }}>
+        {/* Business Card badge */}
+        <div style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:8, background:CC.muted, marginBottom:14 }}>
+          <span style={{ display:'flex', color:CC.terra }}>{IcoCard}</span>
+          <span style={{ fontSize:12, fontWeight:700, color:CC.terra }}>Business Card</span>
+        </div>
+        {/* Contact header */}
+        <div style={{ display:'flex', alignItems:'center', gap:14, marginBottom:16 }}>
+          <div style={{ width:52, height:52, borderRadius:'50%', background:AV[0].bg, color:AV[0].fg, display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, fontWeight:700, flexShrink:0 }}>BB</div>
+          <div style={{ fontSize:20, fontWeight:800, letterSpacing:'-0.02em', color:CC.fg }}>Bernhard Beispiel</div>
+        </div>
+        {/* Business card photo */}
+        <BusinessCard/>
+        {/* Extracted fields */}
+        <FieldRow icon={IcoBuilding} value="SAMPLE International GmbH"/>
+        <FieldRow icon={IcoBriefcase} value="Einkäufer"/>
+        <FieldRow icon={IcoPhone} value="+39 12 345 67 09-012"/>
+      </div>
+      {/* CTA */}
+      <div style={{ padding:'12px 20px 16px', flexShrink:0 }}>
+        <Btn icon={IcoCheck}>Looks good</Btn>
+      </div>
+      <TabBar active="capture"/>
+    </div>
+  );
+}
+
+// ── Screen 4: Voice recording (recording α=0.68) ──────────────────────────────
+function Waveform() {
+  const h=[18,44,28,60,38,74,50,64,32,52,44,70,28,50,38,62,52,42,60,32];
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap:3, height:50 }}>
+      {h.map((v,i)=><div key={i} style={{ width:3.5, height:v*0.66, background:'oklch(0.30 0.08 255)', borderRadius:2, opacity:0.7+(i%4)*0.08 }}/>)}
+    </div>
+  );
+}
+
+function S4Voice() {
+  return (
+    <div style={{ height:874, overflow:'hidden', display:'flex', flexDirection:'column', paddingTop:62, fontFamily:F, ...GRAD.recording }}>
+      {/* Floating nav + progress */}
+      <div style={{ height:48, display:'flex', alignItems:'center', padding:'0 8px', flexShrink:0 }}>
+        <IcoBtn>{IcoBack}</IcoBtn>
+        <ProgressDots step={1}/>
+        <div style={{ width:36 }}/>
+      </div>
+      <FolderStrip/>
+      {/* Content */}
+      <div style={{ flex:1, display:'flex', flexDirection:'column', justifyContent:'center', padding:'0 20px 80px', gap:24 }}>
+        <div>
+          <div style={{ fontSize:11, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:CC.mutedFg, marginBottom:8 }}>Step 2 of 2</div>
+          <div style={{ fontSize:26, fontWeight:800, letterSpacing:'-0.03em', color:CC.fg, lineHeight:1.15 }}>Record your<br/>impression</div>
+          <div style={{ fontSize:13, color:CC.mutedFg, marginTop:8, lineHeight:1.55 }}>Capture key insights and follow-ups — we'll transcribe it for you.</div>
+        </div>
+        {/* Recording card */}
+        <div style={{ borderRadius:18, background:'rgba(240,242,248,0.90)', padding:'24px 20px', display:'flex', flexDirection:'column', alignItems:'center', gap:14 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+            <div style={{ width:10, height:10, borderRadius:'50%', background:'#E02020', animation:'ccPulseDot 1s ease-in-out infinite' }}/>
+            <span style={{ fontSize:14, fontWeight:600, color:'oklch(0.30 0.08 255)' }}>Recording…</span>
+          </div>
+          <Waveform/>
+          <div style={{ fontSize:28, fontWeight:700, letterSpacing:'0.08em', color:'oklch(0.25 0.06 255)', fontVariantNumeric:'tabular-nums' }}>00:02</div>
+        </div>
+        <Btn icon={IcoSquare} variant="danger">Stop recording</Btn>
+      </div>
+      <TabBar active="capture"/>
+    </div>
+  );
+}
+
+// ── Screen 5: Conversation card (welcome α=0.42) ──────────────────────────────
+function S5ConvDetail() {
+  return (
+    <div style={{ height:874, overflow:'hidden', display:'flex', flexDirection:'column', paddingTop:62, fontFamily:F, ...GRAD.welcome }}>
+      {/* Inline nav — no glass bar */}
+      <div style={{ height:52, display:'flex', alignItems:'center', padding:'0 8px', flexShrink:0 }}>
+        <IcoBtn>{IcoBack}</IcoBtn>
+        <div style={{ flex:1, textAlign:'center', fontSize:16, fontWeight:700, color:CC.fg }}>Conversation</div>
+        <IcoBtn style={{ color:CC.mutedFg }}>{IcoTrash}</IcoBtn>
+      </div>
+      <div style={{ flex:1, overflow:'hidden', padding:'0 22px 100px' }}>
+        {/* Company */}
+        <div style={{ paddingTop:18, paddingBottom:16, borderBottom:`1px solid ${CC.divider}` }}>
+          <div style={{ fontSize:24, fontWeight:800, letterSpacing:'-0.03em', color:CC.fg, marginBottom:10 }}>SAMPLE International GmbH</div>
+          <button style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'6px 12px 6px 9px', borderRadius:100, background:CC.muted, border:'none', cursor:'default', fontSize:12, fontWeight:600, color:CC.mutedFg, fontFamily:F }}>
+            <span style={{ color:CC.terra, display:'flex' }}>{IcoFldrSm}</span>Default<span style={{ display:'flex' }}>{IcoChevD}</span>
+          </button>
+        </div>
+        {/* People */}
+        <div style={{ paddingTop:16 }}>
+          <div style={{ fontSize:11, fontWeight:700, letterSpacing:'0.10em', textTransform:'uppercase', color:CC.mutedFg, marginBottom:10 }}>People</div>
+          <div style={{ width:154, borderRadius:18, background:CC.muted, overflow:'hidden', marginBottom:14 }}>
+            <div style={{ width:'100%', height:72, background:'linear-gradient(135deg,oklch(0.88 0.04 240),oklch(0.84 0.06 250))', display:'flex', alignItems:'center', justifyContent:'center', fontSize:20, fontWeight:800, color:'oklch(0.50 0.10 258)' }}>BB</div>
+            <div style={{ padding:'10px 12px 12px' }}>
+              <div style={{ fontSize:13, fontWeight:700, color:CC.fg, marginBottom:1 }}>Bernhard Beispiel</div>
+              <div style={{ fontSize:11, color:CC.mutedFg }}>Einkäufer · SAMPLE</div>
+            </div>
+          </div>
+        </div>
+        {/* Voice transcript */}
+        <div style={{ marginBottom:12 }}>
+          <div style={{ fontSize:11, fontWeight:700, letterSpacing:'0.10em', textTransform:'uppercase', color:CC.mutedFg, marginBottom:8 }}>Voice Notes</div>
+          <div style={{ borderRadius:14, background:'rgba(255,255,255,0.70)', padding:'12px 16px', fontSize:13, color:CC.fg, fontStyle:'italic', lineHeight:1.6 }}>
+            "Interested in bulk pricing for Q3. Follow up with catalogue and arrange demo for procurement team."
+          </div>
+        </div>
+        {/* Notes */}
+        <div>
+          <div style={{ fontSize:11, fontWeight:700, letterSpacing:'0.10em', textTransform:'uppercase', color:CC.mutedFg, marginBottom:8 }}>Notes</div>
+          <div style={{ borderRadius:14, background:'rgba(255,255,255,0.50)', padding:'12px 16px', fontSize:13, color:CC.mutedFg }}>Add notes…</div>
+        </div>
+      </div>
+      {/* Pinned CTA */}
+      <div style={{ position:'absolute', bottom:82, left:0, right:0, padding:'10px 22px 12px', background:'rgba(245,248,255,0.88)', backdropFilter:'blur(20px)' }}>
+        <Btn icon={IcoCheck}>Save &amp; Close</Btn>
+      </div>
+      <TabBar active="conversations"/>
+    </div>
+  );
+}
+
+// ── Screen 6: HubSpot sync (idle α=0.30 bg, bottom sheet) ────────────────────
+function S6HubSpot() {
+  return (
+    <div style={{ height:874, overflow:'hidden', position:'relative', background:CC.bg, fontFamily:F, ...GRAD.idle }}>
+      {/* Settings page background */}
+      <div style={{ position:'absolute', inset:0, display:'flex', flexDirection:'column' }}>
+        {/* Dark header */}
+        <div style={{ height:114, background:CC.terra, display:'flex', alignItems:'flex-end', padding:'0 22px 14px', flexShrink:0 }}>
+          <span style={{ color:'rgba(255,255,255,0.65)', display:'flex', marginRight:8 }}>{IcoBack}</span>
+          <span style={{ fontSize:17, fontWeight:700, color:'#fff', letterSpacing:'-0.01em' }}>Settings</span>
+        </div>
+        {/* Profile */}
+        <div style={{ padding:'20px 22px 16px', display:'flex', alignItems:'center', gap:14, background:CC.bg }}>
+          <div style={{ width:48, height:48, borderRadius:'50%', background:CC.terra, display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:700, fontSize:16, flexShrink:0 }}>KE</div>
+          <div style={{ flex:1 }}>
+            <div style={{ fontSize:16, fontWeight:700, color:CC.fg }}>Kevin</div>
+            <div style={{ fontSize:13, color:CC.mutedFg }}>kevin@test.com</div>
+          </div>
+          <div style={{ fontSize:10, fontWeight:700, letterSpacing:'0.09em', textTransform:'uppercase', padding:'4px 10px', borderRadius:100, background:CC.terra, color:'#fff' }}>Pro</div>
+        </div>
+        {/* Sub card */}
+        <div style={{ margin:'0 22px', borderRadius:16, background:CC.terra, padding:'16px 18px' }}>
+          <div style={{ fontSize:9, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(255,255,255,0.55)', marginBottom:3 }}>ConCap Pro · Monthly</div>
+          <div style={{ fontSize:17, fontWeight:700, color:'#fff', marginBottom:10 }}>Renews 28 May 2026</div>
+          <div style={{ fontSize:11, color:'rgba(255,255,255,0.65)', background:'rgba(255,255,255,0.15)', borderRadius:100, padding:'3px 10px', display:'inline-block' }}>Member since 28 Apr 2026</div>
+        </div>
+      </div>
+
+      {/* Bottom sheet */}
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, height:530, borderRadius:'28px 28px 0 0', background:'#fff', boxShadow:'0 -8px 40px rgba(10,20,60,0.14)', padding:'0 22px 40px' }}>
+        {/* Handle */}
+        <div style={{ display:'flex', justifyContent:'center', padding:'12px 0 10px' }}>
+          <div style={{ width:36, height:5, borderRadius:100, background:'rgba(60,60,67,0.18)' }}/>
+        </div>
+        {/* Header */}
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:14 }}>
+          <div>
+            <div style={{ fontSize:20, fontWeight:700, color:CC.fg, marginBottom:2 }}>HubSpot Connected</div>
+            <div style={{ fontSize:12, color:CC.mutedFg }}>www.concap.live · Connected 13/05/2026</div>
+          </div>
+          <button style={{ width:30, height:30, borderRadius:'50%', background:CC.muted, border:'none', cursor:'default', display:'flex', alignItems:'center', justifyContent:'center', color:CC.mutedFg, fontSize:16, fontFamily:F }}>×</button>
+        </div>
+        {/* Stats */}
+        <div style={{ borderRadius:12, background:CC.muted, overflow:'hidden', marginBottom:14 }}>
+          {[['Portal ID','148132443'],['Contacts synced','24']].map(([k,v],i)=>(
+            <div key={i} style={{ display:'flex', justifyContent:'space-between', padding:'12px 16px', borderBottom:i===0?`1px solid ${CC.divider}`:'none' }}>
+              <span style={{ fontSize:14, color:CC.mutedFg }}>{k}</span>
+              <span style={{ fontSize:14, fontWeight:600, color:CC.fg }}>{v}</span>
+            </div>
+          ))}
+        </div>
+        {/* Radio options */}
+        <RadioOpt label="New contacts only (2)" sub="Not yet in HubSpot" selected/>
+        <RadioOpt label="All contacts (26)" sub="Update existing records"/>
+        {/* Sync CTA */}
+        <Btn icon={IcoSync} style={{ marginTop:8 }}>Sync 2 contacts</Btn>
+        {/* Disconnect */}
+        <div style={{ textAlign:'center', marginTop:14 }}>
+          <span style={{ fontSize:14, color:'oklch(0.52 0.18 25)', cursor:'default', fontFamily:F }}>Disconnect HubSpot</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Phone wrapper ─────────────────────────────────────────────────────────────
+function PhoneWrapper({ children }) {
+  return (
+    <div style={{ width:261, height:568, flexShrink:0, position:'relative' }}>
+      <div style={{ position:'absolute', top:0, left:0, transform:'scale(0.65)', transformOrigin:'top left', width:402, height:874 }}>
+        <IOSDevice width={402} height={874} dark={false}>{children}</IOSDevice>
+      </div>
+    </div>
+  );
+}
+
+function Annotation({ num, title, sub, desc }) {
+  return (
+    <div style={{ width:261, paddingTop:16 }}>
+      <span style={{ fontSize:10, fontWeight:700, letterSpacing:'0.12em', textTransform:'uppercase', color:'#8898C0', display:'block', marginBottom:5, fontFamily:INTER }}>{num}</span>
+      <h3 style={{ fontSize:15, fontWeight:700, color:'#1a1a2e', marginBottom:4, fontFamily:PLAYFAIR }}>{title}</h3>
+      <div style={{ display:'inline-block', fontSize:10, fontWeight:600, letterSpacing:'0.06em', textTransform:'uppercase', color:'#8898C0', background:'rgba(20,40,100,0.07)', padding:'2px 8px', borderRadius:100, marginBottom:5, fontFamily:INTER }}>{sub}</div>
+      <p style={{ fontSize:12, color:'#6b7280', lineHeight:1.55, fontFamily:INTER }}>{desc}</p>
+    </div>
+  );
+}
+
+// ── Portfolio App ─────────────────────────────────────────────────────────────
+const screens = [
+  { num:'01', title:'Home',              sub:'welcome · α=0.42',    desc:'No chrome bar — wordmark and gear float on the gradient. Glass cards layer above without obscuring the atmosphere.',     component:<S1Home/> },
+  { num:'02', title:'Capture Methods',   sub:'scanning · α=0.62',   desc:'Floating back arrow + folder strip replace the nav bar. 5 capture modes in a 2+1 tile grid with platform marks.',        component:<S2Capture/> },
+  { num:'03', title:'Card Result',       sub:'review · α=0.52',     desc:'Enriched view — OCR extracts name, company, job title and phone from the scanned card. "Looks good" confirms.',          component:<S3CardResult/> },
+  { num:'04', title:'Voice Recording',   sub:'recording · α=0.68',  desc:'Step 2 of 2. Gradient blobs pool at the bottom — the most vivid state. Pulse dot, live waveform, stop CTA.',            component:<S4Voice/> },
+  { num:'05', title:'Conversation Card', sub:'welcome · α=0.42',    desc:'Captured contact, voice transcript, and notes in one view. Inline nav — no glass header bar.',                          component:<S5ConvDetail/> },
+  { num:'06', title:'Sync to HubSpot',   sub:'idle · α=0.30',       desc:'Settings background visible above the rising bottom sheet. Radio options let the user sync new or all contacts.',      component:<S6HubSpot/> },
+];
+
+function App() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const gridRef = useRef(null);
+  const handleScroll = () => {
+    if (!gridRef.current) return;
+    setActiveSlide(Math.round(gridRef.current.scrollLeft / gridRef.current.offsetWidth));
+  };
+  return (
+    <div style={{ minHeight:'100vh', background:'#FAF8F5', fontFamily:F }}>
+      <div className="screens-grid" ref={gridRef} onScroll={handleScroll}>
+        {screens.map((s,i)=>(
+          <div key={i} className="screen-item">
+            <PhoneWrapper>{s.component}</PhoneWrapper>
+            <Annotation num={s.num} title={s.title} sub={s.sub} desc={s.desc}/>
+          </div>
+        ))}
+      </div>
+      <div className="slide-dots">
+        {screens.map((_,i)=>(
+          <div key={i} className={`dot${i===activeSlide?' dot-active':''}`}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

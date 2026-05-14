@@ -1,5 +1,5 @@
 ---
-layout: coursera-case-study.njk
+layout: case-study.njk
 title: Coursera UX Project
 tagline: A UX design project completed as part of the Google UX Design Certificate — currently being documented as a full case study.
 order: 1

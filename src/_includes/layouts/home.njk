@@ -17,9 +17,6 @@ layout: base.njk
           <a href="{{ homeUrl }}#work" class="btn">{{ hp.heroCta }}</a>
         </div>
       </div>
-      <div class="hero__photo" role="img" aria-label="Portrait of {{ hp.heroName }}">
-        {% if hp.heroPhoto %}<img src="{{ hp.heroPhoto }}" alt="{{ hp.heroName }}" width="380" height="500" loading="eager" fetchpriority="high">{% else %}Portrait photo{% endif %}
-      </div>
     </div>
     <div class="hero__scroll" aria-hidden="true">↓</div>
   </section>
@@ -103,12 +100,14 @@ layout: base.njk
           {% endfor %}
         </div>
       </div>
-      <div class="about__photo" role="img" aria-label="Portrait of Aylin Irk">Portrait photo</div>
+      <div class="about__photo">
+        {% if hp.heroPhoto %}<img src="{{ hp.heroPhoto }}" alt="{{ hp.heroName }}" width="300" height="400" loading="lazy">{% endif %}
+      </div>
     </div>
   </section>
 
   {# ── CONTACT ────────────────────────────────────────────────── #}
-  <section class="section contact" id="contact" aria-labelledby="contact-heading">
+  <section class="section section--cream contact" id="contact" aria-labelledby="contact-heading">
     <span class="label" aria-hidden="true">{{ strings.sectionContact }}</span>
     <h2 id="contact-heading">{{ strings.contactHeading }}</h2>
     <p class="contact__sub">{{ strings.contactSub }}</p>

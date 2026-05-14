@@ -122,13 +122,19 @@ layout: base.njk
 {% if lofiPhase %}
 <div class="phase-block" role="region" aria-label="{{ lofiPhase.label }}">
   <p class="phase-block__label">{{ lofiPhase.label }}</p>
-  <div class="phase-grid">
-    {% for screen in lofiPhase.screens %}
-      <div class="phase-img">
-        {% if screen.src %}<img src="{{ screen.src }}" alt="{{ screen.caption | default('') }}" loading="lazy">{% else %}{{ screen.label }}{% endif %}
-      </div>
-    {% endfor %}
-  </div>
+  {% if lofiPhase.embed %}
+    <div class="phase-embed">
+      <iframe src="{{ lofiPhase.embed }}" title="{{ lofiPhase.label }}" loading="lazy" scrolling="no"></iframe>
+    </div>
+  {% else %}
+    <div class="phase-grid">
+      {% for screen in lofiPhase.screens %}
+        <div class="phase-img">
+          {% if screen.src %}<img src="{{ screen.src }}" alt="{{ screen.caption | default('') }}" loading="lazy">{% else %}{{ screen.label }}{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 </div>
 {% endif %}
 
@@ -150,13 +156,19 @@ layout: base.njk
 {% if hifiPhase %}
 <div class="phase-block phase-block--cream" role="region" aria-label="{{ hifiPhase.label }}">
   <p class="phase-block__label">{{ hifiPhase.label }}</p>
-  <div class="phase-grid">
-    {% for screen in hifiPhase.screens %}
-      <div class="phase-img">
-        {% if screen.src %}<img src="{{ screen.src }}" alt="{{ screen.caption | default('') }}" loading="lazy">{% else %}{{ screen.label }}{% endif %}
-      </div>
-    {% endfor %}
-  </div>
+  {% if hifiPhase.embed %}
+    <div class="phase-embed phase-embed--hifi">
+      <iframe src="{{ hifiPhase.embed }}" title="{{ hifiPhase.label }}" loading="lazy" scrolling="no"></iframe>
+    </div>
+  {% else %}
+    <div class="phase-grid">
+      {% for screen in hifiPhase.screens %}
+        <div class="phase-img">
+          {% if screen.src %}<img src="{{ screen.src }}" alt="{{ screen.caption | default('') }}" loading="lazy">{% else %}{{ screen.label }}{% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 </div>
 {% endif %}
 
