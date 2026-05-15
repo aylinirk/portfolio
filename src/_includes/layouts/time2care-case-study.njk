@@ -40,21 +40,14 @@
   .back-bar a:hover { color: var(--sage-dark); }
 
   /* ── Cover ── */
-  .cover {
-    background: linear-gradient(135deg, #C8D9C0 0%, #9AB88A 35%, #6A9060 70%, #3E5E40 100%);
-    color: white; padding: 88px 60px 80px; position: relative; overflow: hidden;
-  }
-  .cover::before { content: ''; position: absolute; top: -80px; right: -80px; width: 360px; height: 360px; border-radius: 50%; background: rgba(255,255,255,0.08); }
-  .cover::after  { content: ''; position: absolute; bottom: -60px; left: 180px; width: 240px; height: 240px; border-radius: 50%; background: rgba(0,0,0,0.08); }
-  .cover-tag { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); color: white; padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
-  .cover h1 { font-family: 'Lora', Georgia, serif; font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 1; }
-  .cover h1 span { opacity: 0.75; }
-  .cover-sub { font-size: 18px; color: rgba(255,255,255,0.85); margin-bottom: 48px; max-width: 580px; position: relative; z-index: 1; line-height: 1.6; }
-  .cover-meta { display: flex; gap: 40px; position: relative; z-index: 1; flex-wrap: wrap; }
-  .cover-meta-item label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
-  .cover-meta-item span { font-size: 15px; color: white; font-weight: 500; }
-  .cover-tags { position: absolute; bottom: 60px; right: 60px; display: flex; flex-direction: column; gap: 8px; z-index: 1; }
-  .skill-pill { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; text-align: center; }
+  .cover { background: var(--surface); padding: 72px 60px 64px; }
+  .cover-tag { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 20px; }
+  .cover h1 { font-family: 'Lora', Georgia, serif; font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 700; color: var(--text); line-height: 1.1; margin-bottom: 20px; }
+  .cover h1 span { color: var(--text); }
+  .cover-sub { font-size: 18px; color: var(--text-muted); max-width: 600px; margin-bottom: 40px; line-height: 1.6; }
+  .cover-meta { display: flex; gap: 40px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 24px; }
+  .cover-meta-item label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
+  .cover-meta-item span { font-size: 14px; color: var(--text); }
 
   /* ── Page sections ── */
   .page { max-width: 900px; margin: 0 auto; padding: 64px 60px; }
@@ -160,8 +153,8 @@
     .cover { padding: 64px 24px 60px; }
     .cover h1 { font-size: 36px; }
     .cover-sub { font-size: 16px; }
+    .cover { padding: 48px 24px 40px; }
     .cover-meta { gap: 24px; }
-    .cover-tags { display: none; }
     .page { padding: 48px 24px; }
     .wide-wrap { padding: 0; }
     .overview-grid { grid-template-columns: 1fr 1fr; }
@@ -233,11 +226,6 @@
       <label>{{ "Laufzeit" if isDE else "Duration" }}</label>
       <span>{{ "Google UX Design Certificate, Kurs 2–5 · 2025–2026" if isDE else "Google UX Design Certificate, Course 2–5 · 2025–2026" }}</span>
     </div>
-  </div>
-  <div class="cover-tags">
-    {% for tag in tags %}
-      <span class="skill-pill">{{ tag }}</span>
-    {% endfor %}
   </div>
 </div>
 
