@@ -7,6 +7,7 @@ tags:
   - Webdesign
   - UX Design
   - "2026"
+cover: "/assets/images/spielgruppe-thumb.png"
 coverGradient: "linear-gradient(135deg, #F7C59F 0%, #EFAA76 35%, #E08C50 70%, #C97A3A 100%)"
 role: "UX Strategy, Content Design, Brand Identity"
 scope: "Recherche, Informationsarchitektur, Copywriting, Logo, Flyer, Website"

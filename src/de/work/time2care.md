@@ -7,6 +7,7 @@ tags:
   - UX Design
   - Fallstudie
   - "2026"
+cover: "/assets/images/time2care-thumb.png"
 coverGradient: "linear-gradient(135deg, #C8D9C0 0%, #9AB88A 35%, #6A9060 70%, #3E5E40 100%)"
 role: "UX-Forschung, Wireframing, Prototyping, Usability-Tests"
 scope: "Empathize, Define, Ideate, Prototype, Test"

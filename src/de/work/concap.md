@@ -6,6 +6,7 @@ order: 3
 tags:
   - UX & Produktdesign
   - "2026"
+cover: "/assets/images/concap-thumb.png"
 coverGradient: "linear-gradient(135deg, #A8C095 0%, #8A9E78 35%, #6E8860 70%, #587050 100%)"
 role: "UX- und Produktdesign, Prototyping, Testing, Iteration"
 scope: "Problemdefinition, Low-fi-Flow, Live-Prototyp, High-fi-Ausarbeitung, frühe Nutzervalidierung"
