@@ -17,8 +17,31 @@ layout: base.njk
           <a href="{{ homeUrl }}#work" class="btn">{{ hp.heroCta }}</a>
         </div>
       </div>
+      {% if hp.heroPhoto %}
+      <div class="hero__photo">
+        <img src="{{ hp.heroPhoto }}" alt="{{ hp.heroName }}" width="360" height="360" loading="eager">
+      </div>
+      {% endif %}
     </div>
     <div class="hero__scroll" aria-hidden="true">↓</div>
+  </section>
+
+  {# ── ABOUT ──────────────────────────────────────────────────── #}
+  <section class="section" id="about" aria-label="{{ strings.sectionAbout }}">
+    <div class="about__inner">
+      <div class="about__left">
+        <span class="label" aria-hidden="true">{{ strings.sectionAbout }}</span>
+        <p class="about__quote">&ldquo;{{ hp.aboutQuote }}&rdquo;</p>
+        {% if hp.aboutBio %}
+          <div class="about__bio">{{ hp.aboutBio | md | safe }}</div>
+        {% endif %}
+        <div class="about__skills" aria-label="Skills">
+          {% for skill in hp.skills %}
+            <span class="tag">{{ skill }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </section>
 
   {# ── WORK ────────────────────────────────────────────────────── #}
@@ -82,27 +105,6 @@ layout: base.njk
     <div class="learning-callout">
       <p class="learning-callout__eyebrow">{{ strings.learningCalloutLabel }}</p>
       <p class="learning-callout__text">{{ strings.learningCalloutText }}</p>
-    </div>
-  </section>
-
-  {# ── ABOUT ──────────────────────────────────────────────────── #}
-  <section class="section" id="about" aria-label="{{ strings.sectionAbout }}">
-    <div class="about__inner">
-      <div class="about__left">
-        <span class="label" aria-hidden="true">{{ strings.sectionAbout }}</span>
-        <p class="about__quote">&ldquo;{{ hp.aboutQuote }}&rdquo;</p>
-        {% if hp.aboutBio %}
-          <div class="about__bio">{{ hp.aboutBio | md | safe }}</div>
-        {% endif %}
-        <div class="about__skills" aria-label="Skills">
-          {% for skill in hp.skills %}
-            <span class="tag">{{ skill }}</span>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="about__photo">
-        {% if hp.heroPhoto %}<img src="{{ hp.heroPhoto }}" alt="{{ hp.heroName }}" width="300" height="400" loading="lazy">{% endif %}
-      </div>
     </div>
   </section>
 
