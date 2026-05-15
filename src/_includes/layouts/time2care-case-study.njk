@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study – time2care · Aylin Irk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:           #FAF8F5;
+    --surface:      #F2EDE6;
+    --sage:         #5A7E52;
+    --sage-dark:    #3E5E40;
+    --sage-light:   #C8D9C0;
+    --sage-pale:    #EDF2EB;
+    --cream:        #F2EDE6;
+    --text:         #1E1A17;
+    --text-muted:   #7A6F65;
+    --border:       #E8E0D6;
+  }
+  body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; padding-top: 52px; }
+
+  /* ── Back bar ── */
+  .back-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,248,245,0.88);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+    backdrop-filter: saturate(150%) blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 60px;
+  }
+  .back-bar a {
+    color: var(--text-muted); text-decoration: none; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.03em;
+    display: inline-flex; align-items: center; gap: 6px; transition: color 0.2s;
+  }
+  .back-bar a:hover { color: var(--sage-dark); }
+
+  /* ── Cover ── */
+  .cover {
+    background: linear-gradient(135deg, #C8D9C0 0%, #9AB88A 35%, #6A9060 70%, #3E5E40 100%);
+    color: white; padding: 88px 60px 80px; position: relative; overflow: hidden;
+  }
+  .cover::before { content: ''; position: absolute; top: -80px; right: -80px; width: 360px; height: 360px; border-radius: 50%; background: rgba(255,255,255,0.08); }
+  .cover::after  { content: ''; position: absolute; bottom: -60px; left: 180px; width: 240px; height: 240px; border-radius: 50%; background: rgba(0,0,0,0.08); }
+  .cover-tag { display: inline-block; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); color: white; padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .cover h1 { font-family: 'Lora', Georgia, serif; font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; position: relative; z-index: 1; }
+  .cover h1 span { opacity: 0.75; }
+  .cover-sub { font-size: 18px; color: rgba(255,255,255,0.85); margin-bottom: 48px; max-width: 580px; position: relative; z-index: 1; line-height: 1.6; }
+  .cover-meta { display: flex; gap: 40px; position: relative; z-index: 1; flex-wrap: wrap; }
+  .cover-meta-item label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+  .cover-meta-item span { font-size: 15px; color: white; font-weight: 500; }
+  .cover-tags { position: absolute; bottom: 60px; right: 60px; display: flex; flex-direction: column; gap: 8px; z-index: 1; }
+  .skill-pill { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; text-align: center; }
+
+  /* ── Page sections ── */
+  .page { max-width: 900px; margin: 0 auto; padding: 64px 60px; }
+  .page-break { border-top: 1px solid var(--border); }
+  .section-number { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage); margin-bottom: 8px; }
+  .section-title { font-family: 'Lora', Georgia, serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid var(--sage-light); }
+  .body-text { font-size: 15px; line-height: 1.85; color: #4A4138; }
+  .body-text + .body-text { margin-top: 16px; }
+
+  /* ── Overview grid ── */
+  .overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+  .overview-card { background: white; border-radius: 16px; padding: 24px; border: 1px solid var(--border); }
+  .overview-card .icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
+  .icon-green  { background: #ecf5ec; }
+  .icon-sage   { background: #edf2eb; }
+  .icon-blue   { background: #eff6ff; }
+  .icon-orange { background: #fdf0e8; }
+  .icon-purple { background: #f5f3ff; }
+  .icon-teal   { background: #e6f7f4; }
+  .overview-card h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+  .overview-card p { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.5; }
+
+  /* ── Challenge / callout box ── */
+  .challenge-box { background: var(--sage-pale); border: 1px solid var(--sage-light); border-left: 4px solid var(--sage); border-radius: 0 20px 20px 0; padding: 36px 40px; margin: 32px 0; }
+  .challenge-box h3 { font-family: 'Lora', Georgia, serif; font-size: 20px; margin-bottom: 12px; color: var(--sage-dark); }
+  .challenge-box p { color: #3A4E35; font-size: 15px; line-height: 1.8; }
+
+  /* ── Insight quote ── */
+  .insight { background: #1E2F26; border-radius: 20px; padding: 48px 52px; margin: 40px 0; position: relative; overflow: hidden; }
+  .insight::before { content: '"'; position: absolute; top: -20px; left: 32px; font-family: 'Lora', serif; font-size: 160px; color: rgba(255,255,255,0.06); line-height: 1; pointer-events: none; }
+  .insight blockquote { font-family: 'Lora', Georgia, serif; font-size: 22px; font-style: italic; color: white; line-height: 1.6; position: relative; z-index: 1; margin-bottom: 16px; }
+  .insight cite { font-size: 13px; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; font-style: normal; }
+
+  /* ── Pain points ── */
+  .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
+  .pain-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .pain-number { display: inline-block; background: var(--sage-pale); color: var(--sage-dark); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+  .pain-card h4 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
+  .pain-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── Persona box ── */
+  .persona-box { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 40px; display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: start; margin-top: 32px; }
+  .persona-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--sage-light), var(--sage)); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0; }
+  .persona-info h3 { font-family: 'Lora', Georgia, serif; font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .persona-info .persona-role { font-size: 14px; color: var(--text-muted); font-weight: 500; margin-bottom: 20px; }
+  .persona-quote { background: var(--sage-pale); border-left: 3px solid var(--sage); border-radius: 0 12px 12px 0; padding: 16px 20px; font-style: italic; font-size: 15px; color: var(--sage-dark); line-height: 1.6; }
+
+  /* ── Process steps ── */
+  .process-list { display: flex; flex-direction: column; gap: 0; margin-top: 32px; }
+  .process-item { display: grid; grid-template-columns: 64px 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--border); align-items: start; }
+  .process-item:last-child { border-bottom: none; }
+  .process-num { font-family: 'Lora', Georgia, serif; font-size: 36px; font-weight: 700; color: var(--sage-light); line-height: 1; padding-top: 4px; }
+  .process-body h4 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+  .process-body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── Image sliders ── */
+  .screens-section { margin-top: 40px; }
+  .screens-label { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 20px; }
+  .screens-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 8px 0 16px;
+  }
+  .screen-cell { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .screen-cell img {
+    width: 100%; border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
+    display: block;
+  }
+  .screen-caption { font-size: 12px; color: var(--text-muted); text-align: center; line-height: 1.4; }
+
+  /* ── Usability findings ── */
+  .findings-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .finding-item { display: grid; grid-template-columns: 48px 1fr; gap: 20px; background: white; border: 1px solid var(--border); border-radius: 16px; padding: 24px; align-items: start; }
+  .finding-num { width: 40px; height: 40px; border-radius: 50%; background: #FEF2E8; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; color: #C97B5A; flex-shrink: 0; }
+  .finding-body h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .finding-body p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── Outcomes ── */
+  .metrics-row { display: flex; gap: 24px; margin-top: 32px; flex-wrap: wrap; }
+  .metric-card { flex: 1; min-width: 160px; background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; text-align: center; }
+  .metric-value { font-family: 'Lora', Georgia, serif; font-size: 28px; font-weight: 700; color: var(--sage-dark); margin-bottom: 8px; }
+  .metric-label { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── Reflection ── */
+  .reflection-pull { font-family: 'Lora', Georgia, serif; font-size: 24px; font-style: italic; color: var(--sage-dark); line-height: 1.5; border-left: 4px solid var(--sage-light); padding-left: 28px; margin: 32px 0; }
+
+  /* ── Divider ── */
+  .divider { height: 1px; background: var(--border); margin: 0; }
+
+  /* ── Wide screens wrapper ── */
+  .wide-wrap { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+
+  /* ── Slide dots (hidden on desktop) ── */
+  .slide-dots { display: none; justify-content: center; gap: 8px; padding: 20px 0 8px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(62,94,64,0.2); transition: background 0.2s, transform 0.2s; }
+  .dot.dot-active { background: var(--sage-dark); transform: scale(1.35); }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .back-bar { padding: 14px 24px; }
+    .cover { padding: 64px 24px 60px; }
+    .cover h1 { font-size: 36px; }
+    .cover-sub { font-size: 16px; }
+    .cover-meta { gap: 24px; }
+    .cover-tags { display: none; }
+    .page { padding: 48px 24px; }
+    .wide-wrap { padding: 0; }
+    .overview-grid { grid-template-columns: 1fr 1fr; }
+    .pain-grid { grid-template-columns: 1fr; }
+    .persona-box { grid-template-columns: 1fr; gap: 20px; }
+    .insight { padding: 32px 28px; }
+    .insight blockquote { font-size: 18px; }
+    .metrics-row { flex-direction: column; }
+
+    /* ── Slider on mobile ── */
+    .screens-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 0;
+      padding: 8px 0 0;
+    }
+    .screens-grid::-webkit-scrollbar { display: none; }
+    .screen-cell {
+      flex: 0 0 82vw;
+      scroll-snap-align: center;
+      padding: 0 10px;
+      align-items: center;
+    }
+    .screen-cell img { width: 100%; }
+    .screen-caption { text-align: center; }
+    .slide-dots { display: flex; }
+  }
+
+  @media (max-width: 480px) {
+    .overview-grid { grid-template-columns: 1fr; }
+    .screen-cell { flex: 0 0 88vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Back bar -->
+<div class="back-bar">
+  <a href="/de/">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Zurück zur Übersicht
+  </a>
+</div>
+
+<!-- Cover -->
+<div class="cover">
+  <div class="cover-tag">Case Study</div>
+  <h1>time<span>2</span>care</h1>
+  <p class="cover-sub">{{ tagline }}</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <label>Rolle</label>
+      <span>{{ role }}</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Tools</label>
+      <span>{{ tools }}</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Jahr</label>
+      <span>{{ year }}</span>
+    </div>
+  </div>
+  <div class="cover-tags">
+    {% for tag in tags %}
+      <span class="skill-pill">{{ tag }}</span>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- 01 — Projektübersicht -->
+<div class="page">
+  <div class="section-number">01 — Projektübersicht</div>
+  <div class="section-title">Das Produkt</div>
+
+  <p class="body-text">time2care ist eine Mobile App, die Nutzerinnen und Nutzern ermöglicht, schnell und unkompliziert Therapie- und Trainingsangebote zu suchen, zu filtern und direkt zu buchen — alles vom Smartphone aus, ohne Telefonate oder lange Wartezeiten.</p>
+
+  <div class="overview-grid" style="margin-top: 32px;">
+    <div class="overview-card">
+      <div class="icon icon-sage">🎯</div>
+      <h4>Das Problem</h4>
+      <p>Die Buchung von Therapieterminen läuft meist noch telefonisch oder per E-Mail — besonders abends und am Wochenende ein grosses Hindernis.</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon icon-green">✅</div>
+      <h4>Das Ziel</h4>
+      <p>Eine intuitive App entwickeln, die Suche, Filterung und Buchung so einfach und transparent macht, dass Nutzer in wenigen Schritten einen Termin finden.</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon icon-blue">👤</div>
+      <h4>Meine Rolle</h4>
+      <p>End-to-End UX: Nutzerforschung, Persona, Wireframes, Prototyp und Usability-Tests — im Rahmen des Google UX Design Certificate.</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon icon-orange">🔍</div>
+      <h4>Scope</h4>
+      <p>{{ scope }}</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon icon-purple">🛠️</div>
+      <h4>Tools</h4>
+      <p>{{ tools }}</p>
+    </div>
+    <div class="overview-card">
+      <div class="icon icon-teal">📅</div>
+      <h4>Laufzeit</h4>
+      <p>Google UX Design Certificate, Kurs 2–5 · 2025–2026</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 02 — Nutzungsforschung -->
+<div class="page page-break">
+  <div class="section-number">02 — Nutzungsforschung</div>
+  <div class="section-title">Die Nutzenden verstehen</div>
+
+  <p class="body-text">Zu Beginn nahm ich an, dass die Suche nach einem passenden Therapeuten die grösste Hürde ist. Nach Nutzerinterviews und einer unmoderierten Remote-Usability-Studie mit fünf Teilnehmenden zeigte sich: Auch der Buchungsprozess selbst ist problematisch — fehlende Transparenz und Unsicherheit bei der Buchungsbestätigung waren die häufigsten Schmerzpunkte.</p>
+
+  <div class="insight">
+    <blockquote>Diese Erkenntnisse haben meinen Designfokus direkt geprägt: nicht nur die Suche vereinfachen, sondern den gesamten Weg bis zur Bestätigung.</blockquote>
+    <cite>Zentrale Erkenntnis aus der Forschungsphase</cite>
+  </div>
+
+  <p class="body-text" style="font-weight: 600; margin-bottom: 4px;">4 identifizierte Schmerzpunkte</p>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-number">Schmerzpunkt 01</div>
+      <h4>Hoher Verwaltungsaufwand</h4>
+      <p>Viele Nutzer:innen können Termine nur per Telefon oder E-Mail buchen. Das kostet Zeit und schreckt besonders berufstätige Personen ab, die abends oder am Wochenende buchen möchten.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-number">Schmerzpunkt 02</div>
+      <h4>Fehlende zentrale Lösung</h4>
+      <p>Informationen zu Spezialisierungen, Qualifikationen und Verfügbarkeit sind schwer auffindbar oder unvollständig. Nutzer:innen können schlecht einschätzen, ob ein Therapeut zu ihren Bedürfnissen passt.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-number">Schmerzpunkt 03</div>
+      <h4>Komplexe Bedienung für manche Nutzer:innen</h4>
+      <p>Nicht alle Nutzer:innen sind technisch versiert — besonders ältere Personen fühlen sich schnell überfordert. Das Design muss deshalb besonders intuitiv und barrierearm sein.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-number">Schmerzpunkt 04</div>
+      <h4>Kurzfristige Terminabsagen</h4>
+      <p>Nutzer:innen sind nach dem Buchen oft unsicher, ob ihr Termin wirklich gilt. Fehlende oder unklare Bestätigungen führen zu Misstrauen und unnötigen Rückrufen.</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 03 — Persona & User Journey -->
+<div class="page page-break">
+  <div class="section-number">03 — Persona & User Journey</div>
+  <div class="section-title">Jonas Bauermann</div>
+
+  <div class="persona-box">
+    <div class="persona-avatar">👤</div>
+    <div class="persona-info">
+      <h3>Jonas Bauermann</h3>
+      <p class="persona-role">Marketing Manager · 34 Jahre · Zürich</p>
+      <div class="persona-quote">
+        „Jonas ist ein vielbeschäftigter Marketing Manager, der einen Therapeuten für seine Nackenschmerzen sucht — er möchte abends schnell und unkompliziert einen Termin buchen, ohne Telefonate und ohne lange Suche."
+      </div>
+      <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div style="background: var(--sage-pale); border-radius: 12px; padding: 16px;">
+          <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px;">Ziele</p>
+          <p style="font-size: 13px; line-height: 1.6; color: var(--text);">Schnell den richtigen Therapeuten finden · Termin ohne Telefonate buchen · Bestätigung sofort erhalten</p>
+        </div>
+        <div style="background: #FEF2F2; border-radius: 12px; padding: 16px;">
+          <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px;">Frustrationen</p>
+          <p style="font-size: 13px; line-height: 1.6; color: var(--text);">Nur telefonisch buchbar · Kein Überblick über Spezialisierungen · Keine klare Bestätigung</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="challenge-box" style="margin-top: 32px;">
+    <h3>User Journey</h3>
+    <p>Die User Journey zeigt, wie Jonas einen passenden Therapeuten sucht und einen Termin bucht — von der ersten Suche bis zur Buchungsbestätigung. Ziel ist es, diesen Prozess so einfach und schnell wie möglich zu gestalten, damit Jonas alles unkompliziert vom Smartphone aus erledigen kann.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 04 — Lo-Fi Wireframes -->
+<div class="page page-break">
+  <div class="section-number">04 — Lo-Fi Wireframes</div>
+  <div class="section-title">Den Flow skizzieren</div>
+
+  <p class="body-text">Für die mobile App habe ich zunächst Papier-Wireframes erstellt, um verschiedene Ansätze für den Buchungsfluss zu testen. Danach wurden die besten Ideen in digitale Wireframes überführt. Der Fokus lag auf einem schnellen, einfachen Ablauf — basierend auf den Bedürfnissen von Jonas: eine klare Suchfunktion mit Filtermöglichkeiten, sodass er ohne Umwege zum passenden Therapeuten gelangt.</p>
+</div>
+
+<div class="wide-wrap" style="padding-bottom: 64px;">
+  <div class="screens-grid" id="lofi-grid" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="screen-cell">
+      <img src="/assets/time2care/lofi/01_home.jpg" alt="Lo-Fi: Home" loading="lazy">
+      <div class="screen-caption">01 — Home<br>Schneller Einstieg in die Suche</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/lofi/02_therapeuten_liste.jpg" alt="Lo-Fi: Therapeuten Liste" loading="lazy">
+      <div class="screen-caption">02 — Therapeuten<br>Listenansicht mit Vorschlägen</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/lofi/03_filter.jpg" alt="Lo-Fi: Filter" loading="lazy">
+      <div class="screen-caption">03 — Filter<br>Aktive Filter klar erkennbar</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/lofi/04_gefilterte_therapeuten.jpg" alt="Lo-Fi: Gefiltert" loading="lazy">
+      <div class="screen-caption">04 — Gefiltert<br>Übersichtliche Ergebnisliste</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/lofi/05_detailansicht.jpg" alt="Lo-Fi: Detailansicht" loading="lazy">
+      <div class="screen-caption">05 — Detailansicht<br>Angebote auf einen Blick</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/lofi/06_detailansicht_buchung.jpg" alt="Lo-Fi: Buchung" loading="lazy">
+      <div class="screen-caption">06 — Buchung<br>Termin auswählen & buchen</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/lofi/07_buchungsbestaetigung.jpg" alt="Lo-Fi: Bestätigung" loading="lazy">
+      <div class="screen-caption">07 — Bestätigung<br>Klare Buchungsbestätigung</div>
+    </div>
+  </div>
+  <div class="slide-dots" id="lofi-dots"></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 05 — Usability-Studie -->
+<div class="page page-break">
+  <div class="section-number">05 — Usability-Studie</div>
+  <div class="section-title">Was die Tests gezeigt haben</div>
+
+  <p class="body-text">In einer unmoderierten Remote-Usability-Studie mit 5 Teilnehmenden wurde der Lo-Fi-Prototyp getestet. Das Ziel war, herauszufinden, wo im Flow Nutzer:innen stolpern — bevor das Hi-Fi-Design erstellt wird. Die drei wichtigsten Erkenntnisse:</p>
+
+  <div class="findings-list">
+    <div class="finding-item">
+      <div class="finding-num">1</div>
+      <div class="finding-body">
+        <h4>Filterfunktion war unklar und schwer auffindbar</h4>
+        <p>Nutzer:innen übersahen das Filter-Icon oder wussten nicht, welche Filter aktiv waren. Lösung im Hi-Fi: Filter als sichtbare Chips direkt unter der Suchleiste, aktive Filter farblich hervorgehoben.</p>
+      </div>
+    </div>
+    <div class="finding-item">
+      <div class="finding-num">2</div>
+      <div class="finding-body">
+        <h4>Buchungsablauf hatte zu viele Schritte</h4>
+        <p>Der Weg von der Therapeuten-Auswahl bis zur Buchung war zu lang. Lösung: Direkter Zugang zu freien Terminen von der Detailansicht aus, ohne Umwege über mehrere Screens.</p>
+      </div>
+    </div>
+    <div class="finding-item">
+      <div class="finding-num">3</div>
+      <div class="finding-body">
+        <h4>Fehlende Bestätigungsseite sorgte für Unsicherheit</h4>
+        <p>Nach dem Buchen wussten Nutzer:innen nicht, ob der Termin wirklich gespeichert wurde. Lösung: Eine dedizierte Bestätigungsseite mit allen Buchungsdetails und klarer Erfolgsmeldung.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 06 — Hi-Fi Screens -->
+<div class="page page-break">
+  <div class="section-number">06 — Hi-Fi Prototyp</div>
+  <div class="section-title">Das verfeinerte Design</div>
+
+  <p class="body-text">Basierend auf den Usability-Erkenntnissen wurde der Hi-Fi-Prototyp entwickelt. Das Farbkonzept orientiert sich an Ruhe und Vertrauen: ein dunkles Salbeigrün als Primärfarbe, helle neutrale Flächen, klare Typografie. Jeder Screen spiegelt eine konkrete Designentscheidung wider, die aus der Forschung entstanden ist.</p>
+</div>
+
+<div class="wide-wrap" style="padding-bottom: 64px;">
+  <div class="screens-grid" id="hifi-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/01_home.png" alt="Hi-Fi: Home" loading="lazy">
+      <div class="screen-caption">01 — Home<br>Personalisierte Begrüssung, direkte Therapeutenvorschläge</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/02_profile.png" alt="Hi-Fi: Profile" loading="lazy">
+      <div class="screen-caption">02 — Profil<br>Nutzerdaten auf einen Blick</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/03_therapeuten_liste.png" alt="Hi-Fi: Therapeuten Liste" loading="lazy">
+      <div class="screen-caption">03 — Therapeuten<br>Suche mit aktiven Filter-Chips</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/04_gefilterte_therapeuten.png" alt="Hi-Fi: Gefiltert" loading="lazy">
+      <div class="screen-caption">04 — Gefiltert<br>Klare Ergebnisliste, Filter erkennbar</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/05_therapeuten_ausgewaehlt.png" alt="Hi-Fi: Ausgewählt" loading="lazy">
+      <div class="screen-caption">05 — Therapeut ausgewählt<br>Profil & Bewertungen</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/06_behandlungsangebote.png" alt="Hi-Fi: Angebote" loading="lazy">
+      <div class="screen-caption">06 — Behandlungsangebote<br>Angebote mit Preisen</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/07_detailansicht_angebote.png" alt="Hi-Fi: Detail Angebote" loading="lazy">
+      <div class="screen-caption">07 — Detailansicht<br>Terminwahl nach Angebot</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/08_detailansicht_buchung.png" alt="Hi-Fi: Buchung" loading="lazy">
+      <div class="screen-caption">08 — Buchung<br>Termin bestätigen & bezahlen</div>
+    </div>
+    <div class="screen-cell">
+      <img src="/assets/time2care/hifi/09_detailansicht_bestaetigung.png" alt="Hi-Fi: Bestätigung" loading="lazy">
+      <div class="screen-caption">09 — Bestätigung<br>Klare Buchungsbestätigung</div>
+    </div>
+  </div>
+  <div class="slide-dots" id="hifi-dots"></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 07 — Learnings -->
+<div class="page page-break">
+  <div class="section-number">07 — Learnings</div>
+  <div class="section-title">Was ich mitgenommen habe</div>
+
+  <p class="reflection-pull">Annahmen sind keine Erkenntnisse — Testen schon.</p>
+
+  <p class="body-text">Die wichtigste Erkenntnis dieses Projekts: Meine ursprüngliche Annahme, dass die Suche das grösste Problem sei, war nur die halbe Wahrheit. Erst die Interviews und Usability-Tests haben gezeigt, dass Unsicherheit bei der Buchungsbestätigung genauso viel Gewicht hat.</p>
+  <p class="body-text" style="margin-top: 16px;">time2care war mein erster vollständiger UX-Prozess — von der Forschung bis zum Hi-Fi-Prototyp. Es hat mir gezeigt, wie wichtig es ist, früh zu testen und offen zu sein, das initiale Framing anzupassen. Die Einschränkungen des Kurses (fester Prozess, begrenzte Zeit) haben mich gezwungen, Prioritäten zu setzen — und das hat geholfen, klarer zu designen.</p>
+
+  <div class="metrics-row" style="margin-top: 40px;">
+    <div class="metric-card">
+      <div class="metric-value">5</div>
+      <div class="metric-label">Nutzer:innen in der Usability-Studie getestet</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">4</div>
+      <div class="metric-label">Schmerzpunkte aus der Forschungsphase identifiziert</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">Lo → Hi</div>
+      <div class="metric-label">Vollständiger Design-Prozess von Wireframe bis Prototyp</div>
+    </div>
+  </div>
+
+  <div class="challenge-box" style="margin-top: 40px;">
+    <h3>Nächste Schritte</h3>
+    <p>Mit mehr Zeit würde ich die Barrierefreiheit vertiefen — insbesondere für ältere Nutzer:innen, die als Schmerzpunkt identifiziert wurden. Ausserdem würde ich einen zweiten Usability-Test mit dem Hi-Fi-Prototyp durchführen, um zu prüfen ob die Überarbeitungen wirklich geholfen haben.</p>
+  </div>
+</div>
+
+<script>
+  function initSlider(gridId, dotsId) {
+    const grid = document.getElementById(gridId);
+    const dotsEl = document.getElementById(dotsId);
+    if (!grid || !dotsEl) return;
+
+    const cells = grid.querySelectorAll('.screen-cell');
+    const count = cells.length;
+
+    // Build dots
+    for (let i = 0; i < count; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' dot-active' : '');
+      dotsEl.appendChild(d);
+    }
+
+    const dots = dotsEl.querySelectorAll('.dot');
+
+    function updateDots() {
+      const cellW = grid.offsetWidth;
+      if (!cellW) return;
+      const idx = Math.round(grid.scrollLeft / cellW);
+      dots.forEach((d, i) => d.classList.toggle('dot-active', i === idx));
+    }
+
+    grid.addEventListener('scroll', updateDots, { passive: true });
+  }
+
+  initSlider('lofi-grid', 'lofi-dots');
+  initSlider('hifi-grid', 'hifi-dots');
+</script>
+</body>
+</html>
