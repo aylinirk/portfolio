@@ -1,14 +1,14 @@
 ---
 layout: time2care-case-study.njk
 title: "Coursera UX Project – time2care"
-tagline: Mobile App zur Buchung von Therapie- und Trainingsangeboten — vom ersten Nutzerinterview bis zum High-Fidelity-Prototyp.
+tagline: Mobile app for booking therapy and training — from first user interview to high-fidelity prototype.
 order: 1
 tags:
   - UX Design
-  - Fallstudie
+  - Case Study
   - "2026"
 coverGradient: "linear-gradient(135deg, #C8D9C0 0%, #9AB88A 35%, #6A9060 70%, #3E5E40 100%)"
-role: "UX-Forschung, Wireframing, Prototyping, Usability-Tests"
+role: "UX Research, Wireframing, Prototyping, Usability Testing"
 scope: "Empathize, Define, Ideate, Prototype, Test"
 tools: "Figma"
 year: 2026
