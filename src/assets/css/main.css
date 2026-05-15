@@ -190,6 +190,7 @@ body {
   padding: 80px max(48px, calc(50vw - 580px)) 72px;
   display: flex;
   align-items: center;
+  background: var(--surface);
 }
 
 .hero__inner {
