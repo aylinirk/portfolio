@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ 'de' if isDE else 'en' }}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -176,20 +176,21 @@
 </style>
 </head>
 <body>
+{% set isDE = '/de/' in page.url %}
 
 <div class="back-bar">
-  <a href="{{ homeUrl }}#work">← Zurück zum Portfolio</a>
+  <a href="{{ homeUrl }}#work">← {{ "Zurück zum Portfolio" if isDE else "Back to portfolio" }}</a>
 </div>
 
 <div class="cover">
-  <div class="cover-tag">UX / Web Design · Case Study</div>
+  <div class="cover-tag">{{ "Webdesign · UX Design · Fallstudie" if isDE else "Web Design · UX Design · Case Study" }}</div>
   <h1>Spielgruppe <span>Seon</span></h1>
-  <p class="cover-sub">Digitalisierung einer über 20 Jahre bestehenden Spielgruppe – von der Strategie bis zur fertigen Website mit Online-Anmeldung. Umgesetzt an einem Wochenende.</p>
+  <p class="cover-sub">{{ tagline }}</p>
   <div class="cover-meta">
     <div class="cover-meta-item"><label>Projekt</label><span>Website Spielgruppe Seon</span></div>
-    <div class="cover-meta-item"><label>Jahr</label><span>2026</span></div>
-    <div class="cover-meta-item"><label>Rolle</label><span>UX Strategy · Content · Design</span></div>
-    <div class="cover-meta-item"><label>Ort</label><span>Seon, Aargau, Schweiz</span></div>
+    <div class="cover-meta-item"><label>{{ "Jahr" if isDE else "Year" }}</label><span>2026</span></div>
+    <div class="cover-meta-item"><label>{{ "Rolle" if isDE else "Role" }}</label><span>UX Strategy · Content · Design</span></div>
+    <div class="cover-meta-item"><label>{{ "Ort" if isDE else "Location" }}</label><span>Seon, Aargau, Schweiz</span></div>
   </div>
   <div class="cover-tags">
     <div class="skill-pill">UX Strategy</div>
@@ -201,128 +202,245 @@
 </div>
 
 <div class="page">
-  <div class="section-number">01 — Projektübersicht</div>
-  <div class="section-title">Auf einen Blick</div>
+  <div class="section-number">{{ "01 — Projektübersicht" if isDE else "01 — Project Overview" }}</div>
+  <div class="section-title">{{ "Auf einen Blick" if isDE else "At a Glance" }}</div>
   <div class="overview-grid">
-    <div class="overview-card"><div class="icon green">👤</div><h4>Kundin</h4><p>Dina, neue Leiterin der Spielgruppe Seon</p></div>
-    <div class="overview-card"><div class="icon orange">🎯</div><h4>Ziel</h4><p>Bestehende Spielgruppe digitalisieren & Anmeldung vereinfachen</p></div>
-    <div class="overview-card"><div class="icon yellow">👥</div><h4>Zielgruppe</h4><p>Eltern von Kindern zwischen 2½ und 4 Jahren in Seon</p></div>
+    <div class="overview-card"><div class="icon green">👤</div><h4>{{ "Kundin" if isDE else "Client" }}</h4>
+      {% if isDE %}<p>Dina, neue Leiterin der Spielgruppe Seon</p>{% else %}<p>Dina, new leader of Spielgruppe Seon</p>{% endif %}
+    </div>
+    <div class="overview-card"><div class="icon orange">🎯</div><h4>{{ "Ziel" if isDE else "Goal" }}</h4>
+      {% if isDE %}<p>Bestehende Spielgruppe digitalisieren & Anmeldung vereinfachen</p>{% else %}<p>Digitalise an existing playgroup & simplify registration</p>{% endif %}
+    </div>
+    <div class="overview-card"><div class="icon yellow">👥</div><h4>{{ "Zielgruppe" if isDE else "Target group" }}</h4>
+      {% if isDE %}<p>Eltern von Kindern zwischen 2½ und 4 Jahren in Seon</p>{% else %}<p>Parents of children aged 2½ to 4 in Seon</p>{% endif %}
+    </div>
     <div class="overview-card"><div class="icon blue">🛠</div><h4>Tools</h4><p>Claude AI · Claude Design · Canva</p></div>
-    <div class="overview-card"><div class="icon purple">📄</div><h4>Umfang</h4><p>7 Sektionen inkl. Datenschutz, Impressum, Logo & Flyer</p></div>
-    <div class="overview-card"><div class="icon red">🌍</div><h4>Sprache</h4><p>Deutsch (Schweiz) – ohne «ß», inklusiv formuliert</p></div>
+    <div class="overview-card"><div class="icon purple">📄</div><h4>{{ "Umfang" if isDE else "Scope" }}</h4>
+      {% if isDE %}<p>7 Sektionen inkl. Datenschutz, Impressum, Logo & Flyer</p>{% else %}<p>7 sections incl. privacy policy, imprint, logo & flyer</p>{% endif %}
+    </div>
+    <div class="overview-card"><div class="icon red">🌍</div><h4>{{ "Sprache" if isDE else "Language" }}</h4>
+      {% if isDE %}<p>Deutsch (Schweiz) – ohne «ß», inklusiv formuliert</p>{% else %}<p>German (Switzerland) – no «ß», inclusive language</p>{% endif %}
+    </div>
   </div>
 
   <div class="sprint-box">
     <div class="sprint-icon">⚡</div>
     <div>
-      <h4>Wochenend-Sprint – von null auf live</h4>
+      <h4>{{ "Wochenend-Sprint – von null auf live" if isDE else "Weekend sprint — from zero to live" }}</h4>
+      {% if isDE %}
       <p>Das Projekt musste schnell gehen. Die Spielgruppe brauchte eine funktionsfähige Online-Präsenz so rasch wie möglich. Die gesamte Umsetzung – Strategie, Inhalt, Design, Logo und Flyer – entstand an einem einzigen Wochenende. Kein endloses Abwägen, kein Scope-Creep: klarer Fokus, klare Prioritäten, fertiges Ergebnis.</p>
+      {% else %}
+      <p>The whole project had to move fast. The playgroup needed a working online presence as quickly as possible. The entire implementation — strategy, content, design, logo and flyer — was completed in a single weekend. No endless deliberating, no scope creep: clear focus, clear priorities, finished result.</p>
+      {% endif %}
     </div>
   </div>
 
   <div class="challenge-box">
-    <h3>Die Ausgangslage</h3>
+    <h3>{{ "Die Ausgangslage" if isDE else "Background" }}</h3>
+    {% if isDE %}
     <p>Die Spielgruppe Seon existiert seit über 20 Jahren und ist in der Region bekannt – jedoch ohne jede digitale Präsenz. Dina, ausgebildete Fachfrau Betreuung Kleinkinder mit 10 Jahren Erfahrung in einer KITA, hat die Spielgruppe übernommen. Ihr Wunsch: Eltern sollen sich einfach und unkompliziert online informieren und anmelden können – ohne Telefonanruf, ohne Umweg. Eine Institution mit 20-jähriger Geschichte bekommt ihren ersten digitalen Auftritt.</p>
+    {% else %}
+    <p>Spielgruppe Seon has existed for over 20 years and is well known in the region — but with no digital presence at all. Dina, a qualified childcare professional with 10 years of experience in a Kita, has taken over the playgroup. Her wish: parents should be able to find information and register easily online — no phone calls, no detours. An institution with 20 years of history gets its first digital presence.</p>
+    {% endif %}
   </div>
 
   <div class="context-box">
-    <h4>Wichtiger Kontext – bestehende Stärken nutzen</h4>
+    <h4>{{ "Wichtiger Kontext – bestehende Stärken nutzen" if isDE else "Important context — building on existing strengths" }}</h4>
+    {% if isDE %}
     <p>Die Spielgruppe Seon ist keine Neugründung. Sie bringt über 20 Jahre Vertrauen und Geschichte in der Gemeinde mit. Dinas 10-jährige KITA-Erfahrung ergänzt diese Kontinuität. Die Website musste diese doppelte Stärke kommunizieren: bewährte Tradition trifft frische, kompetente Leitung.</p>
+    {% else %}
+    <p>Spielgruppe Seon is not a startup. It brings over 20 years of trust and history in the community. Dina's 10 years of Kita experience adds to this continuity. The website needed to communicate this double strength: proven tradition meets fresh, competent leadership.</p>
+    {% endif %}
   </div>
 
-  <div class="section-number" style="margin-top:48px;">02 — Herausforderung & Ziele</div>
-  <div class="section-title">Was musste gelöst werden?</div>
+  <div class="section-number" style="margin-top:48px;">{{ "02 — Herausforderung & Ziele" if isDE else "02 — Challenge & Goals" }}</div>
+  <div class="section-title">{{ "Was musste gelöst werden?" if isDE else "What needed solving?" }}</div>
   <div class="learning-list">
-    <div class="learning-item"><h4>Vertrauen für eine neue Leiterin aufbauen</h4><p>Dina hat die Spielgruppe übernommen. Eltern die die bisherige Leiterin kannten, müssen Vertrauen in die neue Person entwickeln. Die Website musste Dinas Kompetenz und Herzlichkeit zeigen – ohne die Geschichte der Spielgruppe zu übergehen.</p></div>
-    <div class="learning-item"><h4>Online-Anmeldung mit Warteliste</h4><p>Bisher erfolgte die Anmeldung ausschliesslich durch direkten Kontakt. Eine transparente Online-Anmeldung mit Wartelisten-Hinweis sollte den Prozess für beide Seiten vereinfachen und professionalisieren.</p></div>
-    <div class="learning-item"><h4>Informationsarchitektur: Was brauchen Eltern zuerst?</h4><p>Öffnungszeiten, Alter, Preise und Kontaktmöglichkeiten sind für Eltern die entscheidenden Informationen – noch vor allem anderen. Diese Hierarchie musste konsequent in der Seitenstruktur abgebildet werden.</p></div>
-    <div class="learning-item"><h4>Morgen- und Nachmittagsbetreuung abbilden</h4><p>Die Spielgruppe bietet an drei Tagen (Mo/Di/Do) jeweils Morgen- (08:15–11:45) und Nachmittagszeiten (13:00–15:30) an. Diese Flexibilität musste im Formular und in der Übersicht klar und verständlich dargestellt werden.</p></div>
-    <div class="learning-item"><h4>Inklusivität in der Sprache</h4><p>Alle Inhalte wurden aktiv auf ausgrenzende Formulierungen geprüft und überarbeitet. Der Grundsatz «Alle Kinder sind willkommen – so wie sie sind» zieht sich durch die gesamte Website.</p></div>
+    <div class="learning-item">
+      <h4>{{ "Vertrauen für eine neue Leiterin aufbauen" if isDE else "Build trust for a new leader" }}</h4>
+      {% if isDE %}
+      <p>Dina hat die Spielgruppe übernommen. Eltern die die bisherige Leiterin kannten, müssen Vertrauen in die neue Person entwickeln. Die Website musste Dinas Kompetenz und Herzlichkeit zeigen – ohne die Geschichte der Spielgruppe zu übergehen.</p>
+      {% else %}
+      <p>Dina has taken over the playgroup. Parents who knew the previous leader need to build trust in the new person. The website needed to show Dina's competence and warmth — without bypassing the playgroup's history.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Online-Anmeldung mit Warteliste" if isDE else "Online registration with waitlist" }}</h4>
+      {% if isDE %}
+      <p>Bisher erfolgte die Anmeldung ausschliesslich durch direkten Kontakt. Eine transparente Online-Anmeldung mit Wartelisten-Hinweis sollte den Prozess für beide Seiten vereinfachen und professionalisieren.</p>
+      {% else %}
+      <p>Registration had previously only been possible through direct contact. A transparent online registration with a waitlist notice was meant to simplify and professionalise the process for both sides.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Informationsarchitektur: Was brauchen Eltern zuerst?" if isDE else "Information architecture: what do parents need first?" }}</h4>
+      {% if isDE %}
+      <p>Öffnungszeiten, Alter, Preise und Kontaktmöglichkeiten sind für Eltern die entscheidenden Informationen – noch vor allem anderen. Diese Hierarchie musste konsequent in der Seitenstruktur abgebildet werden.</p>
+      {% else %}
+      <p>Opening times, age range, prices and contact options are the deciding factors for parents — before anything else. This hierarchy needed to be consistently reflected in the page structure.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Morgen- und Nachmittagsbetreuung abbilden" if isDE else "Morning and afternoon childcare" }}</h4>
+      {% if isDE %}
+      <p>Die Spielgruppe bietet an drei Tagen (Mo/Di/Do) jeweils Morgen- (08:15–11:45) und Nachmittagszeiten (13:00–15:30) an. Diese Flexibilität musste im Formular und in der Übersicht klar und verständlich dargestellt werden.</p>
+      {% else %}
+      <p>The playgroup offers morning (08:15–11:45) and afternoon sessions (13:00–15:30) on three days (Mon/Tue/Thu). This flexibility needed to be clearly displayed in the form and overview.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Inklusivität in der Sprache" if isDE else "Inclusive language" }}</h4>
+      {% if isDE %}
+      <p>Alle Inhalte wurden aktiv auf ausgrenzende Formulierungen geprüft und überarbeitet. Der Grundsatz «Alle Kinder sind willkommen – so wie sie sind» zieht sich durch die gesamte Website.</p>
+      {% else %}
+      <p>All content was actively reviewed for exclusionary phrasing. The principle 'All children are welcome — just as they are' runs throughout the entire website.</p>
+      {% endif %}
+    </div>
   </div>
 </div>
 
 <div class="page page-break">
-  <div class="section-number">03 — Prozess</div>
-  <div class="section-title">Von A bis Z</div>
+  <div class="section-number">{{ "03 — Prozess" if isDE else "03 — Process" }}</div>
+  <div class="section-title">{{ "Von A bis Z" if isDE else "From Start to Finish" }}</div>
   <div class="timeline">
     <div class="timeline-item">
       <div class="timeline-dot green">🔍</div>
       <div class="timeline-content">
         <div class="timeline-tag">Discovery</div>
-        <h4>Analyse & strukturiertes Briefing</h4>
+        <h4>{{ "Analyse & strukturiertes Briefing" if isDE else "Research & structured briefing" }}</h4>
+        {% if isDE %}
         <p>Systematische Befragung der Kundin zu Zielgruppe, Inhalten, Preisen, Zeiten und Kontaktpräferenzen. Kritische Rückfragen wurden aktiv gestellt – zu Warteliste, Platzzahl, Schnuppertagen und Kontaktwegen. Wichtige Faktenkorrekturen im Prozess: Dinas Erfahrung stammt aus 10 Jahren KITA-Arbeit; die Spielgruppe selbst besteht seit über 20 Jahren und wurde von ihr übernommen – nicht gegründet.</p>
+        {% else %}
+        <p>Systematic questioning of the client about target audience, content, prices, times and contact preferences. Critical questions were actively raised — about the waitlist, capacity, trial days and contact channels. Important factual corrections during the process: Dina's experience comes from 10 years of Kita work; the playgroup itself has existed for over 20 years and was taken over by her — not founded.</p>
+        {% endif %}
       </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot orange">🏗</div>
       <div class="timeline-content">
-        <div class="timeline-tag">Strategie</div>
+        <div class="timeline-tag">{{ "Strategie" if isDE else "Strategy" }}</div>
         <h4>Competitive Analysis</h4>
+        {% if isDE %}
         <p>Eine bestehende Spielgruppen-Website wurde vollständig analysiert. Fehlende Inhaltsbereiche wurden identifiziert: Eingewöhnungsphase, Ferienregelung, pädagogisches Konzept, Datenschutz nach DSG und Eltern-Infobereich. Für jeden fehlenden Bereich wurde ein gezielter Prompt entwickelt.</p>
+        {% else %}
+        <p>An existing playgroup website was fully analysed. Missing content areas were identified: settling-in period, holiday policy, educational concept, data protection under Swiss law, and a parent information section. A targeted prompt was developed for each missing area.</p>
+        {% endif %}
       </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot blue">🗺</div>
       <div class="timeline-content">
         <div class="timeline-tag">IA</div>
-        <h4>Informationsarchitektur</h4>
+        <h4>{{ "Informationsarchitektur" if isDE else "Information architecture" }}</h4>
+        {% if isDE %}
         <p>Seitenstruktur definiert: Home → Über uns → Was ist eine Spielgruppe? → Zeiten & Preise → Team → Anmeldung → Kontakt → Impressum → Datenschutz. «Was ist eine Spielgruppe?» als eigene Sektion – für Eltern ohne Vorkenntnisse. Rechtliches bewusst im Footer, nicht im Hauptmenü.</p>
+        {% else %}
+        <p>Page structure defined: Home → About us → What is a playgroup? → Times & prices → Team → Registration → Contact → Imprint → Privacy. 'What is a playgroup?' as its own section — for parents without prior knowledge. Legal pages intentionally placed in the footer, not the main menu.</p>
+        {% endif %}
       </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot yellow">✍️</div>
       <div class="timeline-content">
         <div class="timeline-tag">Content Design</div>
-        <h4>Copywriting auf Schweizerdeutsch</h4>
+        <h4>{{ "Copywriting auf Schweizerdeutsch" if isDE else "Copywriting in Swiss German" }}</h4>
+        {% if isDE %}
         <p>Alle Texte in Schweizer Sprachstandard (kein «ß»). Tonalität: warm, einladend, auf Augenhöhe mit Eltern. Das Montessori-Zitat «Hilf mir, es selbst zu tun» wurde mit einer verständlichen Erklärung für neue Eltern ergänzt – zugänglich statt akademisch.</p>
+        {% else %}
+        <p>All content in Swiss language standard (no 'ß'). Tone: warm, welcoming, at eye level with parents. The Montessori quote 'Help me to do it myself' was supplemented with an accessible explanation for new parents — approachable rather than academic.</p>
+        {% endif %}
       </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot purple">🎨</div>
       <div class="timeline-content">
         <div class="timeline-tag">Visual Design</div>
-        <h4>Logo, Flyer & Markenidentität</h4>
+        <h4>{{ "Logo, Flyer & Markenidentität" if isDE else "Logo, flyer & brand identity" }}</h4>
+        {% if isDE %}
         <p>Farbpalette: Salbeigrün (#7a9e7e), Terrakotta (#d4845a), Honiggelb (#f4c842), Cremeweiß (#fdf8f2). Typografie: Baloo 2 für Titel, Lato für Fliesstext. Logo: Igel mit Sonne – direkt gestaltet und als SVG exportiert. Flyer (A5) für physische Verteilung in der Gemeinde erstellt. Alle Materialien folgen demselben visuellen System.</p>
+        {% else %}
+        <p>Colour palette: sage green (#7a9e7e), terracotta (#d4845a), honey yellow (#f4c842), cream white (#fdf8f2). Typography: Baloo 2 for headings, Lato for body text. Logo: hedgehog with sun — designed directly and exported as SVG. Flyer (A5) created for physical distribution in the community. All materials follow the same visual system.</p>
+        {% endif %}
       </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot teal">⚙️</div>
       <div class="timeline-content">
-        <div class="timeline-tag">Entwicklung</div>
-        <h4>Iteratives Prompting mit Claude Design</h4>
+        <div class="timeline-tag">{{ "Entwicklung" if isDE else "Development" }}</div>
+        <h4>{{ "Iteratives Prompting mit Claude Design" if isDE else "Iterative prompting with Claude Design" }}</h4>
+        {% if isDE %}
         <p>Alle Website-Sektionen wurden mit Claude Design umgesetzt. Claude AI unterstützte Strategie, Texte und Struktur. Iterative Anpassungen: Morgen/Nachmittag-Zeiten ergänzt, Kinderanzahl bewusst entfernt, neue Sektionen hinzugefügt, Formulierungen auf Inklusivität geprüft und überarbeitet.</p>
+        {% else %}
+        <p>All website sections were built with Claude Design. Claude AI supported strategy, copy and structure. Iterative adjustments: morning/afternoon times added, child count deliberately removed, new sections added, phrasing reviewed and revised for inclusivity.</p>
+        {% endif %}
       </div>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot green">⚖️</div>
       <div class="timeline-content">
         <div class="timeline-tag">Legal</div>
-        <h4>Datenschutz & Impressum nach Schweizer Recht</h4>
+        <h4>{{ "Datenschutz & Impressum nach Schweizer Recht" if isDE else "Data protection & imprint under Swiss law" }}</h4>
+        {% if isDE %}
         <p>Vollständige Datenschutzerklärung nach Schweizer DSG (SR 235.1) verfasst – angepasst auf die Spielgruppe Seon als Einzelbetrieb mit einer Leiterin. Impressum inkl. Haftungsausschluss und Urheberrecht erstellt und für die Veröffentlichung vorbereitet.</p>
+        {% else %}
+        <p>Complete privacy policy written under Swiss DSG (SR 235.1) — adapted to Spielgruppe Seon as a sole proprietorship with one leader. Imprint including disclaimer and copyright created and prepared for publication.</p>
+        {% endif %}
       </div>
     </div>
   </div>
 </div>
 
 <div class="page page-break">
-  <div class="section-number">04 — Deliverables</div>
-  <div class="section-title">Was wurde erstellt?</div>
+  <div class="section-number">{{ "04 — Deliverables" if isDE else "04 — Deliverables" }}</div>
+  <div class="section-title">{{ "Was wurde erstellt?" if isDE else "What was built?" }}</div>
   <div class="deliverable-grid">
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Website (7 Sektionen)</h4><p>Home, Über uns, Was ist eine Spielgruppe?, Zeiten & Preise, Team, Anmeldung, Kontakt</p></div></div>
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Online-Anmeldeformular</h4><p>Mit Wartelisten-Hinweis, Tagesauswahl Morgen/Nachmittag und Bestätigungstext</p></div></div>
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Logo (SVG)</h4><p>Igel mit Sonne in der Markenfarbe – skalierbar für Web, Druck und Social Media</p></div></div>
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Flyer (A5)</h4><p>Printmaterial für die physische Verteilung in der Gemeinde Seon</p></div></div>
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Datenschutzerklärung</h4><p>Nach Schweizer DSG, angepasst auf Spielgruppe Seon als Einzelbetrieb</p></div></div>
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Impressum</h4><p>Vollständig nach Schweizer Standard inkl. Urheberrecht und Haftungsausschluss</p></div></div>
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Pädagogisches Konzept</h4><p>«Was ist eine Spielgruppe?» mit 5 Themenbereichen und Montessori-Erklärung</p></div></div>
-    <div class="deliverable-item"><div class="check">✅</div><div><h4>Design System</h4><p>Farbpalette, Typografie (Baloo 2 + Lato), Bildsprache und Logo-Richtlinien</p></div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>{{ "Website (7 Sektionen)" if isDE else "Website (7 sections)" }}</h4>
+      {% if isDE %}<p>Home, Über uns, Was ist eine Spielgruppe?, Zeiten & Preise, Team, Anmeldung, Kontakt</p>
+      {% else %}<p>Home, About us, What is a playgroup?, Times & prices, Team, Registration, Contact</p>{% endif %}
+    </div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>{{ "Online-Anmeldeformular" if isDE else "Online registration form" }}</h4>
+      {% if isDE %}<p>Mit Wartelisten-Hinweis, Tagesauswahl Morgen/Nachmittag und Bestätigungstext</p>
+      {% else %}<p>With waitlist notice, morning/afternoon day selection and confirmation text</p>{% endif %}
+    </div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>Logo (SVG)</h4>
+      {% if isDE %}<p>Igel mit Sonne in der Markenfarbe – skalierbar für Web, Druck und Social Media</p>
+      {% else %}<p>Hedgehog with sun in brand colour — scalable for web, print and social media</p>{% endif %}
+    </div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>Flyer (A5)</h4>
+      {% if isDE %}<p>Printmaterial für die physische Verteilung in der Gemeinde Seon</p>
+      {% else %}<p>Print material for physical distribution in the community of Seon</p>{% endif %}
+    </div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>{{ "Datenschutzerklärung" if isDE else "Privacy policy" }}</h4>
+      {% if isDE %}<p>Nach Schweizer DSG, angepasst auf Spielgruppe Seon als Einzelbetrieb</p>
+      {% else %}<p>Under Swiss DSG, adapted to Spielgruppe Seon as a sole proprietorship</p>{% endif %}
+    </div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>{{ "Impressum" if isDE else "Imprint" }}</h4>
+      {% if isDE %}<p>Vollständig nach Schweizer Standard inkl. Urheberrecht und Haftungsausschluss</p>
+      {% else %}<p>Complete under Swiss standard including copyright and disclaimer</p>{% endif %}
+    </div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>{{ "Pädagogisches Konzept" if isDE else "Educational concept" }}</h4>
+      {% if isDE %}<p>«Was ist eine Spielgruppe?» mit 5 Themenbereichen und Montessori-Erklärung</p>
+      {% else %}<p>'What is a playgroup?' with 5 topic areas and Montessori explanation</p>{% endif %}
+    </div></div>
+    <div class="deliverable-item"><div class="check">✅</div><div>
+      <h4>Design System</h4>
+      {% if isDE %}<p>Farbpalette, Typografie (Baloo 2 + Lato), Bildsprache und Logo-Richtlinien</p>
+      {% else %}<p>Colour palette, typography (Baloo 2 + Lato), visual language and logo guidelines</p>{% endif %}
+    </div></div>
   </div>
 </div>
 
 <div class="phase-section">
   <div class="phase-section-header">
     <div class="section-number">05 — Hi-Fi Prototype</div>
-    <div class="section-title">Die fertige Website im Mockup</div>
+    <div class="section-title">{{ "Die fertige Website im Mockup" if isDE else "The finished website in mockup" }}</div>
   </div>
   <div class="phase-embed">
     <iframe src="/assets/spielgruppe/spielgruppe-hifi.html" loading="lazy" title="Spielgruppe Seon – Hi-Fi Screens"></iframe>
@@ -332,38 +450,78 @@
 <div class="page page-break">
   <div class="divider" style="margin-top:0"></div>
 
-  <div class="section-number">06 — Ergebnisse</div>
-  <div class="section-title">Was wurde erreicht?</div>
+  <div class="section-number">{{ "06 — Ergebnisse" if isDE else "06 — Results" }}</div>
+  <div class="section-title">{{ "Was wurde erreicht?" if isDE else "What was achieved?" }}</div>
   <div class="results-grid">
-    <div class="result-card"><div class="num">1</div><div class="label">Wochenende – von null auf live</div></div>
-    <div class="result-card"><div class="num">20+</div><div class="label">Jahre Geschichte sichtbar gemacht</div></div>
-    <div class="result-card"><div class="num">9</div><div class="label">Iterative Design-Schritte</div></div>
-    <div class="result-card"><div class="num">100%</div><div class="label">DSG-konformer Datenschutz</div></div>
+    <div class="result-card"><div class="num">1</div><div class="label">{{ "Wochenende – von null auf live" if isDE else "Weekend — from zero to live" }}</div></div>
+    <div class="result-card"><div class="num">20+</div><div class="label">{{ "Jahre Geschichte sichtbar gemacht" if isDE else "Years of history made visible" }}</div></div>
+    <div class="result-card"><div class="num">9</div><div class="label">{{ "Iterative Design-Schritte" if isDE else "Iterative design steps" }}</div></div>
+    <div class="result-card"><div class="num">100%</div><div class="label">{{ "DSG-konformer Datenschutz" if isDE else "DSG-compliant data protection" }}</div></div>
   </div>
 
   <div class="quote-block">
+    {% if isDE %}
     <p>Die grösste Leistung war nicht die Website – es war das Sichtbarmachen von etwas, das schon lange existierte und es verdient hatte, endlich gefunden zu werden.</p>
     <div class="attribution">— Leitgedanke des Projekts</div>
+    {% else %}
+    <p>The greatest achievement was not the website — it was making visible something that had existed for a long time and deserved to finally be found.</p>
+    <div class="attribution">— Core principle of the project</div>
+    {% endif %}
   </div>
 </div>
 
 <div class="page page-break">
-  <div class="section-number">07 — Learnings</div>
-  <div class="section-title">Was hat dieses Projekt gezeigt?</div>
+  <div class="section-number">{{ "07 — Learnings" if isDE else "07 — Learnings" }}</div>
+  <div class="section-title">{{ "Was hat dieses Projekt gezeigt?" if isDE else "What did this project show?" }}</div>
   <div class="learning-list">
-    <div class="learning-item"><h4>Geschichte ist ein Vertrauensmerkmal</h4><p>Eine Spielgruppe die seit über 20 Jahren besteht, hat etwas das keine neue Website ersetzen kann: bewiesene Kontinuität. Diese Geschichte aktiv zu kommunizieren war eine der wichtigsten strategischen Entscheidungen des Projekts.</p></div>
-    <div class="learning-item"><h4>Übergänge brauchen klare Kommunikation</h4><p>Wenn eine neue Leiterin ein bestehendes Angebot übernimmt, entstehen Fragen bei den Eltern. Die Website musste Dinas Kompetenz – 10 Jahre Kindererziehung in einer KITA – und die Kontinuität der Spielgruppe gleichzeitig sichtbar machen.</p></div>
-    <div class="learning-item"><h4>Kritisches Hinterfragen ist UX-Arbeit</h4><p>Fehler im Briefing wurden aktiv korrigiert: Sachverhalte wurden zunächst ungenau dargestellt. Das Erkennen und Korrigieren solcher Ungenauigkeiten gehört zur UX-Arbeit – nicht nur das Design.</p></div>
-    <div class="learning-item"><h4>Sprache ist Design</h4><p>«Alle Kinder sind willkommen – so wie sie sind» ist kein zufälliger Satz. Er ist das Ergebnis einer bewussten Entscheidung die einen echten Unterschied macht – für Eltern die sich fragen, ob ihr Kind wirklich gemeint ist.</p></div>
-    <div class="learning-item"><h4>Prompting als UX-Kompetenz</h4><p>Präzises Prompting erfordert dieselben Fähigkeiten wie ein gutes Design-Briefing: klare Ziele, konkrete Inhalte, definierte Einschränkungen und ein Verständnis für das Endprodukt. Jede Anpassung war eine bewusste inhaltliche Entscheidung.</p></div>
+    <div class="learning-item">
+      <h4>{{ "Geschichte ist ein Vertrauensmerkmal" if isDE else "History is a trust signal" }}</h4>
+      {% if isDE %}
+      <p>Eine Spielgruppe die seit über 20 Jahren besteht, hat etwas das keine neue Website ersetzen kann: bewiesene Kontinuität. Diese Geschichte aktiv zu kommunizieren war eine der wichtigsten strategischen Entscheidungen des Projekts.</p>
+      {% else %}
+      <p>A playgroup that has existed for over 20 years has something no new website can replace: proven continuity. Actively communicating this history was one of the most important strategic decisions of the project.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Übergänge brauchen klare Kommunikation" if isDE else "Transitions need clear communication" }}</h4>
+      {% if isDE %}
+      <p>Wenn eine neue Leiterin ein bestehendes Angebot übernimmt, entstehen Fragen bei den Eltern. Die Website musste Dinas Kompetenz – 10 Jahre Kindererziehung in einer KITA – und die Kontinuität der Spielgruppe gleichzeitig sichtbar machen.</p>
+      {% else %}
+      <p>When a new leader takes over an existing service, it raises questions for parents. The website needed to make Dina's competence — 10 years of childcare in a Kita — and the continuity of the playgroup visible at the same time.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Kritisches Hinterfragen ist UX-Arbeit" if isDE else "Critical questioning is UX work" }}</h4>
+      {% if isDE %}
+      <p>Fehler im Briefing wurden aktiv korrigiert: Sachverhalte wurden zunächst ungenau dargestellt. Das Erkennen und Korrigieren solcher Ungenauigkeiten gehört zur UX-Arbeit – nicht nur das Design.</p>
+      {% else %}
+      <p>Errors in the brief were actively corrected: facts were initially presented inaccurately. Identifying and correcting such inaccuracies is part of UX work — not just design.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Sprache ist Design" if isDE else "Language is design" }}</h4>
+      {% if isDE %}
+      <p>«Alle Kinder sind willkommen – so wie sie sind» ist kein zufälliger Satz. Er ist das Ergebnis einer bewussten Entscheidung die einen echten Unterschied macht – für Eltern die sich fragen, ob ihr Kind wirklich gemeint ist.</p>
+      {% else %}
+      <p>'All children are welcome — just as they are' is not an accidental sentence. It is the result of a deliberate decision that makes a real difference — for parents wondering whether their child is truly included.</p>
+      {% endif %}
+    </div>
+    <div class="learning-item">
+      <h4>{{ "Prompting als UX-Kompetenz" if isDE else "Prompting as a UX skill" }}</h4>
+      {% if isDE %}
+      <p>Präzises Prompting erfordert dieselben Fähigkeiten wie ein gutes Design-Briefing: klare Ziele, konkrete Inhalte, definierte Einschränkungen und ein Verständnis für das Endprodukt. Jede Anpassung war eine bewusste inhaltliche Entscheidung.</p>
+      {% else %}
+      <p>Precise prompting requires the same skills as a good design brief: clear goals, concrete content, defined constraints and an understanding of the end product. Every adjustment was a deliberate content decision.</p>
+      {% endif %}
+    </div>
   </div>
 
   <div class="divider"></div>
 
-  <div class="section-number">08 — Tools & Methoden</div>
-  <div class="section-title">Womit wurde gearbeitet?</div>
+  <div class="section-number">{{ "08 — Tools & Methoden" if isDE else "08 — Tools & Methods" }}</div>
+  <div class="section-title">{{ "Womit wurde gearbeitet?" if isDE else "Tools used" }}</div>
   <div class="tools-grid">
-    <div class="tool-pill"><span class="dot dot-green"></span>Claude AI (Strategie & Content)</div>
+    <div class="tool-pill"><span class="dot dot-green"></span>{{ "Claude AI (Strategie & Content)" if isDE else "Claude AI (Strategy & Content)" }}</div>
     <div class="tool-pill"><span class="dot dot-blue"></span>Claude Design (Website)</div>
     <div class="tool-pill"><span class="dot dot-orange"></span>Canva (Flyer & Visuals)</div>
     <div class="tool-pill"><span class="dot dot-yellow"></span>SVG (Logo-Illustration)</div>
@@ -372,19 +530,25 @@
     <div class="tool-pill"><span class="dot dot-orange"></span>Information Architecture</div>
     <div class="tool-pill"><span class="dot dot-yellow"></span>UX Copywriting (DE/CH)</div>
     <div class="tool-pill"><span class="dot dot-green"></span>Design System</div>
-    <div class="tool-pill"><span class="dot dot-blue"></span>Schweizer DSG / Datenschutzrecht</div>
+    <div class="tool-pill"><span class="dot dot-blue"></span>{{ "Schweizer DSG / Datenschutzrecht" if isDE else "Swiss DSG / Data Protection Law" }}</div>
     <div class="tool-pill"><span class="dot dot-orange"></span>Prompt Engineering</div>
-    <div class="tool-pill"><span class="dot dot-yellow"></span>Iteratives Design</div>
+    <div class="tool-pill"><span class="dot dot-yellow"></span>{{ "Iteratives Design" if isDE else "Iterative Design" }}</div>
   </div>
 
   <div class="divider"></div>
 
-  <div class="section-number">09 — Fazit</div>
-  <div class="section-title">Rückblick</div>
+  <div class="section-number">{{ "09 — Fazit" if isDE else "09 — Conclusion" }}</div>
+  <div class="section-title">{{ "Rückblick" if isDE else "Reflection" }}</div>
   <div class="prose">
+    {% if isDE %}
     <p>Die Spielgruppe Seon ist kein Start-up – sie ist eine gewachsene Institution mit über 20 Jahren Geschichte. Dinas Aufgabe war es, diese Geschichte in eine neue Ära zu führen: digital, zugänglich und einladend für Eltern von heute.</p>
     <p>Dieses Projekt zeigt, wie eine vollständige digitale Identität für ein bestehendes lokales Angebot aufgebaut werden kann – mit klarer Strategie, bewusstem Content-Design, modernen AI-Tools und dem Mut, Fehler im Prozess zu erkennen und zu korrigieren. Und das an einem einzigen Wochenende.</p>
     <p>Das Ergebnis: Eine Website die nicht nur informiert, sondern Vertrauen schafft. Für eine Spielgruppe die dieses Vertrauen seit über 20 Jahren verdient hat.</p>
+    {% else %}
+    <p>Spielgruppe Seon is not a startup — it is an established institution with over 20 years of history. Dina's task was to lead this history into a new era: digital, accessible and welcoming for parents of today.</p>
+    <p>This project shows how a complete digital identity for an existing local service can be built — with clear strategy, deliberate content design, modern AI tools and the courage to recognise and correct mistakes in the process. And all in a single weekend.</p>
+    <p>The result: a website that does not just inform, but builds trust. For a playgroup that has deserved this trust for over 20 years.</p>
+    {% endif %}
   </div>
 </div>
 

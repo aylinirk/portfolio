@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="{{ 'de' if isDE else 'en' }}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -201,32 +201,37 @@
 </style>
 </head>
 <body>
+{% set isDE = '/de/' in page.url %}
 
 <!-- Back bar -->
 <div class="back-bar">
-  <a href="/de/">
+  <a href="{{ homeUrl }}#work">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Zurück zur Übersicht
+    {{ "Zurück zum Portfolio" if isDE else "Back to portfolio" }}
   </a>
 </div>
 
 <!-- Cover -->
 <div class="cover">
-  <div class="cover-tag">Case Study</div>
+  <div class="cover-tag">{{ "UX Design · Fallstudie" if isDE else "UX Design · Case Study" }}</div>
   <h1>time<span>2</span>care</h1>
   <p class="cover-sub">{{ tagline }}</p>
   <div class="cover-meta">
     <div class="cover-meta-item">
-      <label>Rolle</label>
+      <label>{{ "Rolle" if isDE else "Role" }}</label>
       <span>{{ role }}</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>{{ "Umfang" if isDE else "Scope" }}</label>
+      <span>{{ scope }}</span>
     </div>
     <div class="cover-meta-item">
       <label>Tools</label>
       <span>{{ tools }}</span>
     </div>
     <div class="cover-meta-item">
-      <label>Jahr</label>
-      <span>{{ year }}</span>
+      <label>{{ "Laufzeit" if isDE else "Duration" }}</label>
+      <span>{{ "Google UX Design Certificate, Kurs 2–5 · 2025–2026" if isDE else "Google UX Design Certificate, Course 2–5 · 2025–2026" }}</span>
     </div>
   </div>
   <div class="cover-tags">
@@ -236,28 +241,44 @@
   </div>
 </div>
 
-<!-- 01 — Projektübersicht -->
+<!-- 01 — Projektübersicht / Project Overview -->
 <div class="page">
-  <div class="section-number">01 — Projektübersicht</div>
-  <div class="section-title">Das Produkt</div>
+  <div class="section-number">{{ "01 — Projektübersicht" if isDE else "01 — Project Overview" }}</div>
+  <div class="section-title">{{ "Das Produkt" if isDE else "The Product" }}</div>
 
+  {% if isDE %}
   <p class="body-text">time2care ist eine Mobile App, die Nutzerinnen und Nutzern ermöglicht, schnell und unkompliziert Therapie- und Trainingsangebote zu suchen, zu filtern und direkt zu buchen — alles vom Smartphone aus, ohne Telefonate oder lange Wartezeiten.</p>
+  {% else %}
+  <p class="body-text">time2care is a mobile app that allows users to find, filter and book therapy and training appointments quickly and easily — all from their smartphone, without phone calls or long waiting times.</p>
+  {% endif %}
 
   <div class="overview-grid" style="margin-top: 32px;">
     <div class="overview-card">
       <div class="icon icon-sage">🎯</div>
-      <h4>Das Problem</h4>
+      <h4>{{ "Das Problem" if isDE else "The problem" }}</h4>
+      {% if isDE %}
       <p>Die Buchung von Therapieterminen läuft meist noch telefonisch oder per E-Mail — besonders abends und am Wochenende ein grosses Hindernis.</p>
+      {% else %}
+      <p>Booking therapy appointments still mostly happens by phone or email — a major barrier especially in the evenings and at weekends.</p>
+      {% endif %}
     </div>
     <div class="overview-card">
       <div class="icon icon-green">✅</div>
-      <h4>Das Ziel</h4>
+      <h4>{{ "Das Ziel" if isDE else "The goal" }}</h4>
+      {% if isDE %}
       <p>Eine intuitive App entwickeln, die Suche, Filterung und Buchung so einfach und transparent macht, dass Nutzer in wenigen Schritten einen Termin finden.</p>
+      {% else %}
+      <p>Develop an intuitive app that makes search, filtering and booking so simple and transparent that users can find an appointment in just a few steps.</p>
+      {% endif %}
     </div>
     <div class="overview-card">
       <div class="icon icon-blue">👤</div>
-      <h4>Meine Rolle</h4>
+      <h4>{{ "Meine Rolle" if isDE else "My role" }}</h4>
+      {% if isDE %}
       <p>End-to-End UX: Nutzerforschung, Persona, Wireframes, Prototyp und Usability-Tests — im Rahmen des Google UX Design Certificate.</p>
+      {% else %}
+      <p>End-to-end UX: user research, persona, wireframes, prototype and usability testing — as part of the Google UX Design Certificate.</p>
+      {% endif %}
     </div>
     <div class="overview-card">
       <div class="icon icon-orange">🔍</div>
@@ -271,48 +292,73 @@
     </div>
     <div class="overview-card">
       <div class="icon icon-teal">📅</div>
-      <h4>Laufzeit</h4>
-      <p>Google UX Design Certificate, Kurs 2–5 · 2025–2026</p>
+      <h4>{{ "Laufzeit" if isDE else "Duration" }}</h4>
+      <p>{{ "Google UX Design Certificate, Kurs 2–5 · 2025–2026" if isDE else "Google UX Design Certificate, Course 2–5 · 2025–2026" }}</p>
     </div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- 02 — Nutzungsforschung -->
+<!-- 02 — Nutzungsforschung / User Research -->
 <div class="page page-break">
-  <div class="section-number">02 — Nutzungsforschung</div>
-  <div class="section-title">Die Nutzenden verstehen</div>
+  <div class="section-number">{{ "02 — Nutzungsforschung" if isDE else "02 — User Research" }}</div>
+  <div class="section-title">{{ "Die Nutzenden verstehen" if isDE else "Understanding the users" }}</div>
 
+  {% if isDE %}
   <p class="body-text">Zu Beginn nahm ich an, dass die Suche nach einem passenden Therapeuten die grösste Hürde ist. Nach Nutzerinterviews und einer unmoderierten Remote-Usability-Studie mit fünf Teilnehmenden zeigte sich: Auch der Buchungsprozess selbst ist problematisch — fehlende Transparenz und Unsicherheit bei der Buchungsbestätigung waren die häufigsten Schmerzpunkte.</p>
+  {% else %}
+  <p class="body-text">At the start I assumed that finding the right therapist was the biggest hurdle. After user interviews and an unmoderated remote usability study with five participants, it became clear: the booking process itself is also problematic — a lack of transparency and uncertainty about booking confirmation were the most common pain points.</p>
+  {% endif %}
 
   <div class="insight">
+    {% if isDE %}
     <blockquote>Diese Erkenntnisse haben meinen Designfokus direkt geprägt: nicht nur die Suche vereinfachen, sondern den gesamten Weg bis zur Bestätigung.</blockquote>
     <cite>Zentrale Erkenntnis aus der Forschungsphase</cite>
+    {% else %}
+    <blockquote>These findings directly shaped my design focus: not just simplifying the search, but improving the entire journey through to confirmation.</blockquote>
+    <cite>Key insight from the research phase</cite>
+    {% endif %}
   </div>
 
-  <p class="body-text" style="font-weight: 600; margin-bottom: 4px;">4 identifizierte Schmerzpunkte</p>
+  <p class="body-text" style="font-weight: 600; margin-bottom: 4px;">{{ "4 identifizierte Schmerzpunkte" if isDE else "4 identified pain points" }}</p>
 
   <div class="pain-grid">
     <div class="pain-card">
-      <div class="pain-number">Schmerzpunkt 01</div>
-      <h4>Hoher Verwaltungsaufwand</h4>
+      <div class="pain-number">{{ "Schmerzpunkt 01" if isDE else "Pain point 01" }}</div>
+      <h4>{{ "Hoher Verwaltungsaufwand" if isDE else "High administrative effort" }}</h4>
+      {% if isDE %}
       <p>Viele Nutzer:innen können Termine nur per Telefon oder E-Mail buchen. Das kostet Zeit und schreckt besonders berufstätige Personen ab, die abends oder am Wochenende buchen möchten.</p>
+      {% else %}
+      <p>Many users can only book appointments by phone or email. This takes time and is a particular deterrent for working people who want to book in the evenings or at weekends.</p>
+      {% endif %}
     </div>
     <div class="pain-card">
-      <div class="pain-number">Schmerzpunkt 02</div>
-      <h4>Fehlende zentrale Lösung</h4>
+      <div class="pain-number">{{ "Schmerzpunkt 02" if isDE else "Pain point 02" }}</div>
+      <h4>{{ "Fehlende zentrale Lösung" if isDE else "No central solution" }}</h4>
+      {% if isDE %}
       <p>Informationen zu Spezialisierungen, Qualifikationen und Verfügbarkeit sind schwer auffindbar oder unvollständig. Nutzer:innen können schlecht einschätzen, ob ein Therapeut zu ihren Bedürfnissen passt.</p>
+      {% else %}
+      <p>Information about specialisations, qualifications and availability is hard to find or incomplete. Users struggle to assess whether a therapist suits their needs.</p>
+      {% endif %}
     </div>
     <div class="pain-card">
-      <div class="pain-number">Schmerzpunkt 03</div>
-      <h4>Komplexe Bedienung für manche Nutzer:innen</h4>
+      <div class="pain-number">{{ "Schmerzpunkt 03" if isDE else "Pain point 03" }}</div>
+      <h4>{{ "Komplexe Bedienung für manche Nutzer:innen" if isDE else "Complex interface for some users" }}</h4>
+      {% if isDE %}
       <p>Nicht alle Nutzer:innen sind technisch versiert — besonders ältere Personen fühlen sich schnell überfordert. Das Design muss deshalb besonders intuitiv und barrierearm sein.</p>
+      {% else %}
+      <p>Not all users are tech-savvy — older people in particular can quickly feel overwhelmed. The design therefore needs to be especially intuitive and accessible.</p>
+      {% endif %}
     </div>
     <div class="pain-card">
-      <div class="pain-number">Schmerzpunkt 04</div>
-      <h4>Kurzfristige Terminabsagen</h4>
+      <div class="pain-number">{{ "Schmerzpunkt 04" if isDE else "Pain point 04" }}</div>
+      <h4>{{ "Kurzfristige Terminabsagen" if isDE else "Last-minute cancellations" }}</h4>
+      {% if isDE %}
       <p>Nutzer:innen sind nach dem Buchen oft unsicher, ob ihr Termin wirklich gilt. Fehlende oder unklare Bestätigungen führen zu Misstrauen und unnötigen Rückrufen.</p>
+      {% else %}
+      <p>Users are often uncertain after booking whether their appointment is really confirmed. Missing or unclear confirmations lead to distrust and unnecessary callbacks.</p>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -328,18 +374,30 @@
     <div class="persona-avatar">👤</div>
     <div class="persona-info">
       <h3>Jonas Bauermann</h3>
-      <p class="persona-role">Marketing Manager · 34 Jahre · Zürich</p>
+      <p class="persona-role">{{ "Marketing Manager · 34 Jahre · Zürich" if isDE else "Marketing Manager · 34 · Zurich" }}</p>
       <div class="persona-quote">
+        {% if isDE %}
         „Jonas ist ein vielbeschäftigter Marketing Manager, der einen Therapeuten für seine Nackenschmerzen sucht — er möchte abends schnell und unkompliziert einen Termin buchen, ohne Telefonate und ohne lange Suche."
+        {% else %}
+        "Jonas is a busy marketing manager looking for a therapist for his neck pain — he wants to book an appointment quickly and easily in the evening, without phone calls and without lengthy searching."
+        {% endif %}
       </div>
       <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <div style="background: var(--sage-pale); border-radius: 12px; padding: 16px;">
-          <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px;">Ziele</p>
+          <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px;">{{ "Ziele" if isDE else "Goals" }}</p>
+          {% if isDE %}
           <p style="font-size: 13px; line-height: 1.6; color: var(--text);">Schnell den richtigen Therapeuten finden · Termin ohne Telefonate buchen · Bestätigung sofort erhalten</p>
+          {% else %}
+          <p style="font-size: 13px; line-height: 1.6; color: var(--text);">Find the right therapist quickly · Book an appointment without phone calls · Receive confirmation immediately</p>
+          {% endif %}
         </div>
         <div style="background: #FEF2F2; border-radius: 12px; padding: 16px;">
-          <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px;">Frustrationen</p>
+          <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px;">{{ "Frustrationen" if isDE else "Frustrations" }}</p>
+          {% if isDE %}
           <p style="font-size: 13px; line-height: 1.6; color: var(--text);">Nur telefonisch buchbar · Kein Überblick über Spezialisierungen · Keine klare Bestätigung</p>
+          {% else %}
+          <p style="font-size: 13px; line-height: 1.6; color: var(--text);">Only bookable by phone · No overview of specialisations · No clear confirmation</p>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -347,7 +405,11 @@
 
   <div class="challenge-box" style="margin-top: 32px;">
     <h3>User Journey</h3>
+    {% if isDE %}
     <p>Die User Journey zeigt, wie Jonas einen passenden Therapeuten sucht und einen Termin bucht — von der ersten Suche bis zur Buchungsbestätigung. Ziel ist es, diesen Prozess so einfach und schnell wie möglich zu gestalten, damit Jonas alles unkompliziert vom Smartphone aus erledigen kann.</p>
+    {% else %}
+    <p>The user journey shows how Jonas finds a suitable therapist and books an appointment — from the first search to the booking confirmation. The goal is to make this process as simple and fast as possible, so Jonas can handle everything from his smartphone.</p>
+    {% endif %}
   </div>
 </div>
 
@@ -355,41 +417,45 @@
 
 <!-- 04 — Lo-Fi Wireframes -->
 <div class="page page-break">
-  <div class="section-number">04 — Lo-Fi Wireframes</div>
-  <div class="section-title">Den Flow skizzieren</div>
+  <div class="section-number">{{ "04 — Lo-Fi Wireframes" if isDE else "04 — Lo-Fi Wireframes" }}</div>
+  <div class="section-title">{{ "Den Flow skizzieren" if isDE else "Sketching the flow" }}</div>
 
+  {% if isDE %}
   <p class="body-text">Für die mobile App habe ich zunächst Papier-Wireframes erstellt, um verschiedene Ansätze für den Buchungsfluss zu testen. Danach wurden die besten Ideen in digitale Wireframes überführt. Der Fokus lag auf einem schnellen, einfachen Ablauf — basierend auf den Bedürfnissen von Jonas: eine klare Suchfunktion mit Filtermöglichkeiten, sodass er ohne Umwege zum passenden Therapeuten gelangt.</p>
+  {% else %}
+  <p class="body-text">For the mobile app I first created paper wireframes to test different approaches for the booking flow. The best ideas were then transferred to digital wireframes. The focus was on a fast, simple process — based on Jonas's needs: a clear search function with filtering options, so he reaches the right therapist without detours.</p>
+  {% endif %}
 </div>
 
 <div class="wide-wrap" style="padding-bottom: 64px;">
   <div class="screens-grid" id="lofi-grid" style="grid-template-columns: repeat(4, 1fr);">
     <div class="screen-cell">
       <img src="/assets/time2care/lofi/01_home.jpg" alt="Lo-Fi: Home" loading="lazy">
-      <div class="screen-caption">01 — Home<br>Schneller Einstieg in die Suche</div>
+      <div class="screen-caption">{{ "01 — Home<br>Schneller Einstieg in die Suche" if isDE else "01 — Home<br>Quick entry into search" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/lofi/02_therapeuten_liste.jpg" alt="Lo-Fi: Therapeuten Liste" loading="lazy">
-      <div class="screen-caption">02 — Therapeuten<br>Listenansicht mit Vorschlägen</div>
+      <div class="screen-caption">{{ "02 — Therapeuten<br>Listenansicht mit Vorschlägen" if isDE else "02 — Therapists<br>List view with suggestions" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/lofi/03_filter.jpg" alt="Lo-Fi: Filter" loading="lazy">
-      <div class="screen-caption">03 — Filter<br>Aktive Filter klar erkennbar</div>
+      <div class="screen-caption">{{ "03 — Filter<br>Aktive Filter klar erkennbar" if isDE else "03 — Filter<br>Active filters clearly visible" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/lofi/04_gefilterte_therapeuten.jpg" alt="Lo-Fi: Gefiltert" loading="lazy">
-      <div class="screen-caption">04 — Gefiltert<br>Übersichtliche Ergebnisliste</div>
+      <div class="screen-caption">{{ "04 — Gefiltert<br>Übersichtliche Ergebnisliste" if isDE else "04 — Filtered<br>Clear results list" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/lofi/05_detailansicht.jpg" alt="Lo-Fi: Detailansicht" loading="lazy">
-      <div class="screen-caption">05 — Detailansicht<br>Angebote auf einen Blick</div>
+      <div class="screen-caption">{{ "05 — Detailansicht<br>Angebote auf einen Blick" if isDE else "05 — Detail view<br>Offers at a glance" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/lofi/06_detailansicht_buchung.jpg" alt="Lo-Fi: Buchung" loading="lazy">
-      <div class="screen-caption">06 — Buchung<br>Termin auswählen & buchen</div>
+      <div class="screen-caption">{{ "06 — Buchung<br>Termin auswählen & buchen" if isDE else "06 — Booking<br>Select & book appointment" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/lofi/07_buchungsbestaetigung.jpg" alt="Lo-Fi: Bestätigung" loading="lazy">
-      <div class="screen-caption">07 — Bestätigung<br>Klare Buchungsbestätigung</div>
+      <div class="screen-caption">{{ "07 — Bestätigung<br>Klare Buchungsbestätigung" if isDE else "07 — Confirmation<br>Clear booking confirmation" }}</div>
     </div>
   </div>
   <div class="slide-dots" id="lofi-dots"></div>
@@ -397,33 +463,49 @@
 
 <div class="divider"></div>
 
-<!-- 05 — Usability-Studie -->
+<!-- 05 — Usability-Studie / Usability Study -->
 <div class="page page-break">
-  <div class="section-number">05 — Usability-Studie</div>
-  <div class="section-title">Was die Tests gezeigt haben</div>
+  <div class="section-number">{{ "05 — Usability-Studie" if isDE else "05 — Usability Study" }}</div>
+  <div class="section-title">{{ "Was die Tests gezeigt haben" if isDE else "What the tests revealed" }}</div>
 
+  {% if isDE %}
   <p class="body-text">In einer unmoderierten Remote-Usability-Studie mit 5 Teilnehmenden wurde der Lo-Fi-Prototyp getestet. Das Ziel war, herauszufinden, wo im Flow Nutzer:innen stolpern — bevor das Hi-Fi-Design erstellt wird. Die drei wichtigsten Erkenntnisse:</p>
+  {% else %}
+  <p class="body-text">In an unmoderated remote usability study with 5 participants, the lo-fi prototype was tested. The goal was to find where users stumble in the flow — before creating the hi-fi design. The three key findings:</p>
+  {% endif %}
 
   <div class="findings-list">
     <div class="finding-item">
       <div class="finding-num">1</div>
       <div class="finding-body">
-        <h4>Filterfunktion war unklar und schwer auffindbar</h4>
+        <h4>{{ "Filterfunktion war unklar und schwer auffindbar" if isDE else "Filter function was unclear and hard to find" }}</h4>
+        {% if isDE %}
         <p>Nutzer:innen übersahen das Filter-Icon oder wussten nicht, welche Filter aktiv waren. Lösung im Hi-Fi: Filter als sichtbare Chips direkt unter der Suchleiste, aktive Filter farblich hervorgehoben.</p>
+        {% else %}
+        <p>Users overlooked the filter icon or didn't know which filters were active. Solution in hi-fi: filters as visible chips directly below the search bar, active filters highlighted in colour.</p>
+        {% endif %}
       </div>
     </div>
     <div class="finding-item">
       <div class="finding-num">2</div>
       <div class="finding-body">
-        <h4>Buchungsablauf hatte zu viele Schritte</h4>
+        <h4>{{ "Buchungsablauf hatte zu viele Schritte" if isDE else "Booking flow had too many steps" }}</h4>
+        {% if isDE %}
         <p>Der Weg von der Therapeuten-Auswahl bis zur Buchung war zu lang. Lösung: Direkter Zugang zu freien Terminen von der Detailansicht aus, ohne Umwege über mehrere Screens.</p>
+        {% else %}
+        <p>The path from therapist selection to booking was too long. Solution: direct access to available appointments from the detail view, without detours through multiple screens.</p>
+        {% endif %}
       </div>
     </div>
     <div class="finding-item">
       <div class="finding-num">3</div>
       <div class="finding-body">
-        <h4>Fehlende Bestätigungsseite sorgte für Unsicherheit</h4>
+        <h4>{{ "Fehlende Bestätigungsseite sorgte für Unsicherheit" if isDE else "Missing confirmation page caused uncertainty" }}</h4>
+        {% if isDE %}
         <p>Nach dem Buchen wussten Nutzer:innen nicht, ob der Termin wirklich gespeichert wurde. Lösung: Eine dedizierte Bestätigungsseite mit allen Buchungsdetails und klarer Erfolgsmeldung.</p>
+        {% else %}
+        <p>After booking, users didn't know whether the appointment had really been saved. Solution: a dedicated confirmation page with all booking details and a clear success message.</p>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -433,49 +515,53 @@
 
 <!-- 06 — Hi-Fi Screens -->
 <div class="page page-break">
-  <div class="section-number">06 — Hi-Fi Prototyp</div>
-  <div class="section-title">Das verfeinerte Design</div>
+  <div class="section-number">{{ "06 — Hi-Fi Prototyp" if isDE else "06 — Hi-Fi Prototype" }}</div>
+  <div class="section-title">{{ "Das verfeinerte Design" if isDE else "The refined design" }}</div>
 
+  {% if isDE %}
   <p class="body-text">Basierend auf den Usability-Erkenntnissen wurde der Hi-Fi-Prototyp entwickelt. Das Farbkonzept orientiert sich an Ruhe und Vertrauen: ein dunkles Salbeigrün als Primärfarbe, helle neutrale Flächen, klare Typografie. Jeder Screen spiegelt eine konkrete Designentscheidung wider, die aus der Forschung entstanden ist.</p>
+  {% else %}
+  <p class="body-text">Based on the usability findings, the hi-fi prototype was developed. The colour concept is oriented around calm and trust: a dark sage green as primary colour, light neutral surfaces, clear typography. Each screen reflects a concrete design decision that emerged from research.</p>
+  {% endif %}
 </div>
 
 <div class="wide-wrap" style="padding-bottom: 64px;">
   <div class="screens-grid" id="hifi-grid" style="grid-template-columns: repeat(3, 1fr);">
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/01_home.png" alt="Hi-Fi: Home" loading="lazy">
-      <div class="screen-caption">01 — Home<br>Personalisierte Begrüssung, direkte Therapeutenvorschläge</div>
+      <div class="screen-caption">{{ "01 — Home<br>Personalisierte Begrüssung, direkte Therapeutenvorschläge" if isDE else "01 — Home<br>Personalised greeting, direct therapist suggestions" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/02_profile.png" alt="Hi-Fi: Profile" loading="lazy">
-      <div class="screen-caption">02 — Profil<br>Nutzerdaten auf einen Blick</div>
+      <div class="screen-caption">{{ "02 — Profil<br>Nutzerdaten auf einen Blick" if isDE else "02 — Profile<br>User data at a glance" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/03_therapeuten_liste.png" alt="Hi-Fi: Therapeuten Liste" loading="lazy">
-      <div class="screen-caption">03 — Therapeuten<br>Suche mit aktiven Filter-Chips</div>
+      <div class="screen-caption">{{ "03 — Therapeuten<br>Suche mit aktiven Filter-Chips" if isDE else "03 — Therapists<br>Search with active filter chips" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/04_gefilterte_therapeuten.png" alt="Hi-Fi: Gefiltert" loading="lazy">
-      <div class="screen-caption">04 — Gefiltert<br>Klare Ergebnisliste, Filter erkennbar</div>
+      <div class="screen-caption">{{ "04 — Gefiltert<br>Klare Ergebnisliste, Filter erkennbar" if isDE else "04 — Filtered<br>Clear results list, filters visible" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/05_therapeuten_ausgewaehlt.png" alt="Hi-Fi: Ausgewählt" loading="lazy">
-      <div class="screen-caption">05 — Therapeut ausgewählt<br>Profil & Bewertungen</div>
+      <div class="screen-caption">{{ "05 — Therapeut ausgewählt<br>Profil & Bewertungen" if isDE else "05 — Therapist selected<br>Profile & reviews" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/06_behandlungsangebote.png" alt="Hi-Fi: Angebote" loading="lazy">
-      <div class="screen-caption">06 — Behandlungsangebote<br>Angebote mit Preisen</div>
+      <div class="screen-caption">{{ "06 — Behandlungsangebote<br>Angebote mit Preisen" if isDE else "06 — Treatment offers<br>Offers with prices" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/07_detailansicht_angebote.png" alt="Hi-Fi: Detail Angebote" loading="lazy">
-      <div class="screen-caption">07 — Detailansicht<br>Terminwahl nach Angebot</div>
+      <div class="screen-caption">{{ "07 — Detailansicht<br>Terminwahl nach Angebot" if isDE else "07 — Detail view<br>Appointment selection by offer" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/08_detailansicht_buchung.png" alt="Hi-Fi: Buchung" loading="lazy">
-      <div class="screen-caption">08 — Buchung<br>Termin bestätigen & bezahlen</div>
+      <div class="screen-caption">{{ "08 — Buchung<br>Termin bestätigen & bezahlen" if isDE else "08 — Booking<br>Confirm appointment & pay" }}</div>
     </div>
     <div class="screen-cell">
       <img src="/assets/time2care/hifi/09_detailansicht_bestaetigung.png" alt="Hi-Fi: Bestätigung" loading="lazy">
-      <div class="screen-caption">09 — Bestätigung<br>Klare Buchungsbestätigung</div>
+      <div class="screen-caption">{{ "09 — Bestätigung<br>Klare Buchungsbestätigung" if isDE else "09 — Confirmation<br>Clear booking confirmation" }}</div>
     </div>
   </div>
   <div class="slide-dots" id="hifi-dots"></div>
@@ -486,31 +572,40 @@
 <!-- 07 — Learnings -->
 <div class="page page-break">
   <div class="section-number">07 — Learnings</div>
-  <div class="section-title">Was ich mitgenommen habe</div>
+  <div class="section-title">{{ "Was ich mitgenommen habe" if isDE else "What I took away" }}</div>
 
-  <p class="reflection-pull">Annahmen sind keine Erkenntnisse — Testen schon.</p>
+  <p class="reflection-pull">{{ "Annahmen sind keine Erkenntnisse — Testen schon." if isDE else "Assumptions are not insights — testing is." }}</p>
 
+  {% if isDE %}
   <p class="body-text">Die wichtigste Erkenntnis dieses Projekts: Meine ursprüngliche Annahme, dass die Suche das grösste Problem sei, war nur die halbe Wahrheit. Erst die Interviews und Usability-Tests haben gezeigt, dass Unsicherheit bei der Buchungsbestätigung genauso viel Gewicht hat.</p>
   <p class="body-text" style="margin-top: 16px;">time2care war mein erster vollständiger UX-Prozess — von der Forschung bis zum Hi-Fi-Prototyp. Es hat mir gezeigt, wie wichtig es ist, früh zu testen und offen zu sein, das initiale Framing anzupassen. Die Einschränkungen des Kurses (fester Prozess, begrenzte Zeit) haben mich gezwungen, Prioritäten zu setzen — und das hat geholfen, klarer zu designen.</p>
+  {% else %}
+  <p class="body-text">The key insight of this project: my initial assumption that the search was the main problem was only half the truth. It took the interviews and usability tests to show that uncertainty about the booking confirmation carries just as much weight.</p>
+  <p class="body-text" style="margin-top: 16px;">time2care was my first complete UX process — from research to hi-fi prototype. It showed me how important it is to test early and be open to adjusting the initial framing. The constraints of the course (fixed process, limited time) forced me to prioritise — and that helped me design more clearly.</p>
+  {% endif %}
 
   <div class="metrics-row" style="margin-top: 40px;">
     <div class="metric-card">
       <div class="metric-value">5</div>
-      <div class="metric-label">Nutzer:innen in der Usability-Studie getestet</div>
+      <div class="metric-label">{{ "Nutzer:innen in der Usability-Studie getestet" if isDE else "Users tested in the usability study" }}</div>
     </div>
     <div class="metric-card">
       <div class="metric-value">4</div>
-      <div class="metric-label">Schmerzpunkte aus der Forschungsphase identifiziert</div>
+      <div class="metric-label">{{ "Schmerzpunkte aus der Forschungsphase identifiziert" if isDE else "Pain points identified in the research phase" }}</div>
     </div>
     <div class="metric-card">
       <div class="metric-value">Lo → Hi</div>
-      <div class="metric-label">Vollständiger Design-Prozess von Wireframe bis Prototyp</div>
+      <div class="metric-label">{{ "Vollständiger Design-Prozess von Wireframe bis Prototyp" if isDE else "Complete design process from wireframe to prototype" }}</div>
     </div>
   </div>
 
   <div class="challenge-box" style="margin-top: 40px;">
-    <h3>Nächste Schritte</h3>
+    <h3>{{ "Nächste Schritte" if isDE else "Next steps" }}</h3>
+    {% if isDE %}
     <p>Mit mehr Zeit würde ich die Barrierefreiheit vertiefen — insbesondere für ältere Nutzer:innen, die als Schmerzpunkt identifiziert wurden. Ausserdem würde ich einen zweiten Usability-Test mit dem Hi-Fi-Prototyp durchführen, um zu prüfen ob die Überarbeitungen wirklich geholfen haben.</p>
+    {% else %}
+    <p>With more time I would deepen the accessibility work — especially for older users, who were identified as a pain point. I would also run a second usability test with the hi-fi prototype to check whether the revisions actually helped.</p>
+    {% endif %}
   </div>
 </div>
 
