@@ -2,7 +2,7 @@ backend:
   name: github
   repo: aylinirk/portfolio
   branch: main
-  base_url: https://portfolio-henna-xi-31.vercel.app
+  base_url: https://aylinirk.vercel.app
   auth_endpoint: api/auth
   # OAuth proxy required for production — see docs/superpowers/specs/ for setup notes
 
