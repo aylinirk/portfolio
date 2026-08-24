@@ -213,7 +213,7 @@ body {
 
 .hero__tagline {
   font-size: 18px;
-  color: var(--muted);
+  color: var(--text);
   margin-top: 28px;
   max-width: 440px;
   line-height: 1.65;
@@ -418,7 +418,7 @@ body {
 /* ── 11. CONTACT ────────────────────────────────────────────── */
 .contact { text-align: center; }
 .contact h2 { margin-top: 16px; }
-.contact__sub { font-size: 18px; color: var(--muted); margin-top: 16px; }
+.contact__sub { font-size: 18px; color: var(--text); margin-top: 16px; }
 .contact__actions {
   display: flex;
   flex-direction: column;
