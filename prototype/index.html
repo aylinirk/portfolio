@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aylin Irk — UI/UX Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #FAF8F5;
+      --surface:      #F2EDE6;
+      --text:         #1E1A17;
+      --muted:        #7A6F65;
+      --accent:       #8A9E78;
+      --accent-light: #D6E4CC;
+      --border:       #E8E0D6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--surface);
+    }
+
+    .nav__wordmark {
+      font-family: 'Lora', serif;
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav__links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .nav__links a:hover { color: var(--accent); }
+
+    .nav__locale {
+      font-size: 13px;
+      color: var(--muted);
+      opacity: 0.55;
+    }
+
+    /* ─── SECTION LABEL PILL ─── */
+    .label {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background: var(--accent-light);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    /* ─── SECTION BASE ─── */
+    .section { padding: 96px 48px; }
+
+    .section--cream { background: var(--surface); }
+
+    .section h2 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      line-height: 1.12;
+      margin-top: 16px;
+    }
+
+    /* ─── BTN ─── */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 200ms ease;
+    }
+
+    .btn:hover { background: #7A8E68; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+      position: relative;
+    }
+
+    .hero__inner {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      width: 100%;
+    }
+
+    .hero__content { flex: 1; }
+
+    .hero__name {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(4.5rem, 9vw, 10.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .hero__tagline {
+      font-size: 18px;
+      color: var(--muted);
+      margin-top: 28px;
+      max-width: 440px;
+      line-height: 1.65;
+    }
+
+    .hero__cta { margin-top: 44px; }
+
+    .hero__photo {
+      width: 290px;
+      aspect-ratio: 3 / 4;
+      background: var(--surface);
+      border-radius: 12px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 22px;
+      color: var(--accent-light);
+      animation: nudge 2s ease-in-out infinite;
+    }
+
+    @keyframes nudge {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── WORK ─── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 220ms ease, box-shadow 220ms ease, outline-color 220ms ease;
+      outline: 1.5px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(30,26,23,0.09);
+      outline-color: var(--accent);
+    }
+
+    .project-card__cover {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #C8DABC 0%, #B5CCA5 60%, #A8C095 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.04em;
+    }
+
+    .project-card__cover--warm {
+      background: linear-gradient(135deg, #D6CCBC 0%, #C9BBA8 60%, #BDB099 100%);
+    }
+
+    .project-card__body { padding: 28px; }
+
+    .project-card__title {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--text);
+    }
+
+    .project-card__tagline {
+      font-size: 15px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.55;
+    }
+
+    .project-card__tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: var(--accent-light);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .project-card__link {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    /* ─── LEARNING ─── */
+    .learning-list {
+      margin-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .learning-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 24px;
+    }
+
+    .learning-item__title {
+      font-family: 'Lora', serif;
+      font-size: 17px;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .learning-item__meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .learning-item__platform {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .badge--done     { background: var(--accent-light); color: var(--accent); }
+    .badge--progress { background: #E8F0E3; color: #6A8C5C; }
+    .badge--planned  { background: var(--surface); color: var(--muted); font-style: italic; }
+
+    .learning-item__year {
+      font-size: 13px;
+      color: var(--muted);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .learning-callout {
+      margin-top: 32px;
+      border-left: 3px solid var(--accent);
+      padding: 22px 32px;
+      background: var(--bg);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .learning-callout__eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .learning-callout__text {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 18px;
+      color: var(--text);
+      margin-top: 6px;
+    }
+
+    /* ─── ABOUT ─── */
+    .about__inner {
+      display: flex;
+      gap: 80px;
+      align-items: flex-start;
+    }
+
+    .about__left { flex: 1; }
+
+    .about__quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+      line-height: 1.55;
+      color: var(--text);
+      margin-top: 24px;
+    }
+
+    .about__skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 48px;
+    }
+
+    .about__photo {
+      width: 300px;
+      aspect-ratio: 3 / 4;
+      background: var(--border);
+      border-radius: 12px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact { text-align: center; }
+    .contact h2 { margin-top: 16px; }
+
+    .contact__sub {
+      font-size: 18px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+
+    .contact__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-top: 44px;
+    }
+
+    .link-quiet {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .link-quiet:hover { color: var(--accent); }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      position: relative;
+      overflow: hidden;
+      padding: 48px 48px 0;
+      background: var(--bg);
+      border-top: 1px solid var(--surface);
+    }
+
+    .footer__bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+      padding-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer__bar-links { display: flex; gap: 24px; }
+
+    .footer__bar a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .footer__bar a:hover { color: var(--accent); }
+
+    .footer__watermark {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 15vw;
+      color: var(--accent-light);
+      white-space: nowrap;
+      line-height: 0.82;
+      user-select: none;
+      pointer-events: none;
+      display: block;
+      margin-left: -4px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav__wordmark">Aylin Irk</a>
+  <div class="nav__links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <span class="nav__locale">EN / DE</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <h1 class="hero__name">Aylin<br>Irk</h1>
+      <p class="hero__tagline">UI/UX Designer focused on human-centered digital products.</p>
+      <div class="hero__cta">
+        <a href="#work" class="btn">View Work</a>
+      </div>
+    </div>
+    <div class="hero__photo">Portrait photo</div>
+  </div>
+  <div class="hero__scroll">↓</div>
+</section>
+
+<!-- WORK -->
+<section class="section" id="work">
+  <span class="label">Selected Work</span>
+  <h2>Selected Work</h2>
+  <div class="work-grid">
+
+    <a class="project-card" href="concap.html">
+      <div class="project-card__cover">Cover image</div>
+      <div class="project-card__body">
+        <h3 class="project-card__title">ConCap</h3>
+        <p class="project-card__tagline">Designing a conference capture flow that turns business cards and fast voice notes into clean, CRM-ready contacts.</p>
+        <div class="project-card__tags">
+          <span class="tag">UX &amp; Product Design</span>
+          <span class="tag">2025</span>
+        </div>
+        <span class="project-card__link">View case study →</span>
+      </div>
+    </a>
+
+    <a class="project-card" href="#">
+      <div class="project-card__cover project-card__cover--warm">Cover image</div>
+      <div class="project-card__body">
+        <h3 class="project-card__title">Project Title</h3>
+        <p class="project-card__tagline">Short description of what this project is about and the design challenge it addressed.</p>
+        <div class="project-card__tags">
+          <span class="tag">UX Design</span>
+          <span class="tag">2025</span>
+        </div>
+        <span class="project-card__link">View case study →</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- LEARNING -->
+<section class="section section--cream" id="learning">
+  <span class="label">Learning &amp; Growth</span>
+  <h2>Learning &amp; Growth</h2>
+  <div class="learning-list">
+
+    <div class="learning-item">
+      <span class="learning-item__title">Google UX Design Certificate</span>
+      <div class="learning-item__meta">
+        <span class="learning-item__platform">Coursera</span>
+        <span class="badge badge--done">Completed</span>
+      </div>
+      <span class="learning-item__year">2024</span>
+    </div>
+
+    <div class="learning-item">
+      <span class="learning-item__title">Course or certification name</span>
+      <div class="learning-item__meta">
+        <span class="learning-item__platform">Platform</span>
+        <span class="badge badge--progress">In Progress</span>
+      </div>
+      <span class="learning-item__year">2025</span>
+    </div>
+
+    <div class="learning-item">
+      <span class="learning-item__title">Another learning milestone</span>
+      <div class="learning-item__meta">
+        <span class="learning-item__platform">Platform</span>
+        <span class="badge badge--planned">Planned</span>
+      </div>
+      <span class="learning-item__year">2026</span>
+    </div>
+
+  </div>
+  <div class="learning-callout">
+    <p class="learning-callout__eyebrow">Coming up</p>
+    <p class="learning-callout__text">Professional bachelor in Interaction Design — starting 2026</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="about__inner">
+    <div class="about__left">
+      <span class="label">About</span>
+      <p class="about__quote">&ldquo;I believe good design removes thinking before it adds features.&rdquo;</p>
+      <div class="about__skills">
+        <span class="tag">Figma</span>
+        <span class="tag">Prototyping</span>
+        <span class="tag">User Research</span>
+        <span class="tag">Interaction Design</span>
+        <span class="tag">Webflow</span>
+      </div>
+    </div>
+    <div class="about__photo">Portrait photo</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact" id="contact">
+  <span class="label">Get in touch</span>
+  <h2>Let&rsquo;s talk</h2>
+  <p class="contact__sub">Open to full-time UX design roles</p>
+  <div class="contact__actions">
+    <a href="mailto:hello@aylinirk.com" class="btn">hello@aylinirk.com</a>
+    <a href="#" class="link-quiet">LinkedIn ↗</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__bar">
+    <span>Aylin Irk &copy; 2026</span>
+    <div class="footer__bar-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <span>EN / DE</span>
+  </div>
+  <span class="footer__watermark">Aylin Irk</span>
+</footer>
+
+</body>
+</html>

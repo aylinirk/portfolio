@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConCap — Aylin Irk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #FAF8F5;
+      --surface:      #F2EDE6;
+      --text:         #1E1A17;
+      --muted:        #7A6F65;
+      --accent:       #8A9E78;
+      --accent-light: #D6E4CC;
+      --border:       #E8E0D6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--surface);
+    }
+
+    .nav__wordmark {
+      font-family: 'Lora', serif;
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav__links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .nav__links a:hover { color: var(--accent); }
+
+    .nav__locale {
+      font-size: 13px;
+      color: var(--muted);
+      opacity: 0.55;
+    }
+
+    /* ─── BACK LINK ─── */
+    .case-back {
+      padding: 20px 48px 0;
+    }
+
+    .case-back a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 200ms ease;
+    }
+
+    .case-back a:hover { opacity: 0.7; }
+
+    /* ─── CASE HERO ─── */
+    .case-hero {
+      position: relative;
+      height: 62vh;
+      min-height: 400px;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+
+    .case-hero__image {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #A8C095 0%, #8A9E78 35%, #6E8860 70%, #587050 100%);
+    }
+
+    .case-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(30,26,23,0.72) 0%, rgba(30,26,23,0.1) 55%, transparent 100%);
+    }
+
+    .case-hero__content {
+      position: absolute;
+      bottom: 48px;
+      left: 48px;
+      right: 48px;
+      max-width: 760px;
+    }
+
+    .case-hero__title {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      line-height: 1.05;
+      color: #FAF8F5;
+    }
+
+    .case-hero__tagline {
+      font-size: 18px;
+      color: rgba(250,248,245,0.78);
+      margin-top: 14px;
+      max-width: 560px;
+      line-height: 1.6;
+    }
+
+    /* ─── SNAPSHOT ─── */
+    .snapshot {
+      background: var(--surface);
+      padding: 40px 48px;
+      display: flex;
+      gap: 0;
+    }
+
+    .snapshot__item {
+      flex: 1;
+      padding-right: 32px;
+      border-right: 1px solid var(--border);
+      margin-right: 32px;
+    }
+
+    .snapshot__item:last-child {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+
+    .snapshot__label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .snapshot__value {
+      font-size: 15px;
+      color: var(--text);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ─── METRICS ─── */
+    .metrics-row {
+      display: flex;
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .metric-block {
+      flex: 1;
+      background: var(--bg);
+      padding: 40px 48px;
+      text-align: center;
+    }
+
+    .metric-block__value {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--accent);
+      line-height: 1.1;
+    }
+
+    .metric-block__label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    /* ─── NARRATIVE SECTION ─── */
+    .narrative-section {
+      padding: 72px max(48px, calc(50vw - 380px));
+      border-top: 1px solid var(--border);
+    }
+
+    .narrative-section--cream {
+      background: var(--surface);
+    }
+
+    .narrative-section__label {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background: var(--accent-light);
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .narrative-section__heading {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    .narrative-section__body {
+      max-width: 680px;
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text);
+    }
+
+    .narrative-section__body p + p {
+      margin-top: 20px;
+    }
+
+    .narrative-section__body ul {
+      margin-top: 16px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .narrative-section__body ul li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+
+    .narrative-section__body ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 1.4em;
+      line-height: 1;
+      top: 2px;
+    }
+
+    /* ─── PRINCIPLES LIST ─── */
+    .principles-list {
+      margin-top: 32px;
+      max-width: 680px;
+    }
+
+    .principle {
+      display: flex;
+      gap: 24px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .principle:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .principle__number {
+      font-family: 'Lora', serif;
+      font-size: 5.5rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      line-height: 0.85;
+      flex-shrink: 0;
+      width: 88px;
+      letter-spacing: -0.03em;
+    }
+
+    .principle__content {}
+
+    .principle__title {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .principle__body {
+      font-size: 15px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    /* ─── PROCESS STEPS ─── */
+    .process-list {
+      margin-top: 32px;
+      max-width: 680px;
+    }
+
+    .process-step {
+      display: flex;
+      gap: 32px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .process-step:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .process-step__number {
+      font-family: 'Lora', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      flex-shrink: 0;
+      width: 64px;
+      padding-top: 2px;
+    }
+
+    .process-step__content {}
+
+    .process-step__title {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 19px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .process-step__body {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── PHASE BLOCKS ─── */
+    .phase-block {
+      padding: 56px max(48px, calc(50vw - 560px));
+      border-top: 1px solid var(--border);
+    }
+
+    .phase-block--cream {
+      background: var(--surface);
+    }
+
+    .phase-block__label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 20px;
+    }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .phase-grid--wide {
+      grid-template-columns: 1fr;
+    }
+
+    .phase-img {
+      background: var(--surface);
+      border-radius: 10px;
+      aspect-ratio: 16 / 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      border: 1px solid var(--border);
+    }
+
+    .phase-block--cream .phase-img {
+      background: var(--bg);
+    }
+
+    /* ─── UX DECISIONS ─── */
+    .decisions-section {
+      padding: 72px max(48px, calc(50vw - 480px));
+      border-top: 1px solid var(--border);
+    }
+
+    .decision-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+
+    .decision-row:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+
+    .decision-row__title {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--text);
+      line-height: 1.3;
+      padding-top: 4px;
+    }
+
+    .decision-row__body {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── INSIGHT STRIP ─── */
+    .insight-strip {
+      background: var(--text);
+      padding: 88px 48px;
+      text-align: center;
+    }
+
+    .insight-strip__text {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      color: var(--bg);
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .insight-strip__attr {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── REFLECTION 2-COL ─── */
+    .reflection-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 72px;
+      align-items: start;
+      max-width: 960px;
+    }
+
+    .reflection-pull {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1.25rem, 2vw, 1.65rem);
+      color: var(--text);
+      line-height: 1.55;
+      border-top: 2px solid var(--accent-light);
+      padding-top: 24px;
+    }
+
+    .reflection-body {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .reflection-body p + p { margin-top: 20px; }
+
+    /* ─── OUTCOMES ─── */
+    .outcomes-metrics {
+      display: flex;
+      gap: 2px;
+      background: var(--border);
+      margin-bottom: 56px;
+    }
+
+    .outcomes-metrics .metric-block {
+      padding: 56px 48px;
+    }
+
+    .outcomes-metrics .metric-block__value {
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+    }
+
+    /* ─── QUOTE BLOCK ─── */
+    .quote-block {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      padding: 28px 36px;
+      border-radius: 0 10px 10px 0;
+      margin-top: 24px;
+      max-width: 680px;
+    }
+
+    .quote-block__text {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .quote-block + .quote-block {
+      margin-top: 16px;
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    .testimonial-section {
+      background: var(--surface);
+      padding: 96px 48px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .testimonial-section__mark {
+      font-family: 'Lora', serif;
+      font-size: 72px;
+      color: var(--accent-light);
+      line-height: 0.6;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .testimonial-section__quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+      color: var(--text);
+      line-height: 1.6;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .testimonial-section__author {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── NEXT PROJECT CTA ─── */
+    .next-project {
+      padding: 72px 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .next-project__label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 20px;
+    }
+
+    .next-project__card {
+      display: block;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 480px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+      outline: 1.5px solid transparent;
+    }
+
+    .next-project__card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(30,26,23,0.08);
+      outline-color: var(--accent);
+    }
+
+    .next-project__cover {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      background: linear-gradient(135deg, #D6CCBC 0%, #C9BBA8 60%, #BDB099 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.04em;
+    }
+
+    .next-project__body {
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .next-project__title {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--text);
+    }
+
+    .next-project__arrow {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      position: relative;
+      overflow: hidden;
+      padding: 48px 48px 0;
+      background: var(--bg);
+      border-top: 1px solid var(--surface);
+    }
+
+    .footer__bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+      padding-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer__bar-links { display: flex; gap: 24px; }
+
+    .footer__bar a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 200ms ease;
+    }
+
+    .footer__bar a:hover { color: var(--accent); }
+
+    .footer__watermark {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 15vw;
+      color: var(--accent-light);
+      white-space: nowrap;
+      line-height: 0.82;
+      user-select: none;
+      pointer-events: none;
+      display: block;
+      margin-left: -4px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav__wordmark">Aylin Irk</a>
+  <div class="nav__links">
+    <a href="index.html#work">Work</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+    <span class="nav__locale">EN / DE</span>
+  </div>
+</nav>
+
+<!-- BACK LINK -->
+<div class="case-back">
+  <a href="index.html#work">← Back to work</a>
+</div>
+
+<!-- CASE HERO -->
+<section class="case-hero">
+  <div class="case-hero__image"></div>
+  <div class="case-hero__overlay"></div>
+  <div class="case-hero__content">
+    <h1 class="case-hero__title">ConCap</h1>
+    <p class="case-hero__tagline">Designing a conference capture flow that turns business cards and fast voice notes into clean, CRM-ready contacts.</p>
+  </div>
+</section>
+
+<!-- PROJECT SNAPSHOT -->
+<div class="snapshot">
+  <div class="snapshot__item">
+    <p class="snapshot__label">Role</p>
+    <p class="snapshot__value">UX and product design, prototyping, testing, iteration</p>
+  </div>
+  <div class="snapshot__item">
+    <p class="snapshot__label">Scope</p>
+    <p class="snapshot__value">Problem framing, low-fi flow, live prototype, high-fi refinement, early user validation</p>
+  </div>
+  <div class="snapshot__item">
+    <p class="snapshot__label">Tools</p>
+    <p class="snapshot__value">Figma Make, Supabase, Vercel, Cloud Code</p>
+  </div>
+  <div class="snapshot__item">
+    <p class="snapshot__label">Year</p>
+    <p class="snapshot__value">2025</p>
+  </div>
+</div>
+
+<!-- METRICS -->
+<div class="metrics-row">
+  <div class="metric-block">
+    <p class="metric-block__value">2h → 10 min</p>
+    <p class="metric-block__label">Post-event prep</p>
+  </div>
+  <div class="metric-block">
+    <p class="metric-block__value">1h → 1–2 min</p>
+    <p class="metric-block__label">CRM handoff</p>
+  </div>
+  <div class="metric-block">
+    <p class="metric-block__value">Richer context</p>
+    <p class="metric-block__label">Voice vs. typing under pressure</p>
+  </div>
+</div>
+
+<!-- BRIEF -->
+<section class="narrative-section">
+  <span class="narrative-section__label">Brief</span>
+  <h2 class="narrative-section__heading">The brief</h2>
+  <div class="narrative-section__body">
+    <p>The brief was not "build another networking app." It was tighter than that.</p>
+    <ul>
+      <li>Make contact capture fast.</li>
+      <li>Make it feel low-profile in the middle of a conversation.</li>
+      <li>Do not force users to type under pressure.</li>
+      <li>Make the data usable after the event, not trapped in the app.</li>
+    </ul>
+    <p>That meant the UX had to protect momentum. Every extra field, tap, or decision was friction.</p>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="narrative-section narrative-section--cream">
+  <span class="narrative-section__label">Problem</span>
+  <h2 class="narrative-section__heading">The problem</h2>
+  <div class="narrative-section__body">
+    <p>Conference networking is messy by default. People exchange cards, move to the next conversation, and trust memory to do the rest later. That usually breaks.</p>
+    <p>Photos of cards end up in one place. Voice notes live somewhere else. Details get lost. CRM entry becomes a separate task. By the time the event is over, the best context is already fading.</p>
+    <p>The key insight was simple: users do not have time for admin in the moment. Sometimes they barely have time to take out the phone, scan the card, and say one thing before the next conversation starts.</p>
+  </div>
+</section>
+
+<!-- INSIGHT STRIP -->
+<div class="insight-strip">
+  <p class="insight-strip__text">&ldquo;Users do not have time for admin in the moment. Sometimes they barely have time to take out the phone, scan the card, and say one thing before the next conversation starts.&rdquo;</p>
+  <p class="insight-strip__attr">Key insight</p>
+</div>
+
+<!-- DESIGN PRINCIPLES -->
+<section class="narrative-section">
+  <span class="narrative-section__label">Design Principles</span>
+  <h2 class="narrative-section__heading">Four principles to design around</h2>
+  <div class="principles-list">
+    <div class="principle">
+      <span class="principle__number">1</span>
+      <div class="principle__content">
+        <p class="principle__title">Capture first. Organize later.</p>
+        <p class="principle__body">The first job is to save the contact and the context before they disappear.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <span class="principle__number">2</span>
+      <div class="principle__content">
+        <p class="principle__title">One clear next action.</p>
+        <p class="principle__body">In a rushed setting, the interface cannot ask users to think twice.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <span class="principle__number">3</span>
+      <div class="principle__content">
+        <p class="principle__title">Use the fastest native behavior.</p>
+        <p class="principle__body">Taking a picture and speaking a note are faster than typing into forms.</p>
+      </div>
+    </div>
+    <div class="principle">
+      <span class="principle__number">4</span>
+      <div class="principle__content">
+        <p class="principle__title">Reduce the work after the event.</p>
+        <p class="principle__body">The product only works if it saves time later, not just during capture.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="narrative-section narrative-section--cream">
+  <span class="narrative-section__label">Process</span>
+  <h2 class="narrative-section__heading">How it came together</h2>
+  <div class="process-list">
+    <div class="process-step">
+      <span class="process-step__number">01</span>
+      <div class="process-step__content">
+        <h3 class="process-step__title">Start with the real moment of use</h3>
+        <p class="process-step__body">I began by framing the actual context. Users were not sitting at a desk. They were standing at booths, moving between talks, or speaking to the next person in line. Their attention span was measured in seconds. That changed the product immediately — the app could not behave like a traditional form flow.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <span class="process-step__number">02</span>
+      <div class="process-step__content">
+        <h3 class="process-step__title">Reduce the core flow to two actions</h3>
+        <p class="process-step__body">The main action is scanning a business card. The phone camera opens immediately. OCR reads the card and maps the details into structured fields automatically. The second action is recording a voice note. In one quick flow, users capture the card, the context, and a structured record ready for export or CRM sync.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <span class="process-step__number">03</span>
+      <div class="process-step__content">
+        <h3 class="process-step__title">Prove the workflow in low-fi before polishing</h3>
+        <p class="process-step__body">Before moving into high-fi design, I built a working low-fi prototype using Figma Make, connected a Supabase database, and deployed it on Vercel so the client and early users could test the actual flow. We were not asking people whether they liked screens. We were checking whether the product really worked in a realistic situation.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <span class="process-step__number">04</span>
+      <div class="process-step__content">
+        <h3 class="process-step__title">Move to high-fi only after the behavior worked</h3>
+        <p class="process-step__body">Only after the core interaction proved useful did I apply high-fi design. At that point, the goal was not decoration — it was clarity. I tightened the hierarchy, reduced hesitation, and made the two core actions feel obvious and calm. The visual layer came after the workflow made sense.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <span class="process-step__number">05</span>
+      <div class="process-step__content">
+        <h3 class="process-step__title">Iterate from the first real friction point</h3>
+        <p class="process-step__body">The first major friction was not capture — it was organization. Users liked the speed, but wanted to sort contacts by conference or group. The obvious fix of tagging every contact during capture would have damaged the product. Instead, I designed a session-based grouping model: users set the current conference once, and every new capture inherits that context automatically.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LO-FI PHASE BLOCK -->
+<div class="phase-block">
+  <p class="phase-block__label">Early Wireframes</p>
+  <div class="phase-grid">
+    <div class="phase-img">Lo-fi screen 1</div>
+    <div class="phase-img">Lo-fi screen 2</div>
+    <div class="phase-img">Lo-fi screen 3</div>
+    <div class="phase-img">Lo-fi screen 4</div>
+  </div>
+</div>
+
+<!-- KEY UX DECISIONS -->
+<div class="decisions-section">
+  <span class="narrative-section__label">Key UX Decisions</span>
+  <h2 class="narrative-section__heading" style="margin-top: 0; margin-bottom: 8px;">The decisions that shaped the product</h2>
+
+  <div class="decision-row">
+    <h3 class="decision-row__title">Make scanning the primary action</h3>
+    <p class="decision-row__body">The app opens with the fastest high-value action, not a dashboard. That reduces time to first success and eliminates the cognitive overhead of choosing where to start.</p>
+  </div>
+
+  <div class="decision-row">
+    <h3 class="decision-row__title">Use OCR to remove manual entry</h3>
+    <p class="decision-row__body">Users should not retype a business card they already have in front of them. OCR reads the card and maps it into structured fields automatically — the contact is created before the next conversation begins.</p>
+  </div>
+
+  <div class="decision-row">
+    <h3 class="decision-row__title">Use voice instead of typing for context</h3>
+    <p class="decision-row__body">Typing notes in a crowded event setting is awkward, slow, and socially visible. Speaking is faster, more natural, and fits the rhythm of the moment. The app transcribes and attaches the note automatically.</p>
+  </div>
+
+  <div class="decision-row">
+    <h3 class="decision-row__title">Keep the product open to downstream systems</h3>
+    <p class="decision-row__body">The value of the app is not just capture. It is clean handoff into tools like HubSpot, Salesforce, Airtable, or CSV export. A captured contact that stays locked inside the app is only half the job done.</p>
+  </div>
+</div>
+
+<!-- HI-FI PHASE BLOCK -->
+<div class="phase-block phase-block--cream">
+  <p class="phase-block__label">High-Fidelity Design</p>
+  <div class="phase-grid">
+    <div class="phase-img">Hi-fi screen 1</div>
+    <div class="phase-img">Hi-fi screen 2</div>
+    <div class="phase-img">Hi-fi screen 3</div>
+    <div class="phase-img">Hi-fi screen 4</div>
+  </div>
+</div>
+
+<!-- VALIDATION -->
+<section class="narrative-section narrative-section--cream">
+  <span class="narrative-section__label">Validation</span>
+  <h2 class="narrative-section__heading">How it was tested</h2>
+  <div class="narrative-section__body">
+    <p>I validated two things.</p>
+    <p>First, I compared how much useful context users captured during the event with and without the app. The focus was on note richness, remembered details, and how usable the captured information was afterward.</p>
+    <p>Second, I measured how much desk work remained after the event — a timed before-and-after comparison of the post-conference sorting, structuring, and CRM handoff process.</p>
+    <p>The testing group was small and early, so I treat the results as directional. But the signal was strong.</p>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="narrative-section">
+  <span class="narrative-section__label">Outcomes</span>
+  <h2 class="narrative-section__heading">The clearest win was work removed, not just speed gained</h2>
+</section>
+
+<div class="outcomes-metrics">
+  <div class="metric-block">
+    <p class="metric-block__value">2h → 10 min</p>
+    <p class="metric-block__label">Post-conference sorting and CRM preparation</p>
+  </div>
+  <div class="metric-block">
+    <p class="metric-block__value">1h → 1–2 min</p>
+    <p class="metric-block__label">CRM handoff with sync and review</p>
+  </div>
+  <div class="metric-block">
+    <p class="metric-block__value">Richer notes</p>
+    <p class="metric-block__label">Users captured more context via voice than memory or typing</p>
+  </div>
+</div>
+
+<div style="padding: 0 max(48px, calc(50vw - 380px)) 72px; border-bottom: 1px solid var(--border);">
+  <div class="quote-block">
+    <p class="quote-block__text">&ldquo;It feels smooth and intuitive in the background.&rdquo;</p>
+  </div>
+  <div class="quote-block">
+    <p class="quote-block__text">&ldquo;It doesn&rsquo;t look like I&rsquo;m wasting time on my phone.&rdquo;</p>
+  </div>
+</div>
+
+<!-- REFLECTION -->
+<section class="narrative-section">
+  <span class="narrative-section__label">Reflection</span>
+  <div class="reflection-inner">
+    <p class="reflection-pull">When time and attention are limited, UX has to remove thinking before it adds features.</p>
+    <div class="reflection-body">
+      <p>ConCap reinforced a simple rule: the product&rsquo;s job in the moment is not to be clever. It is to get out of the way.</p>
+      <p>The strongest decision was reducing the experience to two core actions and testing that behavior early in a live prototype. That kept the work honest. It made every later design decision easier, because the product had already proven its value before the visual polish began.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section class="narrative-section narrative-section--cream">
+  <span class="narrative-section__label">Next Steps</span>
+  <h2 class="narrative-section__heading">What comes next</h2>
+  <div class="narrative-section__body">
+    <p>The next product layer is not more capture. It is better organization and follow-through.</p>
+    <p>The first step is session-based grouping by conference, audience, or client segment. From there, the product can support stronger filtering, cleaner segmented exports, and a more structured handoff into sales workflows.</p>
+    <p>The key is to add that structure without slowing the core capture flow. Speed remains the product.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<div class="testimonial-section">
+  <span class="testimonial-section__mark">&ldquo;</span>
+  <p class="testimonial-section__quote">Placeholder — add the real client quote before launch. Keep it concrete: mention the process, the speed of learning, and the value of testing the real flow before over-investing in polish.</p>
+  <p class="testimonial-section__author">— Client name, role</p>
+</div>
+
+<!-- NEXT PROJECT CTA -->
+<div class="next-project">
+  <p class="next-project__label">Next project</p>
+  <a href="#" class="next-project__card">
+    <div class="next-project__cover">Cover image</div>
+    <div class="next-project__body">
+      <span class="next-project__title">Project Title</span>
+      <span class="next-project__arrow">Next project →</span>
+    </div>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__bar">
+    <span>Aylin Irk &copy; 2026</span>
+    <div class="footer__bar-links">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <span>EN / DE</span>
+  </div>
+  <span class="footer__watermark">Aylin Irk</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "aylin-irk-portfolio",
+  "version": "1.0.0",
+  "description": "Aylin Irk — UI/UX Designer Portfolio",
+  "scripts": {
+    "start": "eleventy --serve --quiet",
+    "build": "eleventy",
+    "cms": "npx decap-server"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

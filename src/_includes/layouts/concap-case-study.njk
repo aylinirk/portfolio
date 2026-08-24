@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="{{ 'de' if isDE else 'en' }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study – ConCap · Aylin Irk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:       #3E4A6E;
+    --blue-mid:   #6B7FA8;
+    --blue-light: #A8B5CE;
+    --blue-pale:  #E4E8F0;
+    --bg:         #FAF8F5;
+    --surface:    #F2EDE6;
+    --cream:      #F2EDE6;
+    --sage:       #8A9E78;
+    --sage-dark:  #587050;
+    --terra:      #C97B5A;
+    --text:       #1E1A17;
+    --text-muted: #7A6F65;
+    --border:     #E8E0D6;
+  }
+  body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; padding-top: 52px; }
+
+  .back-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250,248,245,0.86);
+    -webkit-backdrop-filter: saturate(150%) blur(14px);
+    backdrop-filter: saturate(150%) blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 60px;
+  }
+  .back-bar a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .back-bar a:hover { color: var(--navy); }
+
+  /* COVER */
+  .cover { background: var(--surface); padding: 72px 60px 64px; }
+  .cover-tag { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 20px; }
+  .cover h1 { font-family: 'Lora', Georgia, serif; font-size: clamp(2.8rem, 5vw, 4rem); font-weight: 700; color: var(--text); line-height: 1.1; margin-bottom: 20px; }
+  .cover h1 span { color: var(--text); }
+  .cover-sub { font-size: 18px; color: var(--text-muted); max-width: 600px; margin-bottom: 40px; line-height: 1.6; }
+  .cover-meta { display: flex; gap: 40px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 24px; }
+  .cover-meta-item label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
+  .cover-meta-item span { font-size: 14px; color: var(--text); }
+
+  /* METRICS BANNER */
+  .metrics-banner { background: white; border-bottom: 1px solid var(--border); padding: 40px 60px; display: flex; gap: 0; }
+  .metric-item { flex: 1; text-align: center; padding: 0 24px; border-right: 1px solid var(--border); }
+  .metric-item:last-child { border-right: none; }
+  .metric-value { font-family: 'Lora', Georgia, serif; font-size: 40px; font-weight: 800; color: var(--navy); line-height: 1; margin-bottom: 8px; }
+  .metric-label { font-size: 12px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+  /* PAGE */
+  .page { max-width: 900px; margin: 0 auto; padding: 64px 60px; }
+  .section-number { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: 8px; }
+  .section-title { font-family: 'Lora', Georgia, serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 2px solid var(--blue-pale); }
+
+  /* FEATURE BOX */
+  .dark-box { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--navy); color: var(--text); border-radius: 0 20px 20px 0; padding: 44px; margin: 32px 0; }
+  .dark-box h3 { font-family: 'Lora', Georgia, serif; font-size: 22px; margin-bottom: 18px; color: var(--navy); }
+  .dark-box p { color: #4A4138; font-size: 15px; line-height: 1.85; margin-bottom: 12px; }
+  .dark-box p:last-child { margin-bottom: 0; }
+
+  /* INSIGHT QUOTE */
+  .insight { background: var(--cream); border-left: 4px solid var(--navy); border-radius: 0 16px 16px 0; padding: 32px 40px; margin: 40px 0; }
+  .insight p { font-family: 'Lora', Georgia, serif; font-size: 20px; font-style: italic; color: var(--text); line-height: 1.55; margin-bottom: 12px; }
+  .insight .attr { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); }
+
+  /* PRINCIPLES */
+  .principles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+  .principle-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+  .principle-number { font-family: 'Lora', Georgia, serif; font-size: 42px; font-weight: 800; color: var(--blue-pale); line-height: 1; margin-bottom: 12px; }
+  .principle-card h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .principle-card p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+  /* TIMELINE */
+  .timeline { position: relative; margin: 32px 0; }
+  .timeline::before { content: ''; position: absolute; left: 28px; top: 0; bottom: 0; width: 2px; background: var(--blue-pale); }
+  .timeline-item { display: flex; gap: 24px; margin-bottom: 36px; position: relative; }
+  .timeline-dot { width: 56px; height: 56px; border-radius: 50%; background: white; border: 2px solid var(--blue-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+  .timeline-dot span { font-family: 'Lora', Georgia, serif; font-size: 18px; font-weight: 800; color: var(--navy); }
+  .timeline-content { padding-top: 10px; flex: 1; }
+  .timeline-tag { display: inline-block; background: var(--blue-pale); color: var(--navy); padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .timeline-content h4 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .timeline-content p { font-size: 14px; color: var(--text-muted); line-height: 1.75; }
+
+  /* DECISIONS */
+  .decisions-list { display: flex; flex-direction: column; gap: 16px; margin: 32px 0; }
+  .decision-item { background: white; border: 1px solid var(--border); border-left: 4px solid var(--navy); border-radius: 0 14px 14px 0; padding: 22px 28px; }
+  .decision-item h4 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+  .decision-item p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+  /* OUTCOMES */
+  .outcomes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+  .outcome-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 28px 20px; text-align: center; }
+  .outcome-value { font-family: 'Lora', Georgia, serif; font-size: 32px; font-weight: 800; color: var(--terra); line-height: 1.1; margin-bottom: 10px; }
+  .outcome-label { font-size: 12px; color: var(--text-muted); font-weight: 500; line-height: 1.4; }
+
+  /* USER QUOTES */
+  .quotes-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .user-quote { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 24px; position: relative; }
+  .user-quote::before { content: '\201C'; font-family: 'Lora', Georgia, serif; font-size: 48px; color: var(--blue-pale); position: absolute; top: 8px; left: 16px; line-height: 1; }
+  .user-quote p { font-size: 14px; color: var(--text); font-style: italic; line-height: 1.6; padding-left: 24px; padding-top: 16px; }
+
+  /* REFLECTION */
+  .reflection-pull { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--navy); border-radius: 0 20px 20px 0; padding: 44px; margin: 32px 0; }
+  .reflection-pull p { font-family: 'Lora', Georgia, serif; font-size: 22px; font-style: italic; color: var(--navy); line-height: 1.5; }
+
+  .prose p { color: #4A4138; margin-bottom: 16px; font-size: 15px; line-height: 1.85; }
+  .prose ul { margin: 12px 0 16px 20px; }
+  .prose li { font-size: 15px; color: #4A4138; margin-bottom: 6px; line-height: 1.7; }
+
+  /* TOOLS */
+  .tools-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+  .tool-pill { background: white; border: 1px solid var(--border); padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .tool-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--navy); }
+
+  .divider { height: 1px; background: var(--border); margin: 56px 0; }
+  .page-break { padding-top: 56px; }
+
+  /* PHASE EMBED SECTIONS */
+  .phase-section { border-top: 1px solid var(--border); }
+  .phase-section--hifi { }
+  .phase-section__inner { max-width: 900px; margin: 0 auto; padding: 48px 60px 28px; }
+  .phase-section__number { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: 8px; }
+  .phase-section__title { font-family: 'Lora', Georgia, serif; font-size: 28px; font-weight: 700; color: var(--text); }
+  .phase-embed { width: 100%; overflow: hidden; }
+  .phase-embed iframe { display: block; width: 100%; height: 800px; border: none; }
+  .phase-section--hifi .phase-embed iframe { height: 1560px; }
+
+  @media (max-width: 700px) {
+    .cover { padding: 48px 24px 64px; }
+    .cover { padding: 48px 24px 40px; }
+    .cover-meta { gap: 24px; }
+    .page { padding: 40px 24px; }
+    .metrics-banner { flex-direction: column; padding: 32px 24px; gap: 24px; }
+    .metric-item { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    .metric-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .principles-grid { grid-template-columns: 1fr; }
+    .outcomes-grid { grid-template-columns: 1fr; }
+    .quotes-row { grid-template-columns: 1fr; }
+    .back-bar { padding: 14px 24px; }
+    .phase-section__inner { padding: 24px 24px 12px; }
+    .phase-embed iframe { height: 760px; }
+    .phase-section--hifi .phase-embed iframe { height: 820px; }
+    body { padding-top: 48px; }
+  }
+</style>
+</head>
+<body>
+{% set isDE = '/de/' in page.url %}
+
+<div class="back-bar">
+  <a href="{{ homeUrl }}#work">← {{ "Zurück zum Portfolio" if isDE else "Back to portfolio" }}</a>
+</div>
+
+<div class="cover">
+  <div class="cover-tag">{{ "UX & Produktdesign · Fallstudie" if isDE else "UX & Product Design · Case Study" }}</div>
+  <h1>Con<span>Cap</span></h1>
+  <p class="cover-sub">{{ tagline }}</p>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><label>{{ "Rolle" if isDE else "Role" }}</label><span>{{ role }}</span></div>
+    <div class="cover-meta-item"><label>{{ "Umfang" if isDE else "Scope" }}</label><span>{{ scope }}</span></div>
+    <div class="cover-meta-item"><label>Tools</label><span>{{ tools }}</span></div>
+    <div class="cover-meta-item"><label>{{ "Jahr" if isDE else "Year" }}</label><span>{{ year }}</span></div>
+  </div>
+</div>
+
+<div class="metrics-banner">
+  {% for m in metrics %}
+  <div class="metric-item">
+    <div class="metric-value">{{ m.value }}</div>
+    <div class="metric-label">{{ m.label }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="page">
+  <div class="section-number">{{ "01 — Das Briefing" if isDE else "01 — The Brief" }}</div>
+  <div class="section-title">{{ "Was war der Auftrag?" if isDE else "What was the job?" }}</div>
+  <div class="dark-box">
+    <h3>{{ brief.heading }}</h3>
+    {{ brief.body | md | safe }}
+  </div>
+
+  <div class="section-number" style="margin-top:56px;">{{ "02 — Das Problem" if isDE else "02 — The Problem" }}</div>
+  <div class="section-title">{{ "Warum scheitert das?" if isDE else "Why does this break?" }}</div>
+  <div class="prose">
+    {{ problem.body | md | safe }}
+  </div>
+
+  <div class="insight">
+    <p>{{ insightQuote }}</p>
+    <div class="attr">{{ insightAttr }}</div>
+  </div>
+
+  <div class="section-number" style="margin-top:56px;">{{ "03 — Designprinzipien" if isDE else "03 — Design Principles" }}</div>
+  <div class="section-title">{{ principles.heading }}</div>
+  <div class="principles-grid">
+    {% for item in principles.items %}
+    <div class="principle-card">
+      <div class="principle-number">{{ item.number }}</div>
+      <h4>{{ item.title }}</h4>
+      <p>{{ item.body }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">{{ "04 — Prozess" if isDE else "04 — Process" }}</div>
+  <div class="section-title">{{ process.heading }}</div>
+  <div class="timeline">
+    {% for item in process.items %}
+    <div class="timeline-item">
+      <div class="timeline-dot"><span>{{ item.number }}</span></div>
+      <div class="timeline-content">
+        <h4>{{ item.title }}</h4>
+        <p>{{ item.body }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div><!-- /page -->
+
+{% if lofiPhase.embed %}
+<div class="phase-section">
+  <div class="phase-section__inner">
+    <div class="phase-section__number">{{ lofiPhase.label }}</div>
+    <div class="phase-section__title">{{ "Frühe Prototypen — Struktur vor Stil" if isDE else "Early prototypes — structure before style" }}</div>
+  </div>
+  <div class="phase-embed">
+    <iframe src="{{ lofiPhase.embed }}" title="{{ lofiPhase.label }}" loading="lazy" scrolling="no"></iframe>
+  </div>
+</div>
+{% endif %}
+
+{% if hifiPhase.embed %}
+<div class="phase-section phase-section--hifi">
+  <div class="phase-section__inner">
+    <div class="phase-section__number">{{ hifiPhase.label }}</div>
+    <div class="phase-section__title">{{ "High-Fidelity — nachdem das Verhalten funktionierte" if isDE else "High-fidelity — after the behaviour worked" }}</div>
+  </div>
+  <div class="phase-embed">
+    <iframe src="{{ hifiPhase.embed }}" title="{{ hifiPhase.label }}" loading="lazy" scrolling="no"></iframe>
+  </div>
+</div>
+{% endif %}
+
+<div class="page">
+  <div class="divider"></div>
+
+  <div class="section-number">{{ "05 — UX-Entscheidungen" if isDE else "05 — Key UX Decisions" }}</div>
+  <div class="section-title">{{ decisions.heading }}</div>
+  <div class="decisions-list">
+    {% for item in decisions.items %}
+    <div class="decision-item">
+      <h4>{{ item.title }}</h4>
+      <p>{{ item.body }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="page page-break">
+  <div class="section-number">{{ "06 — Validierung" if isDE else "06 — Validation" }}</div>
+  <div class="section-title">{{ validation.heading }}</div>
+  <div class="prose">
+    {{ validation.body | md | safe }}
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">{{ "07 — Ergebnisse" if isDE else "07 — Outcomes" }}</div>
+  <div class="section-title">{{ outcomes.heading }}</div>
+  <div class="outcomes-grid">
+    {% for m in outcomes.metrics %}
+    <div class="outcome-card">
+      <div class="outcome-value">{{ m.value }}</div>
+      <div class="outcome-label">{{ m.label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="quotes-row">
+    {% for q in outcomes.quotes %}
+    <div class="user-quote"><p>{{ q }}</p></div>
+    {% endfor %}
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">{{ "08 — Reflexion" if isDE else "08 — Reflection" }}</div>
+  <div class="section-title">{{ "Was dieses Projekt bestätigt hat" if isDE else "What this project reinforced" }}</div>
+  <div class="reflection-pull">
+    <p>{{ reflection.pull }}</p>
+  </div>
+  <div class="prose" style="margin-top: 24px;">
+    {{ reflection.body | md | safe }}
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section-number">{{ "09 — Nächste Schritte" if isDE else "09 — Next Steps" }}</div>
+  <div class="section-title">{{ nextSteps.heading }}</div>
+  <div class="prose">
+    {{ nextSteps.body | md | safe }}
+  </div>
+
+  <div class="tools-row" style="margin-top: 40px;">
+    <div class="tool-pill"><span class="tool-dot"></span>Figma Make</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Supabase</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Vercel</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Claude Code</div>
+    <div class="tool-pill"><span class="tool-dot"></span>UX Research</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Prototyping</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Usability Testing</div>
+    <div class="tool-pill"><span class="tool-dot"></span>Iteration</div>
+  </div>
+</div>
+
+</body>
+</html>
