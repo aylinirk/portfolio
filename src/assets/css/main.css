@@ -84,8 +84,8 @@ body {
 .btn {
   display: inline-block;
   padding: 14px 32px;
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--surface);
+  color: var(--accent-dark);
   border-radius: 100px;
   font-family: var(--font-sans);
   font-size: 15px;
@@ -93,7 +93,7 @@ body {
   text-decoration: none;
   transition: background var(--duration-normal) var(--ease-out);
 }
-.btn:hover { background: var(--accent-dark); }
+.btn:hover { background: var(--border); }
 
 .link-quiet {
   font-size: 14px;
@@ -175,7 +175,7 @@ body {
 
 /* ── 6. SECTIONS ────────────────────────────────────────────── */
 .section { padding: 96px max(48px, calc(50vw - 580px)); }
-.section--cream { background: var(--surface); }
+.section--cream { background: var(--accent); }
 
 .section h2 {
   font-family: var(--font-serif);
@@ -190,7 +190,7 @@ body {
   padding: 80px max(48px, calc(50vw - 580px)) 72px;
   display: flex;
   align-items: center;
-  background: var(--surface);
+  background: var(--accent);
 }
 
 .hero__inner {
@@ -575,7 +575,7 @@ body {
   padding: 72px max(48px, calc(50vw - 380px));
   border-top: 1px solid var(--border);
 }
-.narrative-section--cream { background: var(--surface); }
+.narrative-section--cream { background: var(--accent); }
 
 .narrative-section__label {
   display: inline-flex;
@@ -684,7 +684,7 @@ body {
   padding: 56px max(48px, calc(50vw - 560px));
   border-top: 1px solid var(--border);
 }
-.phase-block--cream { background: var(--surface); }
+.phase-block--cream { background: var(--accent); }
 
 .phase-block__label {
   font-size: 11px;
