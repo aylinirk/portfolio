@@ -18,11 +18,11 @@ module.exports = {
     viewCaseStudy: "View case study →",
     // Contact
     contactHeading: "Let's talk",
-    contactSub: "Applying for the HF Interaction Design programme — open to junior roles, internships, and collaborative projects.",
+    contactSub: "Studying the HF Interaction Design programme — open to junior roles, internships, and collaborative projects.",
     contactLinkedIn: "LinkedIn ↗",
     // Learning
-    learningCalloutLabel: "Coming up",
-    learningCalloutText: "Professional bachelor in Interaction Design — starting 2026",
+    learningCalloutLabel: "Currently",
+    learningCalloutText: "Professional bachelor in Interaction Design — since 2026",
     badgeCompleted: "Completed",
     badgeInProgress: "In Progress",
     badgePlanned: "Planned",

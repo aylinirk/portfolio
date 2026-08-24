@@ -18,11 +18,11 @@ module.exports = {
     viewCaseStudy: "Fallstudie ansehen →",
     // Contact
     contactHeading: "Lass uns reden",
-    contactSub: "Bewerbung für die HF Interaction Design — offen für Junior-Stellen, Praktika und Kooperationsprojekte.",
+    contactSub: "Studierende der HF Interaction Design — offen für Junior-Stellen, Praktika und Kooperationsprojekte.",
     contactLinkedIn: "LinkedIn ↗",
     // Learning
-    learningCalloutLabel: "Demnächst",
-    learningCalloutText: "Professioneller Bachelor in Interaction Design — ab 2026",
+    learningCalloutLabel: "Aktuell",
+    learningCalloutText: "Professioneller Bachelor in Interaction Design — seit 2026",
     badgeCompleted: "Abgeschlossen",
     badgeInProgress: "In Bearbeitung",
     badgePlanned: "Geplant",
