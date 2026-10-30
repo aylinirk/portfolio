@@ -1,0 +1,5 @@
+{% set enUrl = page.url | replace("/de/", "/") %}
+<div class="lang" role="group" aria-label="{{ strings.ariaLang }}">
+  <a href="{{ '/de' + page.url if locale == 'en' else page.url }}" hreflang="de" lang="de"{% if locale == "de" %} aria-current="true"{% endif %}>DE</a>
+  <a href="{{ page.url if locale == 'en' else enUrl }}" hreflang="en" lang="en"{% if locale == "en" %} aria-current="true"{% endif %}>EN</a>
+</div>

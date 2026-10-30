@@ -1,16 +1,104 @@
 {
   "items": [
     {
+      "title": "Dipl. Kommunikationsdesignerin HF, Professional Bachelor",
+      "platform": "Specialising in Interaction Design · Schule für Gestaltung Zürich",
+      "status": "In Progress",
+      "year": "2026–2029"
+    },
+    {
       "title": "Google UX Design Certificate (6 courses)",
       "platform": "Google · Coursera",
       "status": "In Progress",
-      "year": 2026
-    },
-    {
-      "title": "Bachelor in Interaction Design (HF)",
-      "platform": "Höhere Fachschule",
-      "status": "In Progress",
-      "year": 2026
+      "year": "2026"
     }
-  ]
+  ],
+  "semester": {
+    "kicker": "Communication Design HF, specialising in Interaction Design",
+    "title": "The first semester",
+    "sub": "Part-time, on Fridays and Saturdays. 13 modules in three learning areas, from web technologies and game design to what an hour of work really costs.",
+    "unit": "hours",
+    "stats": [
+      {
+        "value": "304",
+        "label": "Learning hours in semester 1"
+      },
+      {
+        "value": "13",
+        "label": "Modules across three learning areas"
+      }
+    ],
+    "groups": [
+      {
+        "name": "Design & Interaction",
+        "hours": 200,
+        "modules": [
+          {
+            "title": "Introduction to Web Technologies",
+            "hours": 64
+          },
+          {
+            "title": "Games I",
+            "hours": 32
+          },
+          {
+            "title": "LAB",
+            "hours": 16
+          },
+          {
+            "title": "Interaction with DIY Hardware I",
+            "hours": 16
+          },
+          {
+            "title": "Virtual Reality I",
+            "hours": 16
+          },
+          {
+            "title": "Alternate & Design",
+            "hours": 16
+          },
+          {
+            "title": "Typographic Systems",
+            "hours": 16
+          },
+          {
+            "title": "Design Thinking",
+            "hours": 16
+          },
+          {
+            "title": "Case Study I",
+            "hours": 8
+          }
+        ]
+      },
+      {
+        "name": "Context & Concept",
+        "hours": 88,
+        "modules": [
+          {
+            "title": "Experimental Storytelling",
+            "hours": 40
+          },
+          {
+            "title": "Media & Technology History I",
+            "hours": 24
+          },
+          {
+            "title": "Community Building",
+            "hours": 24
+          }
+        ]
+      },
+      {
+        "name": "Implementation & Controlling",
+        "hours": 16,
+        "modules": [
+          {
+            "title": "What does my hour cost?",
+            "hours": 16
+          }
+        ]
+      }
+    ]
+  }
 }

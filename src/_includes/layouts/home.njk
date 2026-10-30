@@ -4,121 +4,189 @@ layout: base.njk
 {% include "partials/nav.njk" %}
 
 {% set hp = homepage_en if locale == "en" else homepage_de %}
+{% set ln = learning_en if locale == "en" else learning_de %}
+{% set arrow %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>{% endset %}
 
 <main>
-
-  {# ── HERO ───────────────────────────────────────────────────── #}
-  <section class="hero" id="home" aria-labelledby="hero-heading">
-    <div class="hero__inner">
-      <div class="hero__content">
-        <h1 class="hero__name" id="hero-heading">{{ hp.heroName }}</h1>
-        <p class="hero__tagline">{{ hp.heroTagline }}</p>
-        <div class="hero__cta">
-          <a href="{{ homeUrl }}#work" class="btn">{{ hp.heroCta }}</a>
+  <section class="hA" id="top">
+    <div class="hA-stage" data-hero-a>
+      <div class="hA-sticky">
+        <figure class="hA-fig" data-a-fig>
+          <div class="hA-photo" data-a-photo>
+            <img src="{{ hp.heroPhoto }}" alt="{{ strings.portraitAlt }}" width="1122" height="1402" fetchpriority="high">
+          </div>
+        </figure>
+        <div class="hA-cap" data-a-cap><p>{{ hp.heroCaption }}</p><span>{{ hp.heroName }} · {{ hp.heroRole }}</span></div>
+        <div class="hA-text" data-a-text>
+          <div class="eyebrow" data-rv="up">{{ hp.heroRole }}</div>
+          <h1 class="disp hero-name" data-rv="words" aria-label="{{ hp.heroName }}">{{ strings.nameWords | wordSpans(true) | safe }}</h1>
+          <p class="lead" data-rv="up" style="--d: 3">{{ hp.heroTagline }}</p>
+          <div class="btns" data-rv="up" style="--d: 4">
+            <a class="btn btn--dark" href="{{ homeUrl }}#work" data-mag>{{ hp.heroCta }}{{ arrow | safe }}</a>
+            <a class="btn btn--line" href="{{ homeUrl }}#contact" data-mag>{{ strings.navContact }}</a>
+          </div>
         </div>
       </div>
-      {% if hp.heroPhoto %}
-      <div class="hero__photo">
-        <img src="{{ hp.heroPhoto }}" alt="{{ hp.heroName }}" width="360" height="360" loading="eager">
-      </div>
-      {% endif %}
     </div>
-    <div class="hero__scroll" aria-hidden="true">↓</div>
   </section>
 
-  {# ── ABOUT ──────────────────────────────────────────────────── #}
-  <section class="section" id="about" aria-label="{{ strings.sectionAbout }}">
-    <div class="about__inner">
-      <div class="about__left">
-        <span class="label" aria-hidden="true">{{ strings.sectionAbout }}</span>
-        <p class="about__quote">&ldquo;{{ hp.aboutQuote }}&rdquo;</p>
-        {% if hp.aboutBio %}
-          <div class="about__bio">{{ hp.aboutBio | md | safe }}</div>
-        {% endif %}
+  <section class="mq" aria-label="Skills">
+    <ul class="sr">
+      {% for s in hp.skills %}<li>{{ s }}</li>{% endfor %}
+      {% for s in hp.tools %}<li>{{ s }}</li>{% endfor %}
+    </ul>
+    <div class="mq-band" data-band aria-hidden="true">
+      <div class="mq-track" data-track="1">
+        {% for i in range(0, 4) %}{% for s in hp.skills %}<span class="mq-item">{{ s }}</span>{% endfor %}{% endfor %}
       </div>
-      <div class="about__skills" aria-label="Skills">
-        {% for skill in hp.skills %}
-          <span class="tag">{{ skill }}</span>
+      <div class="mq-track mq-track--serif" data-track="-1">
+        {% for i in range(0, 4) %}{% for s in hp.tools %}<span class="mq-item">{{ s }}</span>{% endfor %}{% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="{{ strings.statsLabel }}" style="padding: 0 0 clamp(40px, 6vw, 80px)">
+    <div class="wrap stats-grid">
+      {% for st in hp.stats %}
+      <div class="stat" data-rv="up" data-count style="--d: {{ loop.index0 }}">
+        <div class="stat-n"><span class="cnt"><span class="cnt-real">{{ st.value }}</span><span class="cnt-anim" data-cnt-anim aria-hidden="true"></span></span></div>
+        <div class="stat-l">{{ st.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% set workItems = collections.work_en if locale == "en" else collections.work_de %}
+  <section id="work">
+    <div class="hz" data-hz>
+      <div class="hz-sticky" data-hz-sticky>
+        <div class="wrap hz-head">
+          <div style="display: flex; flex-direction: column; gap: 18px">
+            <div class="eyebrow" data-rv="up">{{ strings.workEyebrow }}</div>
+            <h2 class="disp h2" data-rv="words" aria-label="{{ strings.workWords | replace('*', '') }}">{{ strings.workWords | wordSpans(true) | safe }}</h2>
+          </div>
+          <span class="hz-count" data-rv="up">{{ strings.scrollHint }}</span>
+        </div>
+        <div class="hz-track" data-hz-track data-rv="up" style="--d: 2">
+          {% for project in workItems %}
+          <div class="hz-item" data-hz-item>
+            <a class="card tint-{{ project.data.order }}" href="{{ project.url }}" data-tilt data-curtain-label="{{ project.data.title }}" aria-label="{{ project.data.title }} – {{ strings.view }}">
+              <div class="card-media"><div class="card-zoom"><img src="{{ project.data.cover }}" alt="{{ project.data.coverAlt }}" data-hz-img loading="lazy"></div></div>
+              <div class="card-glow" aria-hidden="true"></div>
+              <div class="card-body">
+                <span class="card-idx" aria-hidden="true">0{{ project.data.order }}</span>
+                <div class="tags">{% for tg in project.data.tags %}<span class="tag">{{ tg }}</span>{% endfor %}</div>
+                <div class="card-row">
+                  <div>
+                    <h3 class="card-title">{{ project.data.title }}</h3>
+                    <p class="card-text">{{ project.data.tagline }}</p>
+                  </div>
+                  <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="wrap" style="width: 100%"><div class="hz-bar" aria-hidden="true"><i data-hz-bar></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="seq" data-seq id="about">
+    <blockquote class="sr">{{ hp.aboutQuote }}</blockquote>
+    <div class="seq-sticky" aria-hidden="true">
+      <p class="seq-kicker">{{ strings.seqKicker }}</p>
+      <div class="seq-stack">
+        {% for q in hp.mottoParts %}
+        <div class="seq-item" data-seq-item><span class="seq-a">{{ q.lead }}</span><span class="seq-b">{{ q.word }}</span></div>
         {% endfor %}
       </div>
+      <div class="seq-dots">{% for q in hp.mottoParts %}<i data-seq-dot></i>{% endfor %}</div>
     </div>
   </section>
 
-  {# ── WORK ────────────────────────────────────────────────────── #}
-  {% set workItems = collections.work_en if locale == "en" else collections.work_de %}
-  <section class="section section--cream" id="work" aria-labelledby="work-heading">
-    <span class="label" aria-hidden="true">{{ strings.sectionWork }}</span>
-    <h2 id="work-heading">{{ strings.sectionWork }}</h2>
-    <div class="work-grid">
-      {% for project in workItems %}
-        <a class="project-card" href="{{ project.url }}">
-          <div class="project-card__cover{% if project.data.coverVariant %} project-card__cover--{{ project.data.coverVariant }}{% endif %}">
-            {% if project.data.cover %}
-              <img src="{{ project.data.cover }}" alt="{{ project.data.title }}" width="800" height="450" loading="lazy">
-            {% endif %}
+  <section class="sec">
+    <div class="wrap">
+      <div class="eyebrow" data-rv="up" style="margin-bottom: 40px">{{ strings.navAbout }}</div>
+      <p class="hl" data-hl>{{ hp.bio[0] | hlSpans | safe }}</p>
+      <div class="about-grid">
+        <div class="eyebrow" data-rv="up" style="align-self: start">{{ hp.heroName }}</div>
+        <div class="about-bio">
+          {% for b in hp.bio %}{% if not loop.first %}<p data-rv="up" style="--d: {{ loop.index0 - 1 }}">{{ b }}</p>{% endif %}{% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="learning" style="background: var(--sec-learn); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow" data-rv="up">{{ strings.learnEyebrow }}</div>
+        <div data-par="0.05">
+          <h2 class="disp h2" data-rv="words" aria-label="{{ strings.learnWords | replace('*', '') }}">{{ strings.learnWords | wordSpans(true) | safe }}</h2>
+        </div>
+      </div>
+      <ul class="learn">
+        {% for l in ln.items %}
+        <li data-rv="up" style="--d: {{ loop.index0 }}">
+          <span class="learn-title">{{ l.title }}</span>
+          <span class="learn-sub">{{ l.platform }}</span>
+          <span class="pill">{% if l.status == "Completed" %}{{ strings.badgeCompleted }}{% elif l.status == "In Progress" %}{{ strings.badgeInProgress }}{% else %}{{ strings.badgePlanned }}{% endif %}</span>
+          <span class="learn-year">{{ l.year }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+
+      {% set sem = ln.semester %}
+      <div class="sem" data-rv="up">
+        <div class="sem-head">
+          <div>
+            <div class="eyebrow">{{ sem.kicker }}</div>
+            <h3 class="sem-title">{{ sem.title }}</h3>
+            <p class="sem-sub">{{ sem.sub }}</p>
           </div>
-          <div class="project-card__body">
-            <h3 class="project-card__title">{{ project.data.title }}</h3>
-            <p class="project-card__tagline">{{ project.data.tagline }}</p>
-            <div class="project-card__tags">
-              {% for tag in project.data.tags %}
-                <span class="tag">{{ tag }}</span>
-              {% endfor %}
+          <div class="sem-stats">
+            {% for st in sem.stats %}
+            <div class="sem-stat" data-rv="up" data-count style="--d: {{ loop.index0 }}">
+              <div class="stat-n"><span class="cnt"><span class="cnt-real">{{ st.value }}</span><span class="cnt-anim" data-cnt-anim aria-hidden="true"></span></span></div>
+              <div class="stat-l">{{ st.label }}</div>
             </div>
-            <span class="project-card__link">{{ strings.viewCaseStudy }}</span>
-          </div>
-        </a>
-      {% endfor %}
-      {% if workItems.length < 2 %}
-        <div class="project-card project-card--coming-soon" aria-hidden="true">
-          <div class="project-card__cover project-card__cover--warm"></div>
-          <div class="project-card__body">
-            <h3 class="project-card__title">Next project</h3>
-            <p class="project-card__tagline">Case study in progress.</p>
+            {% endfor %}
           </div>
         </div>
-      {% endif %}
-    </div>
-  </section>
-
-  {# ── LEARNING ─────────────────────────────────────────────────── #}
-  {% set learningItems = learning_en.items if locale == "en" else learning_de.items %}
-  <section class="section" id="learning" aria-labelledby="learning-heading">
-    <span class="label" aria-hidden="true">{{ strings.sectionLearning }}</span>
-    <h2 id="learning-heading">{{ strings.sectionLearning }}</h2>
-    <div class="learning-list">
-      {% for item in learningItems %}
-        <div class="learning-item">
-          <span class="learning-item__title">{{ item.title }}</span>
-          <div class="learning-item__meta">
-            <span class="learning-item__platform">{{ item.platform }}</span>
-            <span class="badge {{ item.status | badgeClass }}">
-              {%- if item.status == "Completed" -%}{{ strings.badgeCompleted }}
-              {%- elif item.status == "In Progress" -%}{{ strings.badgeInProgress }}
-              {%- else -%}{{ strings.badgePlanned }}{%- endif -%}
-            </span>
-          </div>
-          <span class="learning-item__year">{{ item.year }}</span>
+        <div class="sem-bar" aria-hidden="true">
+          {% for g in sem.groups %}<i style="flex: {{ g.hours }} 1 0; --d: {{ loop.index0 }}"></i>{% endfor %}
         </div>
-      {% endfor %}
-    </div>
-    <div class="learning-callout">
-      <p class="learning-callout__eyebrow">{{ strings.learningCalloutLabel }}</p>
-      <p class="learning-callout__text">{{ strings.learningCalloutText }}</p>
-    </div>
-  </section>
-
-  {# ── CONTACT ────────────────────────────────────────────────── #}
-  <section class="section section--cream contact" id="contact" aria-labelledby="contact-heading">
-    <span class="label" aria-hidden="true">{{ strings.sectionContact }}</span>
-    <h2 id="contact-heading">{{ strings.contactHeading }}</h2>
-    <p class="contact__sub">{{ strings.contactSub }}</p>
-    <div class="contact__actions">
-      <a href="mailto:{{ meta.contactEmail }}" class="btn">{{ meta.contactEmail }}</a>
-      <a href="{{ meta.linkedInUrl }}" class="link-quiet" rel="noopener noreferrer" target="_blank">{{ strings.contactLinkedIn }}</a>
+        <div class="sem-groups">
+          {% for g in sem.groups %}
+          <div class="sem-group sem-group--{{ loop.index }}">
+            <div class="sem-g-head"><span>{{ g.name }}</span><span>{{ g.hours }} {{ sem.unit }}</span></div>
+            <ul class="chips">
+              {% for mod in g.modules %}<li class="chip" data-rv="up" style="--d: {{ loop.index0 }}">{{ mod.title }}<small>{{ mod.hours }}</small></li>{% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </section>
 
+  <section class="sec contact" id="contact" style="background: var(--sec-contact)">
+    <div class="wrap">
+      <div class="eyebrow" data-rv="up">{{ strings.contactEyebrow }}</div>
+      <div data-zoom-wrap>
+        <div class="zoomtext" data-zoomtext>
+          <h2 class="disp contact-h" data-rv="words" aria-label="{{ strings.contactWords | replace('*', '') }}">{{ strings.contactWords | wordSpans(true) | safe }}</h2>
+        </div>
+      </div>
+      <p class="lead" data-rv="up" style="--d: 2">{{ strings.contactSub }}</p>
+      <div class="btns" data-rv="up" style="--d: 3">
+        <a class="btn btn--dark" href="mailto:{{ meta.contactEmail }}" data-mag>{{ meta.contactEmail }}</a>
+        <a class="btn btn--line" href="{{ meta.linkedInUrl }}" target="_blank" rel="noopener noreferrer" data-mag>LinkedIn<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg></a>
+      </div>
+    </div>
+  </section>
 </main>
 
 {% include "partials/footer.njk" %}

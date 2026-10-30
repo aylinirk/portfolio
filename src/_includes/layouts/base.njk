@@ -15,11 +15,20 @@
   <link rel="alternate" hreflang="x-default" href="{{ meta.siteUrl }}{% if locale == 'de' %}{{ page.url | replace('/de/', '/') }}{% else %}{{ page.url }}{% endif %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/main.css">
+  <noscript><style>[data-rv="up"],.w .wi,.hlw{opacity:1!important;transform:none!important;filter:none!important}.hA-fig{clip-path:none}.hA-stage,.seq,.cz{height:auto}.hA-sticky,.seq-sticky,.cz-sticky{position:relative;height:auto}.hA-text{position:relative}.hA-fig,.cz-fig{position:relative;inset:auto;height:70vh}.seq-item{position:relative;opacity:1}.seq-stack{height:auto}.hz{height:auto}.hz-sticky{position:relative;height:auto;overflow:visible}.hz-track{flex-direction:column;width:auto}.hz-item{width:auto;height:auto}</style></noscript>
 </head>
 <body>
-  {{ content | safe }}
+  <div class="ap" data-cur="1" data-menu="0">
+    {{ content | safe }}
+    <div class="curtain" data-curtain aria-hidden="true">
+      <div class="curtain-k">{{ meta.siteName }}</div>
+      <div class="curtain-t" data-curtain-title></div>
+    </div>
+    <div class="cur-dot" data-cur-dot aria-hidden="true"></div>
+    <div class="cur-ring" data-cur-ring aria-hidden="true"><div class="cur-shape"><span class="cur-label">{{ strings.view }}</span></div></div>
+  </div>
   <script src="/assets/js/main.js" defer></script>
 </body>
 </html>
