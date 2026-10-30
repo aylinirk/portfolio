@@ -1,26 +1,26 @@
-<nav class="nav" aria-label="Main navigation">
-  <a href="{{ homeUrl }}" class="nav__wordmark">Aylin Stäuble</a>
-
-  <div class="nav__links" id="nav-menu">
-    <a href="{{ homeUrl }}#about">{{ strings.navAbout }}</a>
-    <a href="{{ homeUrl }}#work">{{ strings.navWork }}</a>
-    <a href="{{ homeUrl }}#contact">{{ strings.navContact }}</a>
-    {% if locale == "en" %}
-      <a href="/de{{ page.url }}" class="nav__locale" hreflang="de">DE</a>
-    {% else %}
-      {% set enUrl = page.url | replace("/de/", "/") | replace("/de", "/") %}
-      <a href="{{ enUrl or '/' }}" class="nav__locale" hreflang="en">EN</a>
-    {% endif %}
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="nav-name" href="{{ homeUrl }}#top">{{ meta.siteName }}</a>
+    <nav class="nav-links" aria-label="{{ strings.ariaNav }}">
+      <a class="nav-link" href="{{ homeUrl }}#work">{{ strings.navWork }}</a>
+      <a class="nav-link" href="{{ homeUrl }}#about">{{ strings.navAbout }}</a>
+      <a class="nav-link" href="{{ homeUrl }}#learning">{{ strings.navLearning }}</a>
+      <a class="nav-link" href="{{ homeUrl }}#contact">{{ strings.navContact }}</a>
+      {% include "partials/lang.njk" %}
+    </nav>
+    <button class="burger" type="button" aria-label="{{ strings.menu }}" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
   </div>
+</header>
 
-  <button
-    class="nav__hamburger"
-    aria-label="Open menu"
-    aria-expanded="false"
-    aria-controls="nav-menu"
-  >
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-</nav>
+<div class="menu" id="mobile-menu" aria-hidden="true">
+  <nav class="menu-links" aria-label="{{ strings.ariaMenu }}">
+    <a class="menu-link" href="{{ homeUrl }}#work" style="--i: 0"><span>{{ strings.navWork }}</span></a>
+    <a class="menu-link" href="{{ homeUrl }}#about" style="--i: 1"><span>{{ strings.navAbout }}</span></a>
+    <a class="menu-link" href="{{ homeUrl }}#learning" style="--i: 2"><span>{{ strings.navLearning }}</span></a>
+    <a class="menu-link" href="{{ homeUrl }}#contact" style="--i: 3"><span>{{ strings.navContact }}</span></a>
+  </nav>
+  <div class="menu-foot">
+    {% include "partials/lang.njk" %}
+    <a href="mailto:{{ meta.contactEmail }}">{{ meta.contactEmail }}</a>
+  </div>
+</div>

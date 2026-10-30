@@ -20,29 +20,71 @@ collections:
         file: src/_data/homepage_en.json
         fields:
           - { label: Name, name: heroName, widget: string }
+          - { label: Role line, name: heroRole, widget: string }
           - { label: Tagline, name: heroTagline, widget: text }
+          - { label: Portrait caption, name: heroCaption, widget: string }
           - { label: CTA button text, name: heroCta, widget: string }
           - { label: Hero photo, name: heroPhoto, widget: image, required: false, allow_multiple: false }
           - { label: About quote, name: aboutQuote, widget: text }
-          - { label: About bio (paragraphs, separate with blank line), name: aboutBio, widget: text, required: false }
+          - label: Motto steps
+            name: mottoParts
+            widget: list
+            fields:
+              - { label: Lead-in, name: lead, widget: string }
+              - { label: Large word, name: word, widget: string }
+          - label: Stats
+            name: stats
+            widget: list
+            fields:
+              - { label: Value, name: value, widget: string }
+              - { label: Label, name: label, widget: string }
+          - label: Bio paragraphs
+            name: bio
+            widget: list
+            field: { label: Paragraph, name: paragraph, widget: text }
           - label: Skills
             name: skills
             widget: list
             field: { label: Skill, name: skill, widget: string }
+          - label: Tools
+            name: tools
+            widget: list
+            field: { label: Tool, name: tool, widget: string }
       - label: "Homepage (Deutsch)"
         name: homepage_de
         file: src/_data/homepage_de.json
         fields:
           - { label: Name, name: heroName, widget: string }
+          - { label: Role line, name: heroRole, widget: string }
           - { label: Tagline, name: heroTagline, widget: text }
-          - { label: CTA-Schaltflächentext, name: heroCta, widget: string }
-          - { label: Hero-Foto, name: heroPhoto, widget: image, required: false, allow_multiple: false }
-          - { label: Über-mich-Zitat, name: aboutQuote, widget: text }
-          - { label: Über-mich-Text (Absätze mit Leerzeile trennen), name: aboutBio, widget: text, required: false }
+          - { label: Portrait caption, name: heroCaption, widget: string }
+          - { label: CTA button text, name: heroCta, widget: string }
+          - { label: Hero photo, name: heroPhoto, widget: image, required: false, allow_multiple: false }
+          - { label: About quote, name: aboutQuote, widget: text }
+          - label: Motto steps
+            name: mottoParts
+            widget: list
+            fields:
+              - { label: Lead-in, name: lead, widget: string }
+              - { label: Large word, name: word, widget: string }
+          - label: Stats
+            name: stats
+            widget: list
+            fields:
+              - { label: Value, name: value, widget: string }
+              - { label: Label, name: label, widget: string }
+          - label: Bio paragraphs
+            name: bio
+            widget: list
+            field: { label: Paragraph, name: paragraph, widget: text }
           - label: Skills
             name: skills
             widget: list
             field: { label: Skill, name: skill, widget: string }
+          - label: Tools
+            name: tools
+            widget: list
+            field: { label: Tool, name: tool, widget: string }
 
   # ── Site settings ────────────────────────────────────────────
   - name: settings
@@ -58,7 +100,7 @@ collections:
           - { label: Contact email, name: contactEmail, widget: string }
           - { label: LinkedIn URL, name: linkedInUrl, widget: string }
 
-  # ── Work case studies — English ─────────────────────────────
+  # ── Work case studies ───────────────────────────────────────
   - name: work_en
     label: "Work (English)"
     folder: src/en/work
@@ -67,129 +109,126 @@ collections:
     fields:
       - { label: Layout, name: layout, widget: hidden, default: case-study.njk }
       - { label: Title, name: title, widget: string }
-      - { label: Tagline, name: tagline, widget: text }
+      - { label: "Headline (*word* = serif accent, + = no space)", name: titleWords, widget: string }
+      - { label: Card text, name: tagline, widget: text }
+      - { label: Intro, name: lead, widget: text }
       - { label: Order, name: order, widget: number, default: 99, value_type: int }
       - label: Tags
         name: tags
         widget: list
         field: { label: Tag, name: tag, widget: string }
-      - { label: Cover gradient (CSS), name: coverGradient, widget: string, required: false }
-      - { label: Cover image, name: cover, widget: image, required: false }
+      - { label: Cover image, name: cover, widget: image }
+      - { label: Cover description, name: coverAlt, widget: string }
       - { label: Role, name: role, widget: string }
       - { label: Scope, name: scope, widget: text }
       - { label: Tools, name: tools, widget: string }
-      - { label: Year, name: year, widget: number, value_type: int }
-      - label: Metrics
+      - { label: Year, name: year, widget: string }
+      - { label: Outcomes heading, name: metricsHeading, widget: string, required: false }
+      - { label: Outcomes note, name: metricsNote, widget: string, required: false }
+      - label: Outcomes
         name: metrics
         widget: list
         fields:
           - { label: Value, name: value, widget: string }
           - { label: Label, name: label, widget: string }
-      - label: Brief
-        name: brief
-        widget: object
+      - label: Text blocks before the quote
+        name: blocks
+        widget: list
         fields:
+          - { label: Label, name: label, widget: string }
           - { label: Heading, name: heading, widget: string }
-          - { label: Body (markdown), name: body, widget: markdown }
-      - label: Problem
-        name: problem
-        widget: object
-        fields:
-          - { label: Heading, name: heading, widget: string }
-          - { label: Body (markdown), name: body, widget: markdown }
-      - { label: Insight quote, name: insightQuote, widget: text, required: false }
-      - { label: Insight attribution, name: insightAttr, widget: string, required: false }
+          - label: Paragraphs
+            name: paras
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: text }
+          - label: Bullets
+            name: bullets
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: string }
+          - label: Paragraphs after bullets
+            name: after
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: text }
+      - { label: Insight quote, name: insightQuote, widget: text }
+      - { label: Insight attribution, name: insightAttr, widget: string }
+      - { label: Principles label, name: prinLabel, widget: string, required: false }
+      - { label: Principles heading, name: prinHeading, widget: string }
       - label: Principles
         name: principles
-        widget: object
-        required: false
+        widget: list
         fields:
-          - { label: Heading, name: heading, widget: string }
-          - label: Items
-            name: items
-            widget: list
-            fields:
-              - { label: Number, name: number, widget: string }
-              - { label: Title, name: title, widget: string }
-              - { label: Body, name: body, widget: text }
+          - { label: Number, name: number, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: text }
+      - { label: Process heading, name: procHeading, widget: string }
       - label: Process
         name: process
-        widget: object
-        required: false
+        widget: list
         fields:
-          - { label: Heading, name: heading, widget: string }
-          - label: Items
-            name: items
-            widget: list
-            fields:
-              - { label: Number, name: number, widget: string }
-              - { label: Title, name: title, widget: string }
-              - { label: Body, name: body, widget: text }
-      - label: Key UX Decisions
-        name: decisions
-        widget: object
-        required: false
-        fields:
-          - { label: Heading, name: heading, widget: string }
-          - label: Items
-            name: items
-            widget: list
-            fields:
-              - { label: Title, name: title, widget: string }
-              - { label: Body, name: body, widget: text }
-      - label: Validation
-        name: validation
-        widget: object
-        required: false
-        fields:
-          - { label: Heading, name: heading, widget: string }
-          - { label: Body (markdown), name: body, widget: markdown }
-      - label: Outcomes
-        name: outcomes
-        widget: object
-        required: false
-        fields:
-          - { label: Heading, name: heading, widget: string }
-          - label: Metrics
-            name: metrics
-            widget: list
-            fields:
-              - { label: Value, name: value, widget: string }
-              - { label: Label, name: label, widget: string }
-          - label: Quotes
-            name: quotes
-            widget: list
-            field: { label: Quote, name: quote, widget: string }
-      - label: Reflection
-        name: reflection
-        widget: object
-        required: false
-        fields:
-          - { label: Pull quote, name: pull, widget: text }
-          - { label: Body (markdown), name: body, widget: markdown }
-      - label: Next Steps
-        name: nextSteps
-        widget: object
-        required: false
-        fields:
-          - { label: Heading, name: heading, widget: string }
-          - { label: Body (markdown), name: body, widget: markdown }
-      - label: Testimonial
-        name: testimonial
-        widget: object
-        required: false
-        fields:
-          - { label: Quote, name: quote, widget: text }
-          - { label: Author, name: author, widget: string }
-      - label: Next project
-        name: nextProject
-        widget: object
-        required: false
-        fields:
+          - { label: Number, name: number, widget: string }
           - { label: Title, name: title, widget: string }
-          - { label: URL, name: url, widget: string }
+          - { label: Body, name: body, widget: text }
+      - label: Galleries
+        name: galleries
+        widget: list
+        required: false
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: Heading, name: heading, widget: string }
+          - { label: Intro, name: intro, widget: text, required: false }
+          - { label: Embedded page, name: embed, widget: string, required: false }
+          - { label: Embed height (desktop), name: height, widget: number, value_type: int, required: false }
+          - { label: Embed height (mobile), name: heightMobile, widget: number, value_type: int, required: false }
+          - { label: Columns, name: columns, widget: number, value_type: int, required: false }
+          - label: Images
+            name: images
+            widget: list
+            required: false
+            fields:
+              - { label: Image, name: src, widget: image }
+              - { label: Description, name: alt, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Caption, name: caption, widget: string }
+      - label: Text blocks after the process
+        name: blocks2
+        widget: list
+        required: false
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: Heading, name: heading, widget: string }
+          - label: Paragraphs
+            name: paras
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: text }
+          - label: Cards
+            name: items
+            widget: list
+            required: false
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+      - label: User quotes
+        name: quotes
+        widget: list
+        required: false
+        field: { label: Text, name: text, widget: string }
+      - { label: "Reflection pull quote (*word* = serif accent)", name: pull, widget: text }
+      - label: Reflection paragraphs
+        name: reflection
+        widget: list
+        required: false
+        field: { label: Text, name: text, widget: text }
+      - label: Next steps paragraphs
+        name: nextSteps
+        widget: list
+        required: false
+        field: { label: Text, name: text, widget: text }
 
-  # ── Work case studies — German ──────────────────────────────
+
   - name: work_de
     label: "Work (Deutsch)"
     folder: src/de/work
@@ -197,134 +236,132 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: Layout, name: layout, widget: hidden, default: case-study.njk }
-      - { label: Titel, name: title, widget: string }
-      - { label: Tagline, name: tagline, widget: text }
-      - { label: Reihenfolge, name: order, widget: number, default: 99, value_type: int }
+      - { label: Title, name: title, widget: string }
+      - { label: "Headline (*word* = serif accent, + = no space)", name: titleWords, widget: string }
+      - { label: Card text, name: tagline, widget: text }
+      - { label: Intro, name: lead, widget: text }
+      - { label: Order, name: order, widget: number, default: 99, value_type: int }
       - label: Tags
         name: tags
         widget: list
         field: { label: Tag, name: tag, widget: string }
-      - { label: Cover-Verlauf (CSS), name: coverGradient, widget: string, required: false }
-      - { label: Cover-Bild, name: cover, widget: image, required: false }
-      - { label: Rolle, name: role, widget: string }
-      - { label: Umfang, name: scope, widget: text }
+      - { label: Cover image, name: cover, widget: image }
+      - { label: Cover description, name: coverAlt, widget: string }
+      - { label: Role, name: role, widget: string }
+      - { label: Scope, name: scope, widget: text }
       - { label: Tools, name: tools, widget: string }
-      - { label: Jahr, name: year, widget: number, value_type: int }
-      - label: Metriken
+      - { label: Year, name: year, widget: string }
+      - { label: Outcomes heading, name: metricsHeading, widget: string, required: false }
+      - { label: Outcomes note, name: metricsNote, widget: string, required: false }
+      - label: Outcomes
         name: metrics
         widget: list
         fields:
-          - { label: Wert, name: value, widget: string }
-          - { label: Bezeichnung, name: label, widget: string }
-      - label: Briefing
-        name: brief
-        widget: object
+          - { label: Value, name: value, widget: string }
+          - { label: Label, name: label, widget: string }
+      - label: Text blocks before the quote
+        name: blocks
+        widget: list
         fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - { label: Text (Markdown), name: body, widget: markdown }
-      - label: Problem
-        name: problem
-        widget: object
-        fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - { label: Text (Markdown), name: body, widget: markdown }
-      - { label: Insight-Zitat, name: insightQuote, widget: text, required: false }
-      - { label: Insight-Zuordnung, name: insightAttr, widget: string, required: false }
-      - label: Designprinzipien
+          - { label: Label, name: label, widget: string }
+          - { label: Heading, name: heading, widget: string }
+          - label: Paragraphs
+            name: paras
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: text }
+          - label: Bullets
+            name: bullets
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: string }
+          - label: Paragraphs after bullets
+            name: after
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: text }
+      - { label: Insight quote, name: insightQuote, widget: text }
+      - { label: Insight attribution, name: insightAttr, widget: string }
+      - { label: Principles label, name: prinLabel, widget: string, required: false }
+      - { label: Principles heading, name: prinHeading, widget: string }
+      - label: Principles
         name: principles
-        widget: object
-        required: false
+        widget: list
         fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - label: Einträge
-            name: items
-            widget: list
-            fields:
-              - { label: Nummer, name: number, widget: string }
-              - { label: Titel, name: title, widget: string }
-              - { label: Text, name: body, widget: text }
-      - label: Prozess
+          - { label: Number, name: number, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: text }
+      - { label: Process heading, name: procHeading, widget: string }
+      - label: Process
         name: process
-        widget: object
+        widget: list
+        fields:
+          - { label: Number, name: number, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: text }
+      - label: Galleries
+        name: galleries
+        widget: list
         required: false
         fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - label: Einträge
+          - { label: Label, name: label, widget: string }
+          - { label: Heading, name: heading, widget: string }
+          - { label: Intro, name: intro, widget: text, required: false }
+          - { label: Embedded page, name: embed, widget: string, required: false }
+          - { label: Embed height (desktop), name: height, widget: number, value_type: int, required: false }
+          - { label: Embed height (mobile), name: heightMobile, widget: number, value_type: int, required: false }
+          - { label: Columns, name: columns, widget: number, value_type: int, required: false }
+          - label: Images
+            name: images
+            widget: list
+            required: false
+            fields:
+              - { label: Image, name: src, widget: image }
+              - { label: Description, name: alt, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Caption, name: caption, widget: string }
+      - label: Text blocks after the process
+        name: blocks2
+        widget: list
+        required: false
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: Heading, name: heading, widget: string }
+          - label: Paragraphs
+            name: paras
+            widget: list
+            required: false
+            field: { label: Text, name: text, widget: text }
+          - label: Cards
             name: items
             widget: list
+            required: false
             fields:
-              - { label: Nummer, name: number, widget: string }
-              - { label: Titel, name: title, widget: string }
-              - { label: Text, name: body, widget: text }
-      - label: UX-Entscheidungen
-        name: decisions
-        widget: object
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+      - label: User quotes
+        name: quotes
+        widget: list
         required: false
-        fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - label: Einträge
-            name: items
-            widget: list
-            fields:
-              - { label: Titel, name: title, widget: string }
-              - { label: Text, name: body, widget: text }
-      - label: Validierung
-        name: validation
-        widget: object
-        required: false
-        fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - { label: Text (Markdown), name: body, widget: markdown }
-      - label: Ergebnisse
-        name: outcomes
-        widget: object
-        required: false
-        fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - label: Metriken
-            name: metrics
-            widget: list
-            fields:
-              - { label: Wert, name: value, widget: string }
-              - { label: Bezeichnung, name: label, widget: string }
-          - label: Zitate
-            name: quotes
-            widget: list
-            field: { label: Zitat, name: quote, widget: string }
-      - label: Reflexion
+        field: { label: Text, name: text, widget: string }
+      - { label: "Reflection pull quote (*word* = serif accent)", name: pull, widget: text }
+      - label: Reflection paragraphs
         name: reflection
-        widget: object
+        widget: list
         required: false
-        fields:
-          - { label: Pull-Zitat, name: pull, widget: text }
-          - { label: Text (Markdown), name: body, widget: markdown }
-      - label: Nächste Schritte
+        field: { label: Text, name: text, widget: text }
+      - label: Next steps paragraphs
         name: nextSteps
-        widget: object
+        widget: list
         required: false
-        fields:
-          - { label: Überschrift, name: heading, widget: string }
-          - { label: Text (Markdown), name: body, widget: markdown }
-      - label: Testimonial
-        name: testimonial
-        widget: object
-        required: false
-        fields:
-          - { label: Zitat, name: quote, widget: text }
-          - { label: Autor, name: author, widget: string }
-      - label: Nächstes Projekt
-        name: nextProject
-        widget: object
-        required: false
-        fields:
-          - { label: Titel, name: title, widget: string }
-          - { label: URL, name: url, widget: string }
+        field: { label: Text, name: text, widget: text }
 
-  # ── Learning items ───────────────────────────────────────────
+
+  # ── Learning ────────────────────────────────────────────────
   - name: learning
     label: "Learning & Growth"
     files:
-      - label: "Learning items (English)"
+      - label: "Learning (English)"
         name: learning_en
         file: src/_data/learning_en.json
         fields:
@@ -341,22 +378,74 @@ collections:
                   - { label: Completed, value: Completed }
                   - { label: In Progress, value: "In Progress" }
                   - { label: Planned, value: Planned }
-              - { label: Year, name: year, widget: number, value_type: int }
-      - label: "Lerneinträge (Deutsch)"
+              - { label: Year, name: year, widget: string }
+          - label: Semester
+            name: semester
+            widget: object
+            fields:
+              - { label: Kicker, name: kicker, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: sub, widget: text }
+              - { label: Hours unit, name: unit, widget: string }
+              - label: Stats
+                name: stats
+                widget: list
+                fields:
+                  - { label: Value, name: value, widget: string }
+                  - { label: Label, name: label, widget: string }
+              - label: Learning areas
+                name: groups
+                widget: list
+                fields:
+                  - { label: Name, name: name, widget: string }
+                  - { label: Hours, name: hours, widget: number, value_type: int }
+                  - label: Modules
+                    name: modules
+                    widget: list
+                    fields:
+                      - { label: Title, name: title, widget: string }
+                      - { label: Hours, name: hours, widget: number, value_type: int }
+      - label: "Lernen (Deutsch)"
         name: learning_de
         file: src/_data/learning_de.json
         fields:
-          - label: Einträge
+          - label: Items
             name: items
             widget: list
             fields:
-              - { label: Titel, name: title, widget: string }
-              - { label: Plattform, name: platform, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Platform, name: platform, widget: string }
               - label: Status
                 name: status
                 widget: select
                 options:
-                  - { label: Abgeschlossen, value: Completed }
-                  - { label: In Bearbeitung, value: "In Progress" }
-                  - { label: Geplant, value: Planned }
-              - { label: Jahr, name: year, widget: number, value_type: int }
+                  - { label: Completed, value: Completed }
+                  - { label: In Progress, value: "In Progress" }
+                  - { label: Planned, value: Planned }
+              - { label: Year, name: year, widget: string }
+          - label: Semester
+            name: semester
+            widget: object
+            fields:
+              - { label: Kicker, name: kicker, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Text, name: sub, widget: text }
+              - { label: Hours unit, name: unit, widget: string }
+              - label: Stats
+                name: stats
+                widget: list
+                fields:
+                  - { label: Value, name: value, widget: string }
+                  - { label: Label, name: label, widget: string }
+              - label: Learning areas
+                name: groups
+                widget: list
+                fields:
+                  - { label: Name, name: name, widget: string }
+                  - { label: Hours, name: hours, widget: number, value_type: int }
+                  - label: Modules
+                    name: modules
+                    widget: list
+                    fields:
+                      - { label: Title, name: title, widget: string }
+                      - { label: Hours, name: hours, widget: number, value_type: int }

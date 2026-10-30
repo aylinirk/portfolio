@@ -1,22 +1,61 @@
 {
   "heroName": "Aylin Stäuble",
-  "heroTagline": "UI/UX-Designerin mit einem Blick fürs Detail. Ich bringe strukturiertes Denken und Präzision in Design, das wirklich für Menschen funktioniert.",
+  "heroRole": "UI/UX-Designerin · Zürich",
+  "heroTagline": "Buchhaltung war meine Ausbildung. UX ist mein Weg. Ich bringe strukturiertes Denken und Präzision in Design, das wirklich für Menschen funktioniert.",
+  "heroCaption": "Design, das für Menschen funktioniert.",
   "heroCta": "Arbeit ansehen",
-  "heroPhoto": "/assets/images/chatgpt-image-22.-apr.-2026-09_13_15.png",
+  "heroPhoto": "/assets/images/portrait.jpg",
   "aboutQuote": "First make it functional, then fast, and then, pretty.",
-  "aboutBio": "Ich studiere Interaction Design und vertiefe mein Handwerk laufend mit dem Google UX Design Certificate. In jedem Projekt steht Forschung zuerst, dann Iteration — die visuelle Verfeinerung kommt erst, wenn das Verhalten stimmt.\n\nBevor ich zum UX-Design wechselte, habe ich mehrere Jahre in einem strukturierten, prozessorientierten Umfeld gearbeitet — eine Erfahrung, die mir ein Gespür für klare Strukturen und Präzision mitgegeben hat.",
+  "mottoParts": [
+    {
+      "lead": "First make it",
+      "word": "functional,"
+    },
+    {
+      "lead": "then",
+      "word": "fast,"
+    },
+    {
+      "lead": "and then,",
+      "word": "pretty."
+    }
+  ],
+  "stats": [
+    {
+      "value": "3",
+      "label": "Fallstudien, von der Recherche bis zum Prototyp"
+    },
+    {
+      "value": "5",
+      "label": "Nutzer:innen in der time2care-Usability-Studie getestet"
+    },
+    {
+      "value": "6",
+      "label": "Kurse im Google UX Design Certificate"
+    }
+  ],
+  "bio": [
+    "Seit August 2026 studiere ich Kommunikationsdesign HF mit Schwerpunkt Interaction Design. Das dreijährige Studium läuft bis August 2029.",
+    "An der Schule für Gestaltung Zürich habe ich im ersten Semester unter anderem Webtechnologien, Experimentelles Erzählen, Game Design und Design Thinking. Im LAB arbeite ich an eigenen Konzepten.",
+    "Daneben mache ich das Google UX Design Certificate. In meinen Projekten kommt zuerst die Recherche, dann die Iteration. Um das Visuelle kümmere ich mich erst, wenn das Verhalten stimmt.",
+    "Bevor ich ins UX-Design gewechselt habe, habe ich eine Ausbildung in der Buchhaltung gemacht. Daher kommt mein Gespür für klare Strukturen und genaues Arbeiten."
+  ],
   "skills": [
     "Nutzerforschung",
     "User Flows",
     "Wireframing",
     "Prototyping",
     "Usability Testing",
-    "Accessibility Basics",
+    "Accessibility Basics"
+  ],
+  "tools": [
     "Figma",
+    "Figma Make",
     "FigJam",
     "Miro",
     "Notion",
-    "Google Forms",
-    "Microsoft 365"
+    "Claude",
+    "Supabase",
+    "Vercel"
   ]
 }

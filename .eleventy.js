@@ -34,15 +34,30 @@ module.exports = function (eleventyConfig) {
     return SAFE_GRADIENT.test(value.trim()) ? value.trim() : "";
   });
 
-  // Filter: badge CSS modifier from status value (stored in English)
-  eleventyConfig.addFilter("badgeClass", status => {
-    const map = {
-      Completed: "badge--done",
-      "In Progress": "badge--progress",
-      Planned: "badge--planned",
-    };
-    return map[status] || "badge--planned";
+  const escapeHtml = value =>
+    String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  // Filter: word-by-word headline spans. "*word*" sets the serif accent, "+" joins two parts without a space.
+  eleventyConfig.addFilter("wordSpans", (text, animate) => {
+    const parts = [];
+    String(text || "").split(" ").filter(Boolean).forEach(word => {
+      const pieces = word.split("+");
+      pieces.forEach((piece, i) => parts.push({ piece, join: i < pieces.length - 1 }));
+    });
+    return parts.map(({ piece, join }, i) => {
+      const cls = ["w", piece.includes("*") ? "em" : "", join ? "join" : ""].filter(Boolean).join(" ");
+      const style = animate ? ` style="--i: ${i}"` : ' style="transform: none; opacity: 1; filter: none"';
+      const wrap = animate ? ' aria-hidden="true"' : ' style="overflow: visible"';
+      return `<span class="${cls}"${wrap}><span class="wi"${style}>${escapeHtml(piece.replace(/\*/g, ""))}</span></span>`;
+    }).join("");
   });
+
+  // Filter: spans for the scroll-highlighted paragraphs
+  eleventyConfig.addFilter("hlSpans", text =>
+    String(text || "").split(" ").filter(Boolean).map(word =>
+      `<span class="hlw${word.includes("*") ? " em" : ""}">${escapeHtml(word.replace(/\*/g, ""))}</span>`
+    ).join(" ")
+  );
 
   return {
     dir: {
