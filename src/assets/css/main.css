@@ -143,7 +143,7 @@ a{color:#1b1b1a}a:hover{color:#4f6b4a}
 }
 
 /* ---------- Motto sequence ---------- */
-.seq{position:relative;height:calc(var(--vh,800px) * 4);background:var(--dark);color:var(--on-dark)}
+.seq{position:relative;height:calc(var(--vh,800px) * 2.5);background:var(--dark);color:var(--on-dark)}
 .seq-sticky{position:sticky;top:0;height:var(--vh,800px);overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px}
 .seq-kicker{font-size:15px;color:var(--on-dark2);margin-bottom:28px}
 .seq-stack{position:relative;width:100%;height:clamp(180px,22vw,330px)}
