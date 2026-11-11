@@ -1,7 +1,7 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "_site",
-  "installCommand": "npm install",
+  "buildCommand": "echo 'Statische Seite, kein Build-Schritt'",
+  "installCommand": "echo 'Keine Installation noetig'",
+  "outputDirectory": ".",
   "framework": null,
   "headers": [
     {
@@ -13,8 +13,5 @@
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     }
-  ],
-  "rewrites": [
-    { "source": "/admin", "destination": "/admin/index.html" }
   ]
 }
