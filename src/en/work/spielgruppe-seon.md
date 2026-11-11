@@ -23,6 +23,10 @@ metrics:
   - value: Real users
     label: Designed for parents looking for a playgroup
 blocks:
+  - label: Status
+    heading: Current status
+    paras:
+      - The Spielgruppe Seon website is no longer active. The project stays here as a case study: it shows how I work with AI, from writing my own prompts through concept and copy to the finished build.
   - label: Brief
     heading: The brief
     paras:

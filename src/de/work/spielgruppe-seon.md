@@ -23,6 +23,10 @@ metrics:
   - value: Echte Nutzer
     label: Für Eltern gestaltet, die eine Spielgruppe suchen
 blocks:
+  - label: Status
+    heading: Aktueller Status
+    paras:
+      - Die Website der Spielgruppe Seon ist nicht mehr aktiv. Das Projekt bleibt hier als Fallstudie: Es zeigt, wie ich mit KI arbeite, von eigenen Prompts über Konzept und Texte bis zur fertigen Umsetzung.
   - label: Briefing
     heading: Das Briefing
     paras:
