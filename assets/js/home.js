@@ -1,11 +1,11 @@
 /* ==========================================================================
    AyVision home
-   1. Monogram "AV" in Rubik Bubbles, filled with a soft, slowly drifting
+   1. Monogram "Ay" in Rubik Bubbles, filled with a soft, slowly drifting
       colour gradient. Intro: the colour blooms open inside the letters.
       Hover: from the cursor a flower-shaped colour spreads through the letters
       and fades slowly after the cursor leaves. The colours pulse gently all
       the time and faster, stronger while the cursor is on the letters.
-   2. Portals: before the first room the AV shrinks into the room's coloured dot
+   2. Portals: before the first room the AY shrinks into the room's coloured dot
       and takes on its colour, then the dot grows into the room. Between rooms a
       dot grows on the previous room's colour, so the hero does not come back.
    3. Header: docks a nav pill, switches tone over dark rooms, marks the room.
@@ -63,6 +63,7 @@
   var box = { x: 0, y: 0, w: 1, h: 1, pad: 8 };
   var mouse = { x: -9999, y: -9999, on: false };
 
+  var MONO = canvas.getAttribute('data-mono') || 'Ay';
   var FONT = '"Rubik Bubbles", "Geist", "Helvetica Neue", Arial, sans-serif';
 
   function layout() {
@@ -86,7 +87,7 @@
     /* measure the letters and fit them into the layout box */
     var m = document.createElement('canvas').getContext('2d');
     m.font = '400 100px ' + FONT;
-    var tm = m.measureText('AV');
+    var tm = m.measureText(MONO);
     var asc = tm.actualBoundingBoxAscent || 72, desc = tm.actualBoundingBoxDescent || 0;
     var left = tm.actualBoundingBoxLeft || 0, right = tm.actualBoundingBoxRight || tm.width;
     var size = 100 * Math.min(L.w / (left + right), L.h / (asc + desc));
@@ -106,7 +107,7 @@
     mc.font = '400 ' + size + 'px ' + FONT;
     mc.textBaseline = 'alphabetic';
     mc.fillStyle = '#000';
-    mc.fillText('AV', pad + left * size / 100, pad + asc * size / 100);
+    mc.fillText(MONO, pad + left * size / 100, pad + asc * size / 100);
 
     paint = document.createElement('canvas');
     paint.width = mask.width; paint.height = mask.height;

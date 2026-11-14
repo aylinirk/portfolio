@@ -1,4 +1,4 @@
-/* Rubik Bubbles (SIL Open Font License, see ../fonts/OFL-rubik-bubbles.txt), only used for the AV monogram */
+/* Rubik Bubbles (SIL Open Font License, see ../fonts/OFL-rubik-bubbles.txt), only used for the Ay monogram */
 @font-face { font-family: "Rubik Bubbles"; src: url("../fonts/rubik-bubbles-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 
 /* ==========================================================================
@@ -130,8 +130,11 @@
 .about-photo-in img { width: 100%; height: 100%; object-fit: cover; object-position: 43% 40%; }
 .about-photo figcaption { font-size: 13px; color: var(--ink2); margin-top: 12px; font-style: italic; }
 .room--about .about-bio { color: var(--ink); font-size: clamp(18px, 1.5vw, 21px); }
-.motto { margin: 28px 0 0; padding-top: 28px; border-top: 1px solid var(--line); display: flex; flex-direction: column; font-size: clamp(32px, 3.6vw, 56px); font-weight: 600; letter-spacing: -.045em; line-height: 1.02; }
-.motto .serif { font-weight: 400; color: var(--accent); }
+/* Motto: eigener Block unter Foto und Text, damit die Denkweise heraussticht */
+.motto-block { margin: clamp(72px, 9vw, 140px) 0 0; padding-top: clamp(36px, 5vw, 72px); border-top: 1px solid var(--line); }
+.motto-block .eyebrow { margin-bottom: clamp(24px, 3vw, 40px); }
+.motto { margin: 0; display: flex; flex-direction: column; font-size: clamp(40px, 7.4vw, 124px); font-weight: 600; letter-spacing: -.045em; line-height: 1; }
+.motto .serif { font-weight: 400; font-size: 1.1em; letter-spacing: -.02em; color: var(--accent); }
 .room--about .motto .serif { color: var(--pop); }
 .room-stats { margin-top: clamp(64px, 8vw, 120px); }
 .room--about .stat { border-top-color: var(--line); }
@@ -185,7 +188,6 @@
 .about-photo-in { border-radius: 50% 50% 28px 96px / 37.6% 37.6% 28px 96px; transition: border-radius 1s var(--spring); }
 .about-photo:hover .about-photo-in { border-radius: 50% 50% 96px 28px / 37.6% 37.6% 96px 28px; }
 .bloom--photo { position: absolute; z-index: -1; --s: clamp(120px, 15vw, 210px); width: var(--s); height: var(--s); top: calc(var(--s) * -.3); right: calc(var(--s) * -.34); color: var(--pop); animation: spin 50s linear infinite; }
-.motto { rotate: -1deg; transform-origin: 0 50%; }
 .room-stats .stat { transition: translate .8s var(--spring); }
 .room-stats .stat:nth-child(2) { translate: 0 34px; }
 .room-stats .stat:nth-child(3) { translate: 0 12px; }
@@ -238,7 +240,7 @@
   .about-split { grid-template-columns: minmax(0, 1fr); }
   .about-photo { max-width: 420px; }
   .sticker--seal { --s: 100px; padding: 0 16px; font-size: 12px; }
-  .ay-sticker { left: calc(var(--av-x, 50vw) + var(--av-w, 80vw) - var(--s) * .85); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * .72); }
+  .ay-sticker { left: max(8px, calc(var(--av-x, 5vw) - var(--s) * .2)); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * .55); }
   .sticker--city { right: -8px; }
   .room-stats .stat:nth-child(n) { translate: none; }
   .ring { position: relative; right: auto; top: auto; margin: 44px auto 0; --s: 150px; }
@@ -262,7 +264,7 @@
   .ay-rooms { grid-row: 2; }
   .gb { font-size: 14px; padding: 7px 13px 8px; }
   .sticker--seal { --s: 96px; padding: 0 14px; font-size: 11px; }
-  .ay-sticker { left: calc(var(--av-x, 60vw) + var(--av-w, 40vw) - var(--s) * .95); top: calc(var(--av-y, 30vh) + var(--av-h, 50vh) - var(--s) * .6); }
+  .ay-sticker { left: calc(var(--av-x, 50vw) - var(--s) * .3); top: calc(var(--av-y, 30vh) + var(--av-h, 50vh) - var(--s) * .6); }
 }
 @media (max-width: 900px) {
   .ay-head { transition: color .45s var(--ease), background .4s var(--ease); }
