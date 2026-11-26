@@ -417,8 +417,10 @@ body { margin: 0; background: var(--bg); color: var(--ink); }
   .learn-year { grid-column: 2; grid-row: 3; align-self: end; }
   .sem-head, .sem-groups { grid-template-columns: minmax(0, 1fr); }
   .sem-group--1 { grid-row: auto; }
-  .next-card { grid-template-columns: minmax(0, 1fr); }
+  .ap .next-card { grid-template-columns: minmax(0, 1fr); }
   .next-body { padding: 24px 16px 16px; gap: 28px; }
+  .chips { gap: 6px; }
+  .chip { font-size: 13px; gap: 6px; padding: 6px 11px; }
   .gal { padding-left: 20px; padding-right: 20px; }
   .embed iframe { height: min(var(--h, 900px), 820px); }
 }
