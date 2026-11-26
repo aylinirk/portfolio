@@ -173,6 +173,10 @@
 
 /* a project with a dark card colour (ConCap: Bordeaux) */
 .room--work .card--dark { --ink: #ebebeb; --ink2: #e8ccd2; --line: color-mix(in srgb, #ebebeb 24%, transparent); color: #ebebeb; }
+/* Projekt in Arbeit: Platzhalter statt Bild, kein Link */
+.card--soon .soon-media { display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #6b1f33 0%, #b9737f 55%, #e6b8c0 100%); }
+.soon-bloom { position: absolute; width: min(78%, 380px); height: min(78%, 380px); fill: currentColor; color: rgba(246, 241, 244, .16); animation: spin 70s linear infinite; }
+.soon-label { position: relative; font-family: var(--serif); font-style: italic; font-size: clamp(40px, 5.2vw, 76px); line-height: 1; letter-spacing: -.02em; color: #f6f1f4; }
 .card--dark .card-idx { color: var(--pop); }
 .card--dark .tag { background: transparent; color: #f3e6e8; }
 
@@ -234,13 +238,16 @@
   .ay-tag { font-size: 16px; }
   .ay-hero-text .ay-tag { margin-top: 22px; }
   .ay-hero-text .ay-name { margin-top: 14px; }
+  .portal { height: 85vh; }
+  .portal--out { height: 90vh; }
+  .portal--room { height: 95vh; }
   .ay-rooms { grid-row: 3; }
   .gb { font-size: 15px; padding: 8px 15px 9px; }
   .ay-hint { display: none; }
   .about-split { grid-template-columns: minmax(0, 1fr); }
   .about-photo { max-width: 420px; }
   .sticker--seal { --s: 100px; padding: 0 16px; font-size: 12px; }
-  .ay-sticker { left: max(8px, calc(var(--av-x, 5vw) - var(--s) * .2)); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * .55); }
+  .ay-sticker { left: calc(var(--av-x, 5vw) + var(--av-w, 90vw) - var(--s) * .8); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * .85); rotate: 8deg; }
   .sticker--city { right: -8px; }
   .room-stats .stat:nth-child(n) { translate: none; }
   .ring { position: relative; right: auto; top: auto; margin: 44px auto 0; --s: 150px; }
@@ -269,6 +276,14 @@
 @media (max-width: 900px) {
   .ay-head { transition: color .45s var(--ease), background .4s var(--ease); }
   .ay-head.is-docked { background: color-mix(in srgb, var(--hb, var(--bg)) 84%, transparent); -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%); }
+}
+
+@media (max-width: 560px), (max-width: 900px) and (orientation: portrait) {
+  .ap .ay-sticker { --s: 78px; padding: 0 10px; font-size: 10px; }
+}
+/* Grosse Handys: Name direkt unter dem Monogramm statt ganz unten, damit er beim Öffnen sichtbar ist */
+@media (max-width: 900px) and (orientation: portrait) and (min-height: 720px) {
+  .ay-hero-text { grid-row: 1; align-self: start; margin: calc(76px + min(60vw, 30svh) + 16px) 0 0; }
 }
 
 /* ---------- Still mode (reduced motion) ---------- */
