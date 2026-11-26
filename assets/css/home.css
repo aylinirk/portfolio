@@ -247,7 +247,7 @@
   .about-split { grid-template-columns: minmax(0, 1fr); }
   .about-photo { max-width: 420px; }
   .sticker--seal { --s: 100px; padding: 0 16px; font-size: 12px; }
-  .ay-sticker { left: max(8px, calc(var(--av-x, 5vw) - var(--s) * .2)); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * 1.15); }
+  .ay-sticker { left: calc(var(--av-x, 5vw) + var(--av-w, 90vw) - var(--s) * .9); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * .95); rotate: 8deg; }
   .sticker--city { right: -8px; }
   .room-stats .stat:nth-child(n) { translate: none; }
   .ring { position: relative; right: auto; top: auto; margin: 44px auto 0; --s: 150px; }
@@ -278,8 +278,8 @@
   .ay-head.is-docked { background: color-mix(in srgb, var(--hb, var(--bg)) 84%, transparent); -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%); }
 }
 
-@media (max-width: 900px) and (max-height: 700px) {
-  .ap .ay-sticker { --s: 84px; padding: 0 12px; font-size: 10px; }
+@media (max-width: 560px), (max-width: 900px) and (orientation: portrait) {
+  .ap .ay-sticker { --s: 78px; padding: 0 10px; font-size: 10px; }
 }
 
 /* ---------- Still mode (reduced motion) ---------- */
