@@ -247,7 +247,7 @@
   .about-split { grid-template-columns: minmax(0, 1fr); }
   .about-photo { max-width: 420px; }
   .sticker--seal { --s: 100px; padding: 0 16px; font-size: 12px; }
-  .ay-sticker { left: calc(var(--av-x, 5vw) + var(--av-w, 90vw) - var(--s) * .9); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * .95); rotate: 8deg; }
+  .ay-sticker { left: calc(var(--av-x, 5vw) + var(--av-w, 90vw) - var(--s) * .8); top: calc(var(--av-y, 76px) + var(--av-h, 280px) - var(--s) * .85); rotate: 8deg; }
   .sticker--city { right: -8px; }
   .room-stats .stat:nth-child(n) { translate: none; }
   .ring { position: relative; right: auto; top: auto; margin: 44px auto 0; --s: 150px; }
