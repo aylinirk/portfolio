@@ -281,6 +281,10 @@
 @media (max-width: 560px), (max-width: 900px) and (orientation: portrait) {
   .ap .ay-sticker { --s: 78px; padding: 0 10px; font-size: 10px; }
 }
+/* Grosse Handys: Name direkt unter dem Monogramm statt ganz unten, damit er beim Öffnen sichtbar ist */
+@media (max-width: 900px) and (orientation: portrait) and (min-height: 720px) {
+  .ay-hero-text { grid-row: 1; align-self: start; margin: calc(76px + min(60vw, 30svh) + 16px) 0 0; }
+}
 
 /* ---------- Still mode (reduced motion) ---------- */
 .is-still .ay-hero { position: relative; height: 100vh; height: 100svh; }
